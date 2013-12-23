@@ -520,6 +520,10 @@
     <string name="less_notification_sounds_2m">2 minutes</string>
     <string name="less_notification_sounds_5m">5 minutes</string>
     <string name="attention">Attention</string>
+	
+	<!-- Volume Keys Media Control -->
+    <string name="volume_keys_control_media_stream">Media control</string>
+    <string name="volume_keys_control_media_stream_summary">Volume keys control media volume rather than notifications</string>
 
     <!-- SuperSU -->
     <string name="supersu_title">SuperSU</string>
