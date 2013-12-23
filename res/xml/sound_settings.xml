@@ -19,12 +19,19 @@
     android:title="@string/sound_title"
     xmlns:settings="http://schemas.android.com/apk/res/com.android.settings">
 
-    <SwitchPreference
+    <CheckBoxPreference
         android:key="safe_headset_volume"
         android:title="@string/safe_headset_volume_title"
         android:summary="@string/safe_headset_volume_summary"
         android:persistent="false"
         android:defaultValue="true" />
+		
+    <CheckBoxPreference
+        android:key="volume_keys_control_media_stream"
+        android:title="@string/volume_keys_control_media_stream"
+        android:summary="@string/volume_keys_control_media_stream_summary"
+        android:defaultValue="false"
+        android:persistent="false" />
 
     <PreferenceCategory
         android:title="@string/notifications_category_title" />
