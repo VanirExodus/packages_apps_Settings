@@ -325,11 +325,12 @@ public class SettingsActivity extends Activity
             ApnSettings.class.getName(),
             BlacklistSettings.class.getName(),
             ProfilesSettings.class.getName(),
-            com.android.settings.cyanogenmod.PrivacySettings.class.getName(),
             NotificationManagerSettings.class.getName(),
             LockScreenSettings.class.getName(),
             LiveDisplay.class.getName(),
-            DisplayRotation.class.getName()
+            DisplayRotation.class.getName(),
+            com.android.settings.cyanogenmod.PrivacySettings.class.getName(),
+            com.android.settings.exodus.ScreenRecorderSettings.class.getName()
     };
 
 
