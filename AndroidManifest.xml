@@ -2364,6 +2364,5 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.myfirstapp.MainActivity" />
         </activity>
-
     </application>
 </manifest>
