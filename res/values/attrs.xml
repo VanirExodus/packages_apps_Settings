@@ -116,4 +116,11 @@
         <attr name="defaultValue" format="float" />
         <attr name="digits" format="integer" />
     </declare-styleable>
+
+    <declare-styleable name="IntervalSeekBar">
+        <attr name="Min" format="float" />
+        <attr name="Max" format="float" />
+        <attr name="defaultValue" format="float" />
+        <attr name="digits" format="integer" />
+    </declare-styleable>
 </resources>

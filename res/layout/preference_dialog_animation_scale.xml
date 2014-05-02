@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2008 The Android Open Source Project
+<!-- Copyright (C) 2014 The CyanogenMod Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
      You may obtain a copy of the License at
 
-<<<<<<< HEAD
           http://www.apache.org/licenses/LICENSE-2.0
-=======
-     http://www.apache.org/licenses/LICENSE-2.0
->>>>>>> ecc9324... Settings: Use a seekbar preference to allow setting arbitrary animation scale values
 
      Unless required by applicable law or agreed to in writing, software
      distributed under the License is distributed on an "AS IS" BASIS,
@@ -32,26 +28,20 @@
                  android:layout_height="64dp"
                  android:gravity="center_horizontal|center_vertical">
 
-                <TextView android:id="@+id/description"
-                        android:text="@string/font_size_sample"
+                <TextView android:id="@+id/scale"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:textAppearanceLarge" />
 
-                <TextView android:id="@+id/percentage"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:textAppearanceSmall" />
-
         </LinearLayout>
 
-        <com.android.settings.IntervalSeekBar android:id="@+id/font_size"
+        <com.android.settings.IntervalSeekBar android:id="@+id/scale_seekbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
                 android:layout_below="@+id/container"
-                settings:min="0.85"
-                settings:max="1.30"
+                settings:Min="0"
+                settings:Max="2"
                 settings:defaultValue="1.00"
                 settings:digits="2" />
 
