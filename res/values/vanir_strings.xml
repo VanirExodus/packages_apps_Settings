@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2014 VanirAOSP && The Android Open Source Project
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- Generic strings -->
+    <string name="ok">OK</string>
+
+    <!-- Vanir menus -->
+    <string name="voodoo_title">Exodus</string>
+    <string name="vanir_settings_title">Interface</string>
+    <string name="misc_short">Misc</string>
+    <string name="interface_title">Interface</string>
+    <string name="vanir_controls">Controls</string>
+    <string name="userpsace_title">Userspace</string>
+    <string name="general">General</string>
+    <string name="wake_options_title">Device wake up</string>
+
+    <!-- Other device settings -->
+    <string name="more_device_controls_title">More\u2026</string>
+    <string name="more_device_settings_title">Hardware</string>
+    <string name="sensors_motors_title">Sensors &amp; motors</string>
+
+    <!-- Vanir Updater -->
+    <string name="vanirupdate_settings_title">Exodus updates</string>
+    <string name="vanirupdate_settings_alternate_title">System updates</string>
+    <string name="vanirupdate_settings_summary">Check for, view or install available updates</string>
+
+    <!-- Shortcut Picker -->
+    <string name="icon_picker_title">Choose icon source</string>
+    <string name="icon_picker_system_icons_title">System icons</string>
+    <string name="icon_picker_gallery_title">Gallery</string>
+    <string name="icon_picker_pack_title">Icon pack</string>
+    <string name="applist_title">Apps</string>
+    <string name="picker_activities">Activities</string>
+    <string name="select_custom_app_title">Select custom app</string>
+    <string name="select_custom_activity_title">Select custom activity</string>
+
+    <!-- Gesture panel -->
+    <string name="gesture_panel_title">Gesture panel actions</string>
+    <string name="button_add">Add gesture</string>
+    <string name="button_reload">Reload</string>
+    <string name="button_discard">Discard</string>
+    <string name="button_done">Done</string>
+    <string name="prompt_gesture_name">Name</string>
+    <string name="error_missing_name">You must enter a name</string>
+    <string name="save_success">Gesture saved in %s</string>
+    <string name="rename_action">OK</string>
+    <string name="cancel_action">Cancel</string>
+    <string name="gestures_loading">Loading gestures...</string>
+    <string name="gestures_empty">No gestures</string>
+    <string name="gestures_activity">Gestures</string>
+    <string name="gestures_edit">Edit</string>
+    <string name="gestures_delete">Delete</string>
+    <string name="gestures_delete_success">Gesture deleted</string>
+    <string name="gestures_rename_title">Rename gesture</string>
+    <string name="gestures_rename_label">Gesture name</string>
+    <string name="gestures_error_loading">Could not load %s. Make sure you have storage available.</string>
+
+    <!-- vanir actions and utilities -->
+    <string name="shortcut_label">Actions &amp; Utilities</string>
+    <string name="toggle_flushmemory">GC memory</string>
+    <string name="toggle_ring_vib">Ring/Vib</string>
+    <string name="toggle_ring_silent">Ring/Silent</string>
+    <string name="toggle_ring_vib_silent">Ring/Vib/Silent</string>
+    <string name="toggle_profile">Profiles</string>
+    <string name="toggle_profile_toast">Profiles are currently disabled</string>
+    <string name="toggle_dream">Screensaver</string>
+    <string name="toggle_dream_failed">Dreams are off or disabled</string>
+
+    <!-- Brightness sliders -->
+    <string name="brightness_adjustment_sliders_title">Brightness adjustment</string>
+    <string name="brightness_adjustment_sliders_summary">Adjustment method: </string>
+    <string name="brightness_adjust_none">No sliders enabled</string>
+    <string name="brightness_adjust_gesture">Status bar swipe</string>
+    <string name="brightness_adjust_quicksettings">Quicksettings slider</string>
+
+    <!-- LCD Density -->
+    <string name="lcd_density_title">LCD Density</string>
+    <string name="lcd_density_summary">unknown</string>
+    <string name="default_lcd_density">The default density of this device is: </string>
+    <string name="current_lcd_density">"Current LCD Density: "</string>
+    <string name="lcd_density_wizard">LCD Density Wizard</string>
+    <string name="stock_density_title">Reset density to default</string>
+    <string name="stock_density_summary">"Reset the density to a default Android value"</string>
+    <string name="stock_density_changed_summary">"Density set to: "</string>
+    <string name="clear_market_data_title">Clear all relevant market data.</string>
+    <string name="clear_market_data_summary">If you\'ve run into compatibility issues: reset the market data</string>
+    <string name="clear_market_data_cleared">Data successfully cleared</string>
+    <string name="clear_market_data_donot_cleared">"Data couldn't be cleared, please clear it yourself!"</string>
+    <string name="if_your_a_moron_title">Warning:</string>
+    <string name="if_your_a_moron_summary">This feature is experimental and setting extreme values may cause layout issues. Do not report issues if you\'ve changed this setting.</string>
+    <string name="custom_density_title">Change the LCD density</string>
+    <string name="custom_density_summary_invalid">"INVALID DENSITY!"</string>
+    <string name="custom_density">custom</string>
+    <string name="set_custom_density_title">Set custom density</string>
+    <string name="set_custom_density_set">Set</string>
+    <string name="custom_density_dialog_title">WARNING!</string>
+    <string name="custom_density_dialog_summary">Changing your LCD density can cause unexpected app behavior. If you encounter market app incompatibility please return here and restart the process from step 1.</string>
+    <string name="custom_density_dialog_button_got">Got it!</string>
+    <string name="custom_density_dialog_button_reboot">Reboot now</string>
+    <string name="dpi">DPI</string>
+
+    <!-- Status bar greeting -->
+    <string name="status_bar_greeting_title">Status bar greeting</string>
+    <string name="status_bar_greeting_summary">Display a custom greeting in the status bar after unlocking the device</string>
+    <string name="status_bar_greeting_dialog">Set your greeting</string>
+
+    <!-- Shortcut picker -->
+    <string name="use_custom_app_title">Use custom application</string>
+    <string name="use_custom_app_summary">Use custom application instead of the recent applications dialog</string>
+    <string name="group_applications">Applications</string>
+    <string name="select_custom_app_title">Select custom application</string>
+
+    <!-- custom carrier text -->
+    <string name="custom_carrier_label_title">Custom carrier label</string>
+    <string name="custom_carrier_label_explain">Please enter a new label. Enter an empty label to revert to stock label.</string>
+    <string name="custom_carrier_label_notset">Custom label currently not set</string>
+
+    <!-- Custom navigation bar targets -->
+    <string name="choose_action_double_tap_title">Choose double tap action</string>
+    <string name="choose_action_title">Choose action</string>
+    <string name="choose_action_short_title">Choose short action</string>
+    <string name="choose_action_long_title">Choose long action</string>
+    <string name="action_long_save">set as long action</string>
+    <string name="action_short">Short action</string>
+    <string name="action_long">Long action</string>
+    <string name="action_double">Double tap action</string>
+    <string name="action_icon">Custom icon</string>
+    <string name="custom_app_icon_successfully">"'s icon set successfully!"</string>
+    <string name="add_button">Add button</string>
+    <string name="category_navbar">Navigation bar</string>
+    <string name="navbar_tab_arrange">Editor</string>
+    <string name="navbar_tab_settings">Settings</string>
+    <string name="change_layouts_title"> Layout </string>
+    <string name="change_layouts_dialog_title">Select a layout to edit</string>
+    <string name="alternate_key_layouts">Number of enabled layouts</string>
+    <string name="alternate_key_layouts_summary">Enable the layout changer keys and set the number of enabled layouts</string>
+    <string name="alternate_key_layouts_enabled_summary">navigation bar layouts are currently enabled</string>
+    <string name="alternate_key_layouts_enabled_partial_summary">out of 5</string>
+    <string name="alternate_key_layouts_all_enabled_summary">All 5 navigation bar layouts are currently enabled</string>
+    <string name="alternate_menu_summary">Allow legacy menu key to replace layout switch when requested</string>
+    <string name="layouts_dialog_title">Number of enabled layouts</string>
+    <string name="enable_sidekeys">Allow legacy menu keys</string>
+    <string name="enable_sidekeys_summary">Add a space to allow the side menu keys in the navigation bar.</string>
+    <string name="navigation_bar_height_text">Bar height in portrait</string>
+    <string name="navigation_bar_height_landscape_text">Bar height in landscape</string>
+    <string name="navigation_bar_width_text">Bar width in landscape</string>
+    <string name="enable_ime_layout">Extra IME buttons</string>
+    <string name="enable_ime_layout_summary">Include a switch that changes the layout to keyboard arrows and the AOSP keyboard switcher</string>
+    <string name="enable_ime_layout_disabled">Not enough room in the layout: enable additional layouts or legacy menu keys</string>
+    <string name="customize_ime_layout_dialog_title">Customize IME key layout</string>
+    <string name="ime_layout_ime">IME switcher</string>
+    <string name="ime_layout_home">home button</string>
+    <string name="ime_layout_blank">blank space before dpad keys</string>
+    <string name="editor_instructions">Rearrange by dragging by the handle on the right. Remove by swiping.</string>
+    <string name="save">Save</string>
+    <string name="navigation_bar_longpress_timeout_text">Button longpress delay</string>
+    <string name="enable_navigation_ring_title">Navigation search assistant</string>
+    <string name="enable_navigation_ring_summary">Enable long-press on home for the google now search assistant</string>
+    <string name="navbar_use_gallary_warning">Info: please select Gallery to save image</string>
+    <string name="navring_not_available">Install google now to enable navring</string>
+
+    <!-- Power menu enable disable -->
+    <string name="power_menu_settings">Power menu</string>
+    <string name="power_menu_reboot_title">Reboot menu</string>
+    <string name="power_menu_power_title">Power off</string>
+    <string name="power_menu_immersive_desktop">Immersive desktop</string>
+    <string name="power_menu_lockdown_title">Device lockdown</string>
+    <string name="power_menu_settings_title">Settings shortcut</string>
+    <string name="power_menu_screenshot_title">Screenshot shortcut</string>
+    <string name="power_menu_screenrecord_title">Screenrecord shortcut</string>
+    <string name="power_menu_bug_report_title">Bug report</string>
+    <string name="power_menu_profiles_title">Profile switcher</string>
+    <string name="power_menu_airplane_title">Airplane mode</string>
+    <string name="power_menu_users_title">User switcher</string>
+    <string name="power_menu_sound_title">Sound panel</string>
+    <string name="power_menu_bug_report_disabled">Bug reporting: enable option in development settings</string>
+    <string name="power_menu_immersive_disabled">Immersive mode: enable a style in interface settings</string>
+    <string name="power_menu_profiles_disabled">Profile switcher: system profiles are disabled</string>
+    <string name="expanded_desktop_style">Expanded desktop style</string>
+    <string name="expanded_desktop_disabled">Disabled</string>
+    <string name="expanded_desktop_status_bar">Status bar visible</string>
+    <string name="expanded_desktop_no_status_bar">Status bar hidden</string>
+    <string name="expanded_desktop_system_bars_visibility">Disable on lock screen</string>
+    <string name="expanded_desktop_system_bars_visibility_summary">Show status and navigation bar on lock screen during expanded desktop mode</string>
+    <string name="default_power_menu_options">Default options</string>
+    <string name="custom_power_menu_title">Custom options</string>
+
+    <!-- Old school longpress back to kill switch in dev settings -->
+    <string name="kill_app_navbar_summary">This device requires a navigation bar.  Set kill as a longpress target in navigation bar settings.</string>
+
+    <!-- Immersive Mode -->
+    <string name="power_menu_immersive_mode">Immersive mode</string>
+    <string name="power_menu_expanded_mode">Expanded desktop</string>
+    <string name="summary_immersive_mode">%1$s</string>
+    <string name="immersive_mode_hide_navbar">Hide the navbar only</string>
+    <string name="immersive_mode_hide_statusbar">Hide the statusbar only</string>
+    <string name="immersive_mode_hide_both">Hide the statusbar &amp; navbar</string>
+    <string name="immersive_mode_disabled">Disabled</string>
+    <string name="vanir_immersive_desktop">Immersive desktop</string>
+    <string name="immersive_mode_state">Enable</string>
+    <string name="immersive_mode_style">Immersive style</string>
+    <string name="expanded_desktop_title">Expanded desktop</string>
+    <string name="expanded_desktop_summary">Disable the immersive ui swipe gestures</string>
+    <string name="immersive_mode_lol_profile_title">Low profile mode</string>
+    <string name="immersive_mode_lol_on">Hide the statusbar and dim the navbar when applicable</string>
+    <string name="immersive_orientation_title">Orientation</string>
+    <string name="immersive_orientation_dialog_title">Select dependency:</string>
+    <string name="landscape_immersive">Landscape only</string>
+    <string name="portrait_immersive">Portrait only</string>
+    <string name="orientation_disabled">Default</string>
+
+    <!--Quick unlock -->
+    <string name="unlock_quick_unlock_control_title">Quick unlock</string>
+    <string name="unlock_quick_unlock_control_summary">Unlock automatically when the correct PIN/password is entered</string>
+
+    <!-- Lock Gesture settings -->
+    <!-- Security & location settings screen, setting option name -->
+    <string name="lockgesture_change_lock_pattern_label">Change unlock gesture</string>
+    <!-- Security & location settings screen, change unlock gesture screen instruction when the user chooses "Change unlock gesture".  We first ask the user toe nter the current pattern, and this is the message seen -->
+    <string name="lockgesture_change_lock_pin_label">Change unlock PIN</string>
+    <!-- Security & location settings screen, change unlock gesture screen instruction when the user chooses "Change unlock gesture".  We first ask the user toe nter the current pattern, and this is the message seen -->
+    <string name="lockgesture_need_to_unlock">Confirm saved gesture</string>
+    <!-- Do not translate. -->
+    <string name="lockgesture_need_to_unlock_footer" />
+    <!-- Security & location settings screen, change unlock gesture screen instruction if user draws incorrect pattern -->
+    <string name="lockgesture_need_to_unlock_wrong">Try again:</string>
+    <!-- Do not translate. -->
+    <string name="lockgesture_need_to_unlock_wrong_footer" />
+    <!-- Security & location settings screen, change unlock gesture screen instruction on top of screen.  This si when they are supposed to draw a new unlock pattern (for example, if they are changing their unlock patterns)..-->
+    <string name="lockgesture_recording_intro_header">Draw an unlock gesture:</string>
+    <!-- Security & location settings screen, change unlock gesture screen hint on bottom of screen.  We are telling them to press the menu button to see more options or help. -->
+    <string name="lockgesture_recording_intro_footer">Press Menu for help.</string>
+    <!-- Security & location settings screen, change unlock gesture screen instruction on top of screen while drawing pattern -->
+    <string name="lockgesture_recording_inprogress">Release finger when done.</string>
+    <!-- Security & location settings screen, change unlock gesture screen message on top of screen after drawing pattern -->
+    <string name="lockgesture_pattern_entered_header">Gesture recorded.</string>
+    <!-- Security & location settings screen, change unlock gesture screen instruction on top of screen to confirm pattern -->
+    <string name="lockgesture_need_to_confirm">Draw gesture again to confirm:</string>
+    <string name="lockgesture_pattern_confirmed_header">Your new unlock gesture:</string>
+    <!-- Security & location settings screen, change unlock gesture screen button, on bottom of screen.  After they draw a gesture and release their finger, we display the pattern so they remember.  When they are ready to draw it once again to confirm it, they press this button. -->
+    <string name="lockgesture_confirm_button_text">Confirm</string>
+    <!-- Security & location settings screen, change unlock gesture screen button, on bottom of screen.  After they draw a gesture and release their finger, we display the pattern so they remember.  If they are nto satisfied with this pattern, they click this button to redraw the pattern. -->
+    <string name="lockgesture_restart_button_text">Redraw</string>
+    <!-- Security & location settings screen, change unlock gesture screen button, on bottom of screen. If they are supposed to enter their current gesture before being able to draw another one, and they screw up, they hit this button to try again -->
+    <string name="lockgesture_retry_button_text">Retry</string>
+    <!-- Security & location settings screen, change unlock gesture screen button, on bottom of screen. Once they draw a new gesture and confirm it by drawing it again, they press this button to exit -->
+    <string name="lockgesture_continue_button_text">Continue</string>
+    <!-- Security & location settings screen, unlock screen activity title -->
+    <string name="lockgesture_settings_title">Unlock gesture</string>
+    <!-- Security & location settings screen, setting check box title if the unlock pattern MUST be drawn everytime they turn on the screen -->
+    <string name="lockgesture_settings_enable_title">Require gesture</string>
+    <!-- Security & location settings screen, setting summary for the checkbox "Require pattern" -->
+    <string name="lockgesture_settings_enable_summary">Must draw gesture to unlock screen</string>
+    <!-- Security & location settings screen, setting check box title. This setting controls whether a visible gesture is drawn as the user moves his finger around while drawing the unlock pattern.  If checked, this line is drawn.  If unchecked, there is nothing drawn so the user does not reveal his pattern while he unlocks the phone.-->
+    <string name="lockgesture_settings_enable_visible_pattern_title">Make gesture visible</string>
+    <!-- Security & location settings screen, setting check box title. This controls whether the device locks immediately when the power button is pressed. [CHAR LIMIT=28]-->
+    <string name="lockgesture_settings_enable_power_button_instantly_locks">Power button instantly locks</string>
+    <!-- Security & location settings screen, setting option name when user has never set an unlock gesture -->
+    <string name="lockgesture_settings_choose_lock_pattern">Set unlock gesture</string>
+    <!-- Security & location settings screen, setting option name when user has previously set an unlock gesture and wants to change to a new pattern -->
+    <string name="lockgesture_settings_change_lock_pattern">Change unlock gesture</string>
+    <!-- Security & location settings screen, the help instructions (an animation) caption -->
+    <string name="lockgesture_settings_help_how_to_record">How to draw an unlock gesture</string>
+    <!-- Security & location settings screen, change unlock gesture screen instruction on top of screen after too many incorrect attempts -->
+    <string name="lockgesture_too_many_failed_confirmation_attempts_header">Too many incorrect attempts!</string>
+    <!-- Security & location settings screen, change unlock gesture screen countdown hint on bottom of screen after too many incorrect attempts -->
+    <string name="lockgesture_too_many_failed_confirmation_attempts_footer">Try again in <xliff:g id="number">%d</xliff:g> seconds.</string>
+    <!-- Toast shown if setting gesture was successful -->
+    <string name="lockpassword_gesture_set_toast">Gesture has been set</string>
+    <!-- Header on gesture confirm screen [CHAR LIMIT=30] -->
+    <string name="lockpassword_confirm_your_gesture_header">Confirm your gesture</string>
+    <!-- Header on first screen of choose gesture flow [CHAR LIMIT=30] -->
+    <string name="lockpassword_choose_your_gesture_header">Draw your gesture</string>
+
+    <!-- Title for preference that guides the user through creating an unlock gesture [CHAR LIMIT=22] -->
+    <string name="unlock_set_unlock_gesture_title">Gesture</string>
+    <!-- Title for preference that guides the user through creating an unlock gesture [CHAR LIMIT=45] -->
+    <string name="unlock_set_unlock_gesture_summary">Low security, experimental</string>
+
+    <!-- Summary for "Configure lockscreen" when security gesture is enabled [CHAR LIMIT=45] -->
+    <string name="unlock_set_unlock_mode_gesture">Gesture</string>
+
+    <!-- Lock Gesture settings -->
+    <!-- Security & location settings screen, setting option name -->
+    <string name="lockgesture_change_lock_pattern_label">Change unlock gesture</string>
+    <!-- Security & location settings screen, change unlock gesture screen instruction when the user chooses "Change unlock gesture".  We first ask the user toe nter the current pattern, and this is the message seen -->
+    <string name="lockgesture_change_lock_pin_label">Change unlock PIN</string>
+    <!-- Security & location settings screen, change unlock gesture screen instruction when the user chooses "Change unlock gesture".  We first ask the user toe nter the current pattern, and this is the message seen -->
+    <string name="lockgesture_need_to_unlock">Confirm saved gesture</string>
+    <!-- Do not translate. -->
+    <string name="lockgesture_need_to_unlock_footer" />
+    <!-- Security & location settings screen, change unlock gesture screen instruction if user draws incorrect pattern -->
+    <string name="lockgesture_need_to_unlock_wrong">Try again:</string>
+    <!-- Do not translate. -->
+    <string name="lockgesture_need_to_unlock_wrong_footer" />
+    <!-- Security & location settings screen, change unlock gesture screen instruction on top of screen.  This si when they are supposed to draw a new unlock pattern (for example, if they are changing their unlock patterns)..-->
+    <string name="lockgesture_recording_intro_header">Draw an unlock gesture:</string>
+    <!-- Security & location settings screen, change unlock gesture screen hint on bottom of screen.  We are telling them to press the menu button to see more options or help. -->
+    <string name="lockgesture_recording_intro_footer">Press Menu for help.</string>
+    <!-- Security & location settings screen, change unlock gesture screen instruction on top of screen while drawing pattern -->
+    <string name="lockgesture_recording_inprogress">Release finger when done.</string>
+    <!-- Security & location settings screen, change unlock gesture screen message on top of screen after drawing pattern -->
+    <string name="lockgesture_pattern_entered_header">Gesture recorded.</string>
+    <!-- Security & location settings screen, change unlock gesture screen instruction on top of screen to confirm pattern -->
+    <string name="lockgesture_need_to_confirm">Draw gesture again to confirm:</string>
+    <string name="lockgesture_pattern_confirmed_header">Your new unlock gesture:</string>
+    <!-- Security & location settings screen, change unlock gesture screen button, on bottom of screen.  After they draw a gesture and release their finger, we display the pattern so they remember.  When they are ready to draw it once again to confirm it, they press this button. -->
+    <string name="lockgesture_confirm_button_text">Confirm</string>
+    <!-- Security & location settings screen, change unlock gesture screen button, on bottom of screen.  After they draw a gesture and release their finger, we display the pattern so they remember.  If they are nto satisfied with this pattern, they click this button to redraw the pattern. -->
+    <string name="lockgesture_restart_button_text">Redraw</string>
+    <!-- Security & location settings screen, change unlock gesture screen button, on bottom of screen. If they are supposed to enter their current gesture before being able to draw another one, and they screw up, they hit this button to try again -->
+    <string name="lockgesture_retry_button_text">Retry</string>
+    <!-- Security & location settings screen, change unlock gesture screen button, on bottom of screen. Once they draw a new gesture and confirm it by drawing it again, they press this button to exit -->
+    <string name="lockgesture_continue_button_text">Continue</string>
+    <!-- Security & location settings screen, unlock screen activity title -->
+    <string name="lockgesture_settings_title">Unlock gesture</string>
+    <!-- Security & location settings screen, setting check box title if the unlock pattern MUST be drawn everytime they turn on the screen -->
+    <string name="lockgesture_settings_enable_title">Require gesture</string>
+    <!-- Security & location settings screen, setting summary for the checkbox "Require pattern" -->
+    <string name="lockgesture_settings_enable_summary">Must draw gesture to unlock screen</string>
+   <!-- Security & location settings screen, setting check box title. This setting controls whether a visible gesture is drawn as the user moves his finger around while drawing the unlock pattern.  If checked, this line is drawn.  If unchecked, there is nothing drawn so the user does not reveal his pattern while he unlocks the phone.-->
+    <string name="lockgesture_settings_enable_visible_pattern_title">Make gesture visible</string>
+    <!-- Security & location settings screen, setting check box title. This controls whether the device locks immediately when the power button is pressed. [CHAR LIMIT=28]-->
+    <string name="lockgesture_settings_enable_power_button_instantly_locks">Power button instantly locks</string>
+    <!-- Security & location settings screen, setting option name when user has never set an unlock gesture -->
+    <string name="lockgesture_settings_choose_lock_pattern">Set unlock gesture</string>
+    <!-- Security & location settings screen, setting option name when user has previously set an unlock gesture and wants to change to a new pattern -->
+    <string name="lockgesture_settings_change_lock_pattern">Change unlock gesture</string>
+    <!-- Security & location settings screen, the help instructions (an animation) caption -->
+    <string name="lockgesture_settings_help_how_to_record">How to draw an unlock gesture</string>
+    <!-- Security & location settings screen, change unlock gesture screen instruction on top of screen after too many incorrect attempts -->
+    <string name="lockgesture_too_many_failed_confirmation_attempts_header">Too many incorrect attempts!</string>
+    <!-- Security & location settings screen, change unlock gesture screen countdown hint on bottom of screen after too many incorrect attempts -->
+    <string name="lockgesture_too_many_failed_confirmation_attempts_footer">Try again in <xliff:g id="number">%d</xliff:g> seconds.</string>
+    <!-- Toast shown if setting gesture was successful -->
+    <string name="lockpassword_gesture_set_toast">Gesture has been set</string>
+    <!-- Header on gesture confirm screen [CHAR LIMIT=30] -->
+    <string name="lockpassword_confirm_your_gesture_header">Confirm your gesture</string>
+    <!-- Header on first screen of choose gesture flow [CHAR LIMIT=30] -->
+    <string name="lockpassword_choose_your_gesture_header">Draw your gesture</string>
+
+    <!-- Hardware settings -->
+    <string name="performance_settings_title">Kernel performance</string>
+    <string name="button_settings_title">Button action rebinding</string>
+    <string name="button_navigation_title">Button action rebinding</string>
+    <string name="button_settings">General button options</string>
+    <string name="fast_charge_title">USB fast charge</string>
+    <string name="fast_charge_summary">Draw more current to charge faster. Warning: this may damage the device.</string>
+    <string name="supported_hardware_preferences">Supported hardware options</string>
+    <string name="button_power_key_title">Power button</string>
+    <string name="swap_volume_buttons_title">Reorient</string>
+    <string name="volume_wake_summary">Pressing either volume button will wake your device</string>
+    <string name="swap_volume_buttons_title">Reorient</string>
+    <string name="swap_volume_buttons_summary">Swap volume buttons when the screen is rotated</string>
+    <string name="headset_category_title">Headset controls</string>
+    <string name="headset_connect_player_title">Launch music app</string>
+    <string name="headset_connect_player_summary">Launch the default music app when headset is connected</string>
+    <string name="button_headsethook_title">Headset in-line button</string>
+    <string name="button_headsethook_launch_voice_title">Voice controls</string>
+    <string name="button_headsethook_launch_voice_unchecked_summary">Headset button only plays/pauses media</string>
+    <string name="button_headsethook_launch_voice_checked_summary">Launches voice search/dialer with long press. Controls media with short press.</string>
+
+    <!-- Title for preference that guides the user through creating an unlock gesture [CHAR LIMIT=22] -->
+    <string name="unlock_set_unlock_gesture_title">Gesture</string>
+    <!-- Title for preference that guides the user through creating an unlock gesture [CHAR LIMIT=45] -->
+    <string name="unlock_set_unlock_gesture_summary">Low security, experimental</string>
+
+    <!-- Summary for "Configure lockscreen" when security gesture is enabled [CHAR LIMIT=45] -->
+    <string name="unlock_set_unlock_mode_gesture">Gesture</string>
+
+    <!-- CLOCK -->
+    <string name="status_bar_clock_title">Clock style</string>
+    <string name="status_bar_am_pm_title">AM/PM style</string>
+    <string name="status_bar_am_pm_info">24-hour clock is enabled</string>
+    <string name="right_clock">Right position</string>
+    <string name="left_clock">Left position</string>
+    <string name="center_clock">Center position</string>
+    <string name="no_clock">Hidden</string>
+
+    <!-- Screen recorder -->
+    <string name="screen_recorder_title">Screen recorder</string>
+    <string name="screen_recorder_summary">Adjust screen recorder video settings</string>
+    <string name="screen_recorder_dialog_message">Would you like to start recording now?</string>
+    <string name="screen_recorder_video_dimensions_title">Video size</string>
+    <string name="screen_recorder_video_bitrate_title">Bitrate</string>
+    <!-- video sizes -->
+    <string name="screen_recorder_size_240x400">240x400</string>
+    <string name="screen_recorder_size_360x640">360x640</string>
+    <string name="screen_recorder_size_480x800">480x800</string>
+    <string name="screen_recorder_size_480x854">480x854</string>
+    <string name="screen_recorder_size_540x960">540x960</string>
+    <string name="screen_recorder_size_600x1024">600x1024</string>
+    <string name="screen_recorder_size_720x1280">720x1280</string>
+    <!-- frame rates -->
+    <string name="screen_recorder_bitrate_title_100000">100 kB/s</string>
+    <string name="screen_recorder_bitrate_title_250000">250 kB/s</string>
+    <string name="screen_recorder_bitrate_title_500000">500 kB/s</string>
+    <string name="screen_recorder_bitrate_title_1000000">1 MB/s</string>
+    <string name="screen_recorder_bitrate_title_2000000">2 MB/s</string>
+    <string name="screen_recorder_bitrate_title_3000000">3 MB/s</string>
+    <string name="screen_recorder_bitrate_title_4000000">4 MB/s</string>
+    <string name="screen_recorder_bitrate_title_5000000">5 MB/s</string>
+    <string name="screen_recorder_bitrate_title_10000000">10 MB/s</string>
+    <string name="screen_recorder_bitrate_title_20000000">20 MB/s</string>
+    <string name="screen_recorder_bitrate_100000">100000</string>
+    <string name="screen_recorder_bitrate_250000">250000</string>
+    <string name="screen_recorder_bitrate_500000">500000</string>
+    <string name="screen_recorder_bitrate_1000000">1000000</string>
+    <string name="screen_recorder_bitrate_2000000">2000000</string>
+    <string name="screen_recorder_bitrate_3000000">3000000</string>
+    <string name="screen_recorder_bitrate_4000000">4000000</string>
+    <string name="screen_recorder_bitrate_5000000">5000000</string>
+    <string name="screen_recorder_bitrate_10000000">10000000</string>
+    <string name="screen_recorder_bitrate_20000000">20000000</string>
+    <string name="screen_recorder_record_audio_title">External audio</string>
+    <string name="screen_recorder_record_audio_summary">Record audio from the microphone</string>
+
+    <!-- SuperSU -->
+    <string name="supersu_title">SuperSU</string>
+
+</resources>
