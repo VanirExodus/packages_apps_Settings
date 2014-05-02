@@ -14,6 +14,9 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
+    <!-- Generic strings -->
+    <string name="ok">OK</string>
+
     <!-- Vanir menus -->
     <string name="voodoo_title">Exodus</string>
     <string name="vanir_settings_title">Interface</string>
