@@ -119,6 +119,12 @@
                 android:title="@string/wifi_display_settings_title"
                 settings:keywords="@string/keywords_display_cast_screen"
                 android:fragment="com.android.settings.wfd.WifiDisplaySettings" />
+    
+        <!-- Smart cover -->
+        <PreferenceScreen
+                android:key="smart_cover"
+                android:title="@string/smart_cover_title"
+                android:fragment="com.android.settings.exodus.SmartCoverSettings" />
     </PreferenceCategory>
 
     <PreferenceCategory
