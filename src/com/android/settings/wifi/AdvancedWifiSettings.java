@@ -58,6 +58,7 @@ public class AdvancedWifiSettings extends SettingsPreferenceFragment
     private static final String KEY_CURRENT_IP_ADDRESS = "current_ip_address";
     private static final String KEY_FREQUENCY_BAND = "frequency_band";
     private static final String KEY_NOTIFY_OPEN_NETWORKS = "notify_open_networks";
+    private static final String KEY_NOTIFY_CHANGED_NETWORKS = "notify_changed_networks";
     private static final String KEY_SLEEP_POLICY = "sleep_policy";
     private static final String KEY_POOR_NETWORK_DETECTION = "wifi_poor_network_detection";
     private static final String KEY_SCAN_ALWAYS_AVAILABLE = "wifi_scan_always_available";
@@ -68,6 +69,7 @@ public class AdvancedWifiSettings extends SettingsPreferenceFragment
     private static final String KEY_WPS_PIN = "wps_pin_entry";
 
     private WifiManager mWifiManager;
+
     private NetworkScoreManager mNetworkScoreManager;
     private static final int WPS_PBC_DIALOG_ID = 1;
     private static final int WPS_PIN_DIALOG_ID = 2;
@@ -84,6 +86,8 @@ public class AdvancedWifiSettings extends SettingsPreferenceFragment
             }
         }
     };
+
+    private ListPreference mNotifyChangedNetwork;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -149,6 +153,15 @@ public class AdvancedWifiSettings extends SettingsPreferenceFragment
 
         SwitchPreference scanAlwaysAvailable =
             (SwitchPreference) findPreference(KEY_SCAN_ALWAYS_AVAILABLE);
+
+        mNotifyChangedNetwork = (ListPreference) findPreference(KEY_NOTIFY_CHANGED_NETWORKS);
+        int notifyValue = Settings.Exodus.getInt(getContentResolver(),
+                    Settings.Exodus.WIFI_NETWORK_NOTIFICATIONS, 3);
+        mNotifyChangedNetwork.setValueIndex(notifyValue);
+        mNotifyChangedNetwork.setSummary(mNotifyChangedNetwork.getEntries()[notifyValue]);
+        mNotifyChangedNetwork.setOnPreferenceChangeListener(this);
+        mNotifyChangedNetwork.setEnabled(mWifiManager.isWifiEnabled());
+
         scanAlwaysAvailable.setChecked(Global.getInt(getContentResolver(),
                     Global.WIFI_SCAN_ALWAYS_AVAILABLE, 0) == 1);
 
@@ -289,6 +302,15 @@ public class AdvancedWifiSettings extends SettingsPreferenceFragment
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         final Context context = getActivity();
         String key = preference.getKey();
+
+        if (KEY_NOTIFY_CHANGED_NETWORKS.equals(key)) {
+            int notifyValue = Integer.valueOf((String) newValue);
+            int index = mNotifyChangedNetwork.findIndexOfValue((String) newValue);
+            Settings.Exodus.putInt(getContentResolver(), Settings.Exodus.WIFI_NETWORK_NOTIFICATIONS,
+                    notifyValue);
+            mNotifyChangedNetwork.setSummary(mNotifyChangedNetwork.getEntries()[index]);
+            getActivity().sendBroadcast(new Intent("exodus.UPDATE_WIFI_NOTIFICATION_PREFERENCE"));
+        }
 
         if (KEY_FREQUENCY_BAND.equals(key)) {
             try {
