@@ -38,6 +38,15 @@
                     android:targetClass="com.android.settings.deviceinfo.Status" />
         </PreferenceScreen>
 
+        <!-- Extra Info -->
+        <PreferenceScreen android:key="extrainfo"
+                android:title="@string/extrainfo"
+                android:summary="@string/extrainfo_summary">
+            <intent android:action="android.intent.action.MAIN"
+                    android:targetPackage="com.android.settings"
+                    android:targetClass="com.android.settings.vanir.extrainfo.MainActivity" />
+        </PreferenceScreen>
+
         <!-- Contributors -->
         <!--
         <PreferenceScreen

@@ -2245,6 +2245,18 @@
                 android:resource="@id/sim_settings" />
         </activity>
 
+        <!-- Start of Exodus activities -->
+
+        <!-- Extra info -->
+        <activity android:name="com.android.settings.vanir.extrainfo.MainActivity"
+                  android:theme="@android:style/Theme.Material.Light.Dialog.NoActionBar.MinWidth">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+
+        <!-- End of Exodus activities -->
+
         <provider
             android:name=".search.SettingsSearchIndexablesProvider"
             android:authorities="com.android.settings"

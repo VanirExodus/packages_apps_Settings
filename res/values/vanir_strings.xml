@@ -543,4 +543,8 @@
     <string name="lockscreen_disable_power_menu_title">Disable power menu on lock screen</string>
     <string name="lockscreen_disable_power_menu_summary">Disable access to power menu on secure lock screens</string>
 
+    <!-- Extra Info -->
+    <string name="extrainfo">Extra information</string>
+    <string name="extrainfo_summary">Display extra info for cpu, display, etc</string>
+
 </resources>
