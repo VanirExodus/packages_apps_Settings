@@ -41,6 +41,11 @@
 
     <PreferenceCategory
         android:title="@string/general" />
+        
+        <PreferenceScreen
+            android:id="@+id/advanced_settings"
+            android:title="@string/hfm_disable_ads_title"
+            android:fragment="com.android.settings.liquid.hfm.HfmSettings" />
 
         <PreferenceScreen
             android:id="@+id/notification_drawer_settings"
