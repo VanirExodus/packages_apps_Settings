@@ -67,6 +67,12 @@ public class BootReceiver extends BroadcastReceiver {
             } else {
                 SystemProperties.set(IOSCHED_SETTINGS_PROP, "false");
             }
+
+            // Stash ad blocker restore here for now
+            Intent serv = new Intent(context, CheckHosts.class);
+            serv.setAction(intent.getAction());
+            serv.putExtras(intent);
+            context.startService(serv);
         }
 
         /* Restore the hardware tunable values */
