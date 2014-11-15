@@ -51,6 +51,13 @@
             android:switchTextOn=""
             android:persistent="false" />
 
+    <SwitchPreference
+        android:key="safe_headset_volume"
+        android:title="@string/safe_headset_volume_title"
+        android:summary="@string/safe_headset_volume_summary"
+        android:persistent="false"
+        android:defaultValue="true" />
+
     <!-- Touch sounds -->
     <SwitchPreference
             android:key="touch_sounds"
