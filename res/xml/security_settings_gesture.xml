@@ -44,6 +44,18 @@
             android:key="power_button_instantly_locks"
             android:title="@string/lockgesture_settings_enable_power_button_instantly_locks"/>
 
+        <com.android.settings.cyanogenmod.SystemSettingSwitchPreference
+            android:key="lockscreen_enable_power_menu"
+            android:title="@string/lockscreen_enable_power_menu_title"
+            android:summary="@string/lockscreen_enable_power_menu_summary"
+            android:defaultValue="true" />
+
+        <SwitchPreference
+            android:key="block_on_secure_keyguard"
+            android:title="@string/block_on_secure_keyguard_title"
+            android:summary="@string/block_on_secure_keyguard_summary"
+            android:persistent="false" />
+
         <PreferenceScreen
             android:fragment="com.android.settings.OwnerInfoSettings"
             android:key="owner_info_settings"
