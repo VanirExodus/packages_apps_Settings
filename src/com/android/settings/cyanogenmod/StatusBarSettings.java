@@ -25,6 +25,7 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceScreen;
+import android.preference.SwitchPreference;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
 import android.text.Spannable;
@@ -34,11 +35,14 @@ import android.widget.EditText;
 
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
+import com.android.settings.Utils;
 
 public class StatusBarSettings extends SettingsPreferenceFragment
         implements OnPreferenceChangeListener {
 
     private static final String TAG = "StatusBar";
+
+    // Statusbar general category
 
     private static final String STATUS_BAR_BATTERY_STYLE = "status_bar_battery_style";
     private static final String STATUS_BAR_SHOW_BATTERY_PERCENT = "status_bar_show_battery_percent";
@@ -151,14 +155,15 @@ public class StatusBarSettings extends SettingsPreferenceFragment
 
     @Override
     public void onResume() {
-		super.onResume();
+        super.onResume();
         // Adjust clock position for RTL if necessary
-		Configuration config = getResources().getConfiguration();
-		if (config.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL) {
-		    mStatusBarClock.setEntries(getActivity().getResources().getStringArray(R.array.status_bar_clock_style_entries_rtl));
-			mStatusBarClock.setSummary(mStatusBarClock.getEntry());
-		}
-	}
+        Configuration config = getResources().getConfiguration();
+        if (config.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL) {
+            mStatusBarClock.setEntries(getActivity().getResources().getStringArray(R.array.status_bar_clock_style_entries_rtl));
+            mStatusBarClock.setSummary(mStatusBarClock.getEntry());
+        }
+    }
+    }
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
