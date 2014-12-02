@@ -52,6 +52,18 @@
             android:title="@string/lockpattern_settings_enable_power_button_instantly_locks"/>
 
         <SwitchPreference
+            android:key="lockscreen_disable_quick_settings"
+            android:title="@string/lockscreen_disable_quick_settings_title"
+            android:summary="@string/lockscreen_disable_quick_settings_summary"
+            android:persistent="false" />
+
+        <com.android.settings.cyanogenmod.SystemSettingSwitchPreference
+            android:key="lockscreen_disable_power_menu"
+            android:title="@string/lockscreen_disable_power_menu_title"
+            android:summary="@string/lockscreen_disable_power_menu_summary"
+            android:defaultValue="true" />
+
+        <SwitchPreference
             android:key="quick_unlock_control"
             android:title="@string/unlock_quick_unlock_control_title"
             android:summary="@string/unlock_quick_unlock_control_summary"
@@ -65,4 +77,4 @@
 
     </PreferenceCategory>
 
-</PreferenceScreen>
+</Preferenc Screen>
