@@ -25,6 +25,7 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceScreen;
+import android.preference.SwitchPreference;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
 import android.text.Spannable;
@@ -32,17 +33,22 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 
+import com.android.internal.widget.LockPatternUtils;
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
+import com.android.settings.Utils;
 
 public class StatusBarSettings extends SettingsPreferenceFragment
         implements OnPreferenceChangeListener {
 
     private static final String TAG = "StatusBar";
 
+    // Statusbar general category
+
     private static final String STATUS_BAR_BATTERY_STYLE = "status_bar_battery_style";
     private static final String STATUS_BAR_SHOW_BATTERY_PERCENT = "status_bar_show_battery_percent";
     private static final String KEY_STATUS_BAR_GREETING = "status_bar_greeting";
+    private static final String PREF_BLOCK_ON_SECURE_KEYGUARD = "block_on_secure_keyguard";
 
     private static final int STATUS_BAR_BATTERY_STYLE_HIDDEN = 4;
     private static final int STATUS_BAR_BATTERY_STYLE_TEXT = 6;
@@ -56,6 +62,7 @@ public class StatusBarSettings extends SettingsPreferenceFragment
     private ListPreference mStatusBarAmPm;
     private ListPreference mStatusBarClock;
     private CheckBoxPreference mStatusBarGreeting;
+    SwitchPreference mBlockOnSecureKeyguard;
 
     private String mCustomGreetingText = "";
 
@@ -63,6 +70,16 @@ public class StatusBarSettings extends SettingsPreferenceFragment
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         addPreferencesFromResource(R.xml.status_bar_settings);
+
+        final LockPatternUtils lockPatternUtils = new LockPatternUtils(getActivity());
+        mBlockOnSecureKeyguard = (SwitchPreference) findPreference(PREF_BLOCK_ON_SECURE_KEYGUARD);
+        if (lockPatternUtils.isSecure()) {
+            mBlockOnSecureKeyguard.setChecked(Settings.Secure.getInt(getContentResolver(),
+                    Settings.Secure.STATUS_BAR_LOCKED_ON_SECURE_KEYGUARD, 1) == 1);
+            mBlockOnSecureKeyguard.setOnPreferenceChangeListener(this);
+        } else {
+            prefs.removePreference(mBlockOnSecureKeyguard);
+        }
 
         ContentResolver resolver = getActivity().getContentResolver();
 
@@ -151,14 +168,15 @@ public class StatusBarSettings extends SettingsPreferenceFragment
 
     @Override
     public void onResume() {
-		super.onResume();
+        super.onResume();
         // Adjust clock position for RTL if necessary
-		Configuration config = getResources().getConfiguration();
-		if (config.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL) {
-		    mStatusBarClock.setEntries(getActivity().getResources().getStringArray(R.array.status_bar_clock_style_entries_rtl));
-			mStatusBarClock.setSummary(mStatusBarClock.getEntry());
-		}
-	}
+        Configuration config = getResources().getConfiguration();
+        if (config.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL) {
+            mStatusBarClock.setEntries(getActivity().getResources().getStringArray(R.array.status_bar_clock_style_entries_rtl));
+            mStatusBarClock.setSummary(mStatusBarClock.getEntry());
+        }
+    }
+    }
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -192,6 +210,12 @@ public class StatusBarSettings extends SettingsPreferenceFragment
             Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
                     STATUS_BAR_CLOCK, clockStyle);
             mStatusBarClock.setSummary(mStatusBarClock.getEntries()[index]);
+            return true;
+        }
+        } else if (preference == mBlockOnSecureKeyguard) {
+            Settings.Secure.putInt(
+                resolver, Settings.Secure.STATUS_BAR_LOCKED_ON_SECURE_KEYGUARD,
+                (Boolean) newValue ? 1 : 0);
             return true;
         }
         return false;
