@@ -258,7 +258,7 @@ public class ShortcutPickHelper {
                 convertView.setPadding(groupPadding, 0, 0, 0);
             }
             TextView textView = (TextView)convertView.findViewById(android.R.id.text1);
-            textView.setText(getGroup(groupPosition).label);
+            textView.setText(getGroup(groupPosition).label.toString());
             return convertView;
         }
 
