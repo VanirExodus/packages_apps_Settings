@@ -24,6 +24,14 @@
             android:title="@string/battery_saver_turn_on_automatically_title"
             android:persistent="false" />
 
+    <!-- Warning Color -->
+    <ColorListPreference
+            android:key="batery_saver_warning_style"
+            android:title="@string/battery_saver_warning_style_title"
+            android:dialogTitle="@string/battery_saver_warning_style_title"
+            android:entries="@array/battery_saver_warning_style_entries"
+            android:entryValues="@array/battery_saver_warning_style_values" />
+
     <!-- Feature description text -->
     <Preference
             android:key="description"

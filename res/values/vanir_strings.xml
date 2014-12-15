@@ -413,6 +413,10 @@
     <string name="recents_show_membar_title">Memory bar</string>
     <string name="recents_show_membar_summary">Show a bar with the device\'s available memory</string>
 
+    <!-- Battery Saver: Warning Color -->
+    <string name="battery_saver_warning_style_title">Warning color</string>
+    <string name="battery_saver_color_reset_message">Reset battery saver warning color?</string>
+
     <!-- Screen recorder -->
     <string name="screen_recorder_title">Screen recorder</string>
     <string name="screen_recorder_summary">Adjust screen recorder video settings</string>
