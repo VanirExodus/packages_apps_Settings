@@ -35,6 +35,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.PowerManager;
+import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.provider.Settings;
@@ -63,7 +64,8 @@ public class BatterySaverSettings extends SettingsPreferenceFragment
     private static final int MENU_RESET = Menu.FIRST;
     private static final int DLG_RESET = 0;
 
-    private static final String PREF_COLOR_PICKER = "battery_saver_color";
+    private static final String PREF_WARNING_STYLE = "batery_saver_warning_style";
+    private static final String PREF_CUSTOM_WARNING_COLOR = "battery_saver_custom_color";
 
     private final Handler mHandler = new Handler();
     private final SettingsObserver mSettingsObserver = new SettingsObserver(mHandler);
@@ -74,7 +76,8 @@ public class BatterySaverSettings extends SettingsPreferenceFragment
     private SettingPref mTriggerPref;
     private SwitchBar mSwitchBar;
     private Switch mSwitch;
-    private ColorPickerPreference mColorPicker;
+    private ListPreference mWarningColorStyle;
+    private ColorPickerPreference mCustomWarningColor;
     private boolean mValidListener;
     private PowerManager mPowerManager;
 
@@ -106,36 +109,85 @@ public class BatterySaverSettings extends SettingsPreferenceFragment
 
         mPowerManager = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
 
-        mColorPicker = (ColorPickerPreference) findPreference(PREF_COLOR_PICKER);
-        mColorPicker.setOnPreferenceChangeListener(this);
-        initColorPicker();
+        mWarningColorStyle = (ListPreference) findPreference(PREF_WARNING_STYLE);
+        mWarningColorStyle.setOnPreferenceChangeListener(this);
+
+        mCustomWarningColor = (ColorPickerPreference) findPreference(PREF_CUSTOM_WARNING_COLOR);
+        mCustomWarningColor.setOnPreferenceChangeListener(this);
+
+        initWarningColor();
 
         setHasOptionsMenu(true);
     }
 
-    private void initColorPicker() {
-        int intColor = Settings.System.getInt(getActivity().getContentResolver(),
-                    Settings.System.BATTERY_SAVER_MODE_COLOR, -2);
-        if (intColor == -2) {
-            intColor = getResources().getColor(
-                    com.android.internal.R.color.battery_saver_mode_color);
-            mColorPicker.setSummary(getResources().getString(R.string.default_string));
-        } else {
-            String hexColor = String.format("#%08x", (0xffffffff & intColor));
-            mColorPicker.setSummary(hexColor);
-        }
-        mColorPicker.setNewPreviewColor(intColor);
+    private void initWarningColor() {
+        ContentResolver resolver = getActivity().getContentResolver();
 
+        int batterySaverWarningColorStyle = Settings.System.getInt(resolver,
+                 Settings.System.BATTERY_SAVER_MODE_COLOR_STYLE, 0);
+        mWarningColorStyle.setValue(String.valueOf(batterySaverWarningColorStyle));
+        mWarningColorStyle.setSummary(mWarningColorStyle.getEntry());
+
+        if (Integer.parseInt(mWarningColorStyle.getValue()) == 0) {
+            int intColor = getResources().getColor( com.android.internal.R.color.battery_saver_mode_color);
+            mCustomWarningColor.setNewPreviewColor(intColor);
+            mCustomWarningColor.setSummary(getResources().getString(R.string.default_string));
+            mCustomWarningColor.setEnabled(false);
+        } else if (Integer.parseInt(mWarningColorStyle.getValue()) == 1) {
+            int intColor = Settings.System.getInt(resolver,
+                    Settings.System.BATTERY_SAVER_MODE_CUSTOM_COLOR, -2);
+            if (intColor == -2) {
+                intColor = getResources().getColor(
+                        com.android.internal.R.color.battery_saver_mode_color);
+                mCustomWarningColor.setSummary(getResources().getString(R.string.default_string));
+            } else {
+                String hexColor = String.format("#%08x", (0xffffffff & intColor));
+                mCustomWarningColor.setSummary(hexColor);
+            }
+            mCustomWarningColor.setNewPreviewColor(intColor);
+            mCustomWarningColor.setEnabled(true);
+        } else {
+            mCustomWarningColor.setNewPreviewColor(16777215);
+            mCustomWarningColor.setSummary(getResources().getString(R.string.empty_string));
+            mCustomWarningColor.setEnabled(false);
+        }
     }
 
     public boolean onPreferenceChange(Preference preference, Object newValue) {
-        if (preference == mColorPicker) {
+        ContentResolver resolver = getActivity().getContentResolver();
+
+        if (preference == mWarningColorStyle) {
+            int warningStyle = Integer.parseInt((String) newValue);
+            Settings.System.putInt(resolver, Settings.System.BATTERY_SAVER_MODE_COLOR_STYLE, warningStyle);
+
+            if (warningStyle == 0) {
+                int intColor = getResources().getColor( com.android.internal.R.color.battery_saver_mode_color);
+                mCustomWarningColor.setNewPreviewColor(intColor);
+                mCustomWarningColor.setSummary(getResources().getString(R.string.default_string));
+                mCustomWarningColor.setEnabled(false);
+            } else if (warningStyle == 1) {
+                int intColor = Settings.System.getInt(resolver,
+                        Settings.System.BATTERY_SAVER_MODE_CUSTOM_COLOR, -2);
+                String hexColor = String.format("#%08x", (0xffffffff & intColor));
+                mCustomWarningColor.setNewPreviewColor(intColor);
+                mCustomWarningColor.setSummary(hexColor);
+                mCustomWarningColor.setEnabled(true);
+            } else {
+                mCustomWarningColor.setNewPreviewColor(16777215);
+                mCustomWarningColor.setSummary(getResources().getString(R.string.empty_string));
+                mCustomWarningColor.setEnabled(false);
+            }
+
+            int index = mWarningColorStyle.findIndexOfValue((String) newValue);
+            mWarningColorStyle.setSummary(mWarningColorStyle.getEntries()[index]);
+
+            return true;
+        } else if (preference == mCustomWarningColor) {
             String hex = ColorPickerPreference.convertToARGB(Integer.valueOf(String
                     .valueOf(newValue)));
             preference.setSummary(hex);
             int intHex = ColorPickerPreference.convertToColorInt(hex);
-            Settings.System.putInt(getActivity().getContentResolver(),
-                    Settings.System.BATTERY_SAVER_MODE_COLOR, intHex);
+            Settings.System.putInt(resolver, Settings.System.BATTERY_SAVER_MODE_CUSTOM_COLOR, intHex);
             return true;
         }
         return false;
@@ -268,14 +320,16 @@ public class BatterySaverSettings extends SettingsPreferenceFragment
                 case DLG_RESET:
                     return new AlertDialog.Builder(getActivity())
                     .setTitle(R.string.reset)
-                    .setMessage(R.string.battery_saver_style_reset_message)
+                    .setMessage(R.string.battery_saver_color_reset_message)
                     .setNegativeButton(R.string.cancel, null)
                     .setPositiveButton(R.string.dlg_ok,
                         new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             Settings.System.putInt(getActivity().getContentResolver(),
-                                Settings.System.BATTERY_SAVER_MODE_COLOR, -2);
-                            getOwner().initColorPicker();
+                                Settings.System.BATTERY_SAVER_MODE_COLOR_STYLE, 0);
+                            Settings.System.putInt(getActivity().getContentResolver(),
+                                Settings.System.BATTERY_SAVER_MODE_CUSTOM_COLOR, -2);
+                            getOwner().initWarningColor();
                         }
                     })
                     .create();
