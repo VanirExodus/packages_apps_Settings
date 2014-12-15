@@ -24,6 +24,20 @@
             android:title="@string/battery_saver_turn_on_automatically_title"
             android:persistent="false" />
 
+    <!-- Warning Color: Style -->
+    <ListPreference
+            android:key="batery_saver_warning_style"
+            android:title="@string/battery_saver_warning_style_title"
+            android:dialogTitle="@string/battery_saver_warning_style_title"
+            android:entries="@array/battery_saver_warning_style_entries"
+            android:entryValues="@array/battery_saver_warning_style_values" />
+
+    <!-- Warning Color: Custom Color -->
+    <net.margaritov.preference.colorpicker.ColorPickerPreference
+            android:key="battery_saver_custom_color"
+            android:title="@string/battery_saver_custom_color_title"
+            android:defaultValue="0xf4511e" />
+
     <!-- Feature description text -->
     <Preference
             android:key="description"
