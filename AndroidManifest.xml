@@ -2424,6 +2424,7 @@
         <activity android:name="com.android.exodussettings.exodus.ExodusInterface" />
         <activity android:name="com.android.exodussettings.exodus.navbar.NavbarTabHostFragment" />
         <activity android:name="com.android.exodussettings.exodus.buttons.ButtonsTabHost" />
+        <activity android:name="com.android.exodussettings.exodus.VolumeSteps" />
 
         <activity
             android:name=".exodus.fragments.Animations"

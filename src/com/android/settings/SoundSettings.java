@@ -137,7 +137,7 @@ public class SoundSettings extends SettingsPreferenceFragment implements Indexab
             mVibrator = null;
         }
 
-        addPreferencesFromResource(R.xml.sounds);
+        addPreferencesFromResource(getXmlResource(mContext));
 
         final PreferenceCategory volumes = (PreferenceCategory) findPreference(KEY_VOLUMES);
         final PreferenceCategory sounds = (PreferenceCategory) findPreference(KEY_SOUND);
@@ -167,13 +167,12 @@ public class SoundSettings extends SettingsPreferenceFragment implements Indexab
             }
         }
 
-        if (SettingsUtils.isMorphExodus(mContext.getContentResolver())) {
-			getPreferenceScreen().removePreference(vibrate);
-		}
-
         initRingtones(sounds);
         initIncreasingRing(sounds);
-        initVibrateWhenRinging(vibrate);
+
+        if (!SettingsUtils.isMorphExodus(mContext.getContentResolver())) {
+            initVibrateWhenRinging(vibrate);
+        }
 
         mNotificationAccess = findPreference(KEY_NOTIFICATION_ACCESS);
         refreshNotificationListeners();
@@ -210,6 +209,15 @@ public class SoundSettings extends SettingsPreferenceFragment implements Indexab
         mReceiver.register(false);
     }
 
+    private static int getXmlResource(Context context) {
+        switch (SettingsUtils.CurrentMorphMode(context.getContentResolver())) {
+            case MORPH_MODE_CYANOGENMOD:
+                return R.xml.sounds;
+            default:
+                return R.xml.exodus_sound_settings;
+        }
+    }
+
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         return super.onPreferenceTreeClick(preferenceScreen, preference);
@@ -233,7 +241,7 @@ public class SoundSettings extends SettingsPreferenceFragment implements Indexab
                     ? com.android.internal.R.drawable.ic_audio_ring_notif_mute
                     : mRingerMode == AudioManager.RINGER_MODE_VIBRATE
                     ? com.android.internal.R.drawable.ic_audio_ring_notif_vibrate
-                    : com.android.internal.R.drawable.ic_audio_ring_notif);
+                    : R.drawable.ic_ringer_audible);
          }
     }
 
@@ -476,11 +484,13 @@ public class SoundSettings extends SettingsPreferenceFragment implements Indexab
         if (mVoiceCapable) {
             final boolean enabled = Settings.Secure.getInt(getContentResolver(),
                     Settings.Secure.VOLUME_LINK_NOTIFICATION, 1) == 1;
-
             if (mNotificationPreference != null) {
+                if (SettingsUtils.isMorphExodus(mContext.getContentResolver())) {
+                    mNotificationPreference.updateVolumePreference();
+                }
                 mNotificationPreference.setEnabled(!enabled);
             }
-            if (mVolumeLinkNotificationSwitch != null){
+            if (mVolumeLinkNotificationSwitch != null) {
                 mVolumeLinkNotificationSwitch.setChecked(enabled);
             }
         }
@@ -621,19 +631,19 @@ public class SoundSettings extends SettingsPreferenceFragment implements Indexab
         public List<SearchIndexableResource> getXmlResourcesToIndex(
                 Context context, boolean enabled) {
             final SearchIndexableResource sir = new SearchIndexableResource(context);
-            sir.xmlResId = R.xml.sounds;
+            sir.xmlResId = getXmlResource(context);
             return Arrays.asList(sir);
         }
 
         public List<String> getNonIndexableKeys(Context context) {
             final ArrayList<String> rt = new ArrayList<String>();
-            if (Utils.isVoiceCapable(context)) {
-                rt.add(KEY_NOTIFICATION_VOLUME);
-            } else {
+
+            if (!Utils.isVoiceCapable(context)) {
                 rt.add(KEY_RING_VOLUME);
                 rt.add(KEY_PHONE_RINGTONE);
                 rt.add(KEY_VIBRATE_WHEN_RINGING);
             }
+
             Vibrator vib = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
             if (vib == null || !vib.hasVibrator()) {
                 rt.add(KEY_VIBRATE);
@@ -643,7 +653,6 @@ public class SoundSettings extends SettingsPreferenceFragment implements Indexab
             if (!cmHardwareManager.isSupported(CmHardwareManager.FEATURE_VIBRATOR)) {
                 rt.add(KEY_VIBRATION_INTENSITY);
             }
-
             return rt;
         }
     };
