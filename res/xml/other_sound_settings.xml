@@ -102,5 +102,4 @@
                 android:dependency="power_notifications"
                 android:persistent="false" />
     </PreferenceCategory>
-
 </PreferenceScreen>

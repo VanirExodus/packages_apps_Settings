@@ -142,6 +142,15 @@ public class VolumeSeekBarPreference extends SeekBarPreference
         updateSuppressionText();
     }
 
+    public void updateVolumePreference() {
+        if (mVolumizer != null) {
+            if (mSeekBar == null) return;
+            mVolumizer.setSeekBar(mSeekBar);
+            updateIconView();
+            updateSuppressionText();
+        }
+    }
+
     // during initialization, this preference is the SeekBar listener
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromTouch) {
