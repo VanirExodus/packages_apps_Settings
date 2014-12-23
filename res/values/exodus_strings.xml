@@ -151,6 +151,31 @@
     <string name="screen_recorder_record_audio_title">External audio</string>
     <string name="screen_recorder_record_audio_summary">Record audio from the microphone</string>
 
+    <!-- Volume Steps -->
+    <string name="volume_steps_60">60</string>
+    <string name="volume_steps_45">45</string>
+    <string name="volume_steps_30">30</string>
+    <string name="volume_steps_15">15</string>
+    <string name="volume_steps_7">7</string>
+    <string name="volume_steps_5">5</string>
+
+    <!-- Volume step options. -->
+    <string name="volume_steps_title">Volume steps</string>
+    <!-- Sound settings screen, setting option name -->
+    <string name="volume_steps_alarm_title">Volume steps: Alarm</string>
+    <!-- Sound settings screen, setting option name -->
+    <string name="volume_steps_dtmf_title">Volume steps: DTMF</string>
+    <!-- Sound settings screen, setting option name -->
+    <string name="volume_steps_music_title">Volume steps: Music</string>
+    <!-- Sound settings screen, setting option name -->
+    <string name="volume_steps_notification_title">Volume steps: Notification</string>
+    <!-- Sound settings screen, setting option name -->
+    <string name="volume_steps_ring_title">Volume steps: Ringer</string>
+    <!-- Sound settings screen, setting option name -->
+    <string name="volume_steps_system_title">Volume steps: System</string>
+    <!-- Sound settings screen, setting option name -->
+    <string name="volume_steps_voice_call_title">Volume steps: Voice Call</string>
+
     <!-- Superuser indicator on status bar -->
     <string name="su_indicator">Superuser indicator</string>
     <string name="su_indicator_summary">Show superuser indicator on status bar when a session is active</string>
