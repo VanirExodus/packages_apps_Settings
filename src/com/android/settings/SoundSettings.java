@@ -139,7 +139,7 @@ public class SoundSettings extends SettingsPreferenceFragment implements Indexab
             mVibrator = null;
         }
 
-        addPreferencesFromResource(R.xml.sounds);
+        addPreferencesFromResource(getXmlResource(mContext));
 
         final PreferenceCategory volumes = (PreferenceCategory) findPreference(KEY_VOLUMES);
         final PreferenceCategory sounds = (PreferenceCategory) findPreference(KEY_SOUND);
@@ -169,13 +169,12 @@ public class SoundSettings extends SettingsPreferenceFragment implements Indexab
             }
         }
 
-        if (SettingsUtils.isMorphExodus(mContext.getContentResolver())) {
-			getPreferenceScreen().removePreference(vibrate);
-		}
-
         initRingtones(sounds);
         initIncreasingRing(sounds);
-        initVibrateWhenRinging(vibrate);
+
+        if (!SettingsUtils.isMorphExodus(mContext.getContentResolver())) {
+            initVibrateWhenRinging(vibrate);
+        }
 
         mNotificationAccess = findPreference(KEY_NOTIFICATION_ACCESS);
         refreshNotificationListeners();
@@ -212,6 +211,15 @@ public class SoundSettings extends SettingsPreferenceFragment implements Indexab
         mReceiver.register(false);
     }
 
+    private static int getXmlResource(Context context) {
+        switch (SettingsUtils.CurrentMorphMode(context.getContentResolver())) {
+            case MORPH_MODE_CYANOGENMOD:
+                return R.xml.sounds;
+            default:
+                return R.xml.exodus_sound_settings;
+        }
+    }
+
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         return super.onPreferenceTreeClick(preferenceScreen, preference);
@@ -235,7 +243,7 @@ public class SoundSettings extends SettingsPreferenceFragment implements Indexab
                     ? com.android.internal.R.drawable.ic_audio_ring_notif_mute
                     : mRingerMode == AudioManager.RINGER_MODE_VIBRATE
                     ? com.android.internal.R.drawable.ic_audio_ring_notif_vibrate
-                    : com.android.internal.R.drawable.ic_audio_ring_notif);
+                    : R.drawable.ic_ringer_audible);
          }
     }
 
@@ -478,6 +486,21 @@ public class SoundSettings extends SettingsPreferenceFragment implements Indexab
         if (mVoiceCapable) {
             final boolean enabled = Settings.Secure.getInt(getContentResolver(),
                     Settings.Secure.VOLUME_LINK_NOTIFICATION, 1) == 1;
+
+            if (SettingsUtils.isMorphExodus(mContext.getContentResolver())) {
+                int steps;
+
+                if (enabled) {
+                    steps = Settings.System.getInt(mContext.getContentResolver(),
+                            Settings.System.VOLUME_STEPS_NOTIFICATION, 10);
+                } else {
+                    steps = Settings.System.getInt(mContext.getContentResolver(),
+                            Settings.System.VOLUME_STEPS_RINGTONE, 10);
+                }
+
+                mAudioManager.setStreamMaxVolume(AudioManager.STREAM_NOTIFICATION, steps);
+                Log.i(TAG, "Volume steps: volume_steps_notification " + String.valueOf(steps));
+            }
 
             if (mNotificationPreference != null) {
                 mNotificationPreference.setEnabled(!enabled);
