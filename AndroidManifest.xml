@@ -1797,6 +1797,9 @@
 
         <activity android:name=".cyanogenmod.SpamList" />
 
+        <!-- Heads up notifications -->
+        <activity android:name=".headsup.HeadsUpSettings" />
+
         <!-- "Blacklist settings" UI, used only on voice-capable phone devices. -->
         <activity android:name="Settings$BlacklistSettingsActivity"
                 android:uiOptions="splitActionBarWhenNarrow"
@@ -1829,7 +1832,7 @@
         <activity android:name=".vanir.gesturepanel.CreateGestureActivity" />
         <activity android:name=".vanir.gesturepanel.GestureBuilderActivity"
                 android:launchMode="singleTop"
-                android:excludeFromRecents="true" 
+                android:excludeFromRecents="true"
                 android:label="@string/gesture_panel_title" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
