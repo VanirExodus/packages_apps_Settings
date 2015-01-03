@@ -387,6 +387,20 @@
     <string name="center_clock">Center position</string>
     <string name="no_clock">Hidden</string>
 
+    <!-- Recents panel settings -->
+    <string name="recents_title">Recents</string>
+    <string name="show_clear_all_recents_button_title">Clear all recents button</string>
+    <string name="show_clear_all_recents_button_summary">Show clear all button on recents panel</string>
+    <string name="recents_clear_all_location_title">Clear all recents location</string>
+    <string name="recents_clear_all_location_top_right">Top right</string>
+    <string name="recents_clear_all_location_top_left">Top left</string>
+    <string name="recents_clear_all_location_bottom_right">Bottom right</string>
+    <string name="recents_clear_all_location_bottom_left">Bottom left</string>
+
+    <!-- Show/Hide Search Bar -->
+    <string name="recents_show_searchbar">Disable search bar in recents menu</string>
+    <string name="recents_show_searchbar_summary">Disable or enable the search bar in the recents menu</string>
+
     <!-- Screen recorder -->
     <string name="screen_recorder_title">Screen recorder</string>
     <string name="screen_recorder_summary">Adjust screen recorder video settings</string>
