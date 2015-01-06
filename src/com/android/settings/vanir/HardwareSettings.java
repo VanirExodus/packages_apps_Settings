@@ -122,7 +122,7 @@ public class HardwareSettings extends SettingsPreferenceFragment implements
         mProxWake = (CheckBoxPreference) findPreference(KEY_PROXIMITY_WAKE);
         if (!proximityCheckOnWait) {
             getPreferenceScreen().removePreference(mProxWake);
-            Settings.System.putInt(getContentResolver(), Settings.System.PROXIMITY_ON_WAKE, 1);
+            Settings.System.putInt(getContentResolver(), Settings.System.PROXIMITY_ON_WAKE, 0);
         }
 
         mWakeWhenPluggedOrUnplugged =
