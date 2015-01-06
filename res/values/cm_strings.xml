@@ -320,7 +320,7 @@
     <string name="no_filters_title">No filters set</string>
 
     <!-- About phone screen,  setting option name -->
-    <string name="mod_version">Vanir version</string>
+    <string name="mod_version">EXODUS version</string>
     <string name="mod_version_default">Unknown</string>
     <string name="model_name">Model name</string>
     <!-- About phone screen, build date of ROM -->
