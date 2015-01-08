@@ -31,7 +31,6 @@ import android.view.WindowManager;
 import android.view.WindowManagerGlobal;
 
 import com.android.settings.R;
-import com.android.settings.vanir.ScreenRecorderSettings;
 
 /*
  * Screen recorder activity
@@ -68,6 +67,17 @@ public class ScreenRecordActivity extends Activity implements DialogInterface.On
         alert.setNegativeButton(mContext.getResources().getString(R.string.cancel_action),
                 new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
+                finish();
+            }
+        });
+        alert.setNeutralButton(mContext.getResources().getString(R.string.settings_label),
+                new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                  Intent intent = new Intent();
+                  intent.setComponent(new ComponentName("com.android.settings", "com.android.settings.Settings$ScreenRecorderSettingsActivity"));
+                  intent.addCategory("android.intent.category.LAUNCHER");
+                  intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                  mContext.startActivityAsUser(intent, new UserHandle(UserHandle.USER_CURRENT));
                 finish();
             }
         });

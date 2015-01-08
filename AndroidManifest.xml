@@ -2319,13 +2319,24 @@
             android:name="com.android.settings.vanir.activities.ScreenRecordActivity"
             android:label="@string/screen_recorder_title"
             android:icon="@drawable/ic_screen_record"
-            android:theme="@*android:style/Theme.Material.Light.Dialog.Alert"
+            android:theme="@style/Theme.AlertDialog"
             android:excludeFromRecents="true"
             android:launchMode="singleTop" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.android.systemui.SHORTCUT" />
             </intent-filter>
+        </activity>
+        <!-- Pseudo-activity used to provide an intent-filter entry point to Screen recorder settings -->
+        <activity android:name="Settings$ScreenRecorderSettingsActivity"
+                android:label="@string/screen_recorder_title"
+                android:taskAffinity="">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <meta-data android:name="com.android.settings.FRAGMENT_CLASS"
+                android:value="com.android.settings.vanir.ScreenRecorderSettings" />
         </activity>
     </application>
 </manifest>
