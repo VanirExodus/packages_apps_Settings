@@ -382,6 +382,10 @@
     <string name="status_bar_clock_title">Clock style</string>
     <string name="status_bar_am_pm_title">AM/PM style</string>
     <string name="status_bar_am_pm_info">24-hour clock is enabled</string>
+    <string name="right_clock">Right position</string>
+    <string name="left_clock">Left position</string>
+    <string name="center_clock">Center position</string>
+    <string name="no_clock">Hidden</string>
 
     <!-- Screen recorder -->
     <string name="screen_recorder_title">Screen recorder</string>
