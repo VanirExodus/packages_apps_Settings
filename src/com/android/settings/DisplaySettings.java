@@ -1,6 +1,5 @@
 /*
  * Copyright (C) 2010 The Android Open Source Project
- * Copyright (C) 2014 The CyanogenMod Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -159,7 +158,7 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
         int brightness = Settings.System.getInt(resolver, Settings.System.BRIGHTNESS_ADJUSTMENT, 2);
         mBrightnessAdjustment.setValue(String.valueOf(brightness));
         mBrightnessAdjustment.setSummary(getString(R.string.brightness_adjustment_sliders_summary)
-                + mBrightnessAdjustment.getEntries()[mBrightnessAdjustment.findIndexOfValue("" + value)]);
+                + mBrightnessAdjustment.getEntries()[mBrightnessAdjustment.findIndexOfValue("" + brightness)]);
         mBrightnessAdjustment.setOnPreferenceChangeListener(this);
 
         mFontSizePref = (FontDialogPreference) findPreference(KEY_FONT_SIZE);
