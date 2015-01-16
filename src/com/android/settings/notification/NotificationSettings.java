@@ -130,6 +130,7 @@ public class NotificationSettings extends SettingsPreferenceFragment implements 
                     initVolumePreference(KEY_RING_VOLUME, AudioManager.STREAM_RING);
         } else {
             sound.removePreference(sound.findPreference(KEY_RING_VOLUME));
+            sound.removePreference(sound.findPreference("volume_link_notification");
         }
 
         initRingtones(sound);
@@ -419,12 +420,14 @@ public class NotificationSettings extends SettingsPreferenceFragment implements 
         mNotificationPreference = initVolumePreference(KEY_NOTIFICATION_VOLUME,
                 AudioManager.STREAM_NOTIFICATION);
 
-        final boolean enabled = Settings.System.getInt(getContentResolver(),
-                Settings.Secure.VOLUME_LINK_NOTIFICATION, 1) == 1;
+        if (mVoiceCapable) {
+            final boolean enabled = Settings.System.getInt(getContentResolver(),
+                    Settings.Secure.VOLUME_LINK_NOTIFICATION, 1) == 1;
 
-        if (mNotificationPreference != null) {
-            boolean show = !enabled && mVoiceCapable;
-            mNotificationPreference.setEnabled(show);
+            if (mNotificationPreference != null) {
+                boolean show = !enabled;
+                mNotificationPreference.setEnabled(show);
+            }
         }
     }
 
