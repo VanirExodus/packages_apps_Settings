@@ -916,9 +916,6 @@
     <!-- Notification drawer -->
     <string name="notification_drawer_title">Notification drawer</string>
 
-    <string name="status_bar_quick_qs_pulldown_title">Quick pulldown</string>
-    <string name="status_bar_quick_qs_pulldown_summary">Right edge of the status bar pulls down Quick Settings</string>
-
     <!-- Weather in status bar header -->
     <string name="status_bar_show_weather_title">Show weather</string>
     <string name="status_bar_show_weather_summary">Show the weather in the status bar header</string>
