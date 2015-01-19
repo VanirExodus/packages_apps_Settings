@@ -418,6 +418,13 @@
     <string name="battery_saver_custom_color_title">Warning custom color</string>
     <string name="battery_saver_color_reset_message">Reset battery saver warning color?</string>
 
+    <!-- QuickSettings: Quick Pulldown -->
+    <string name="title_quick_pulldown">Quick pulldown</string>
+    <string name="summary_quick_pulldown">%1$s edge of the status bar pulls down Quick Settings</string>
+    <string name="quick_pulldown_off">Off</string>
+    <string name="quick_pulldown_left">Left</string>
+    <string name="quick_pulldown_right">Right</string>
+
     <!-- Screen recorder -->
     <string name="screen_recorder_title">Screen recorder</string>
     <string name="screen_recorder_summary">Adjust screen recorder video settings</string>
