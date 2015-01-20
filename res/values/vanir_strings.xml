@@ -117,6 +117,10 @@
     <string name="status_bar_greeting_summary">Display a custom greeting in the status bar after unlocking the device</string>
     <string name="status_bar_greeting_dialog">Set your greeting</string>
 
+    <!-- System logging -->
+    <string name="system_logging_title">Disable system logging</string>
+    <string name="system_logging_summary">Disable ADB output to free up kernel resources</string>
+
     <!-- Shortcut picker -->
     <string name="use_custom_app_title">Use custom application</string>
     <string name="use_custom_app_summary">Use custom application instead of the recent applications dialog</string>

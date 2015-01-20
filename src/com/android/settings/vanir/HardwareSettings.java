@@ -57,8 +57,11 @@ public class HardwareSettings extends SettingsPreferenceFragment implements
     private static final String KEY_LIFT_TO_WAKE = "lift_to_wake";
     private static final String KEY_WAKE_WHEN_PLUGGED_OR_UNPLUGGED = "wake_when_plugged_or_unplugged";
     private static final String KEY_BUTTON_NAVIGATION = "buttons_navigation";
-    public static final String PREF_FCHARGE = "fast_charge";
+
+    private static final String PREF_FCHARGE = "fast_charge";
     private static final String FCHARGE_PATH = "sys/kernel/fast_charge/force_fast_charge";
+    private static final String KEY_SYSTEM_LOGGING = "disable_logging_set_on_boot";
+    private static final String LOG_PATH = "/sys/module/logger/parameters/log_enabled";
 
     // Masks for checking presence of hardware keys.
     // Must match values in frameworks/base/core/res/res/values/config.xml
@@ -72,6 +75,7 @@ public class HardwareSettings extends SettingsPreferenceFragment implements
     private CheckBoxPreference mProxWake;
     private CheckBoxPreference mLiftToWakePreference;
     private CheckBoxPreference mWakeWhenPluggedOrUnplugged;
+    private static CheckBoxPreference mSystemLogging;
     private static CheckBoxPreference mFastCharge;
 
     private Preference mButtonNavigation;
@@ -95,6 +99,14 @@ public class HardwareSettings extends SettingsPreferenceFragment implements
         mButtonNavigation = (Preference) findPreference(KEY_BUTTON_NAVIGATION);
         if (!hasHomeKey && !hasBackKey && !hasMenuKey && !hasAssistKey && !hasAppSwitchKey) {
             getPreferenceScreen().removePreference(mButtonNavigation);
+        }
+
+        // this kernel module is required for this feature
+        // https://github.com/jimsth/vanir_hammerhead/commit/138cba1c61f364c5c31fd5999e738cbbea03d0d9
+        mSystemLogging = (CheckBoxPreference) findPreference(KEY_SYSTEM_LOGGING);
+        if (!exists(LOG_PATH)) {
+            getPreferenceScreen().removePreference(mSystemLogging);
+            mSystemLogging = null;
         }
 
         // this fast charge commit is required for this feature
@@ -142,6 +154,7 @@ public class HardwareSettings extends SettingsPreferenceFragment implements
     @Override
     public void onResume() {
         super.onResume();
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
         // Default value for wake-on-plug behavior from config.xml
         boolean wakeUpWhenPluggedOrUnpluggedConfig = getResources().getBoolean(
@@ -158,17 +171,26 @@ public class HardwareSettings extends SettingsPreferenceFragment implements
         }
 
         if (mTapToWake != null) {
-            final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
             mTapToWake.setChecked(prefs.getBoolean(KEY_TAP_TO_WAKE, true));
+        }
+
+        if (mSystemLogging != null) {
+            mSystemLogging.setChecked(prefs.getBoolean(KEY_SYSTEM_LOGGING, false));
         }
     }
 
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         if (preference == mTapToWake) {
-			final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+            final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
             prefs.edit().putBoolean(KEY_TAP_TO_WAKE, mTapToWake.isChecked()).commit();
             return TapToWake.setEnabled(mTapToWake.isChecked());
+
+        } else if (preference == mSystemLogging) {
+            final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+            prefs.edit().putBoolean(KEY_SYSTEM_LOGGING, mSystemLogging.isChecked()).commit();
+            writeSystemLoggingOptions();
+            return true;
 
         } else if (preference == mFastCharge) {
             writeFastChargeOption();
@@ -215,8 +237,23 @@ public class HardwareSettings extends SettingsPreferenceFragment implements
         }
     }
 
-    private void writeFastChargeOption() {
+    private void writeSystemLoggingOptions() {
+        if (mSystemLogging.isChecked()) {
+            new CMDProcessor().su.runWaitFor("busybox echo 0 > /sys/module/logger/parameters/log_enabled");
+        } else {
+            new CMDProcessor().su.runWaitFor("busybox echo 1 > /sys/module/logger/parameters/log_enabled");
+        }
+    }
 
+    private void updateSystemLoggingOptions(int value) {
+        if (value == 0) {
+            mSystemLogging.setEnabled(false);
+        } else {
+            mSystemLogging.setEnabled(true);
+        }
+    }
+
+    private void writeFastChargeOption() {
         if (mFastCharge.isChecked()) {
             new CMDProcessor().su.runWaitFor("busybox echo 0 > /sys/kernel/fast_charge/force_cast_charge");
         } else {
@@ -246,6 +283,17 @@ public class HardwareSettings extends SettingsPreferenceFragment implements
                 Log.e(TAG, "Failed to restore tap-to-wake settings.");
             } else {
                 Log.d(TAG, "Tap-to-wake settings restored.");
+            }
+        }
+
+        if (exists(FCHARGE_PATH)) {
+            final boolean logging = prefs.getBoolean(KEY_SYSTEM_LOGGING, false);
+
+            if (!logging) {
+                return;
+            } else {
+                Log.i(TAG, "Setting logging to disabled by user preference");
+                new CMDProcessor().su.runWaitFor("busybox echo 0 > /sys/module/logger/parameters/log_enabled");
             }
         }
     }

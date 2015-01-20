@@ -39,6 +39,12 @@
         android:title="@string/performance_settings_title" />
 
     <CheckBoxPreference
+        android:key="disable_logging_set_on_boot"
+        android:title="@string/system_logging_title"
+        android:summary="@string/system_logging_summary"
+        android:persistent="true" />
+
+    <CheckBoxPreference
         android:key="fast_charge"
         android:title="@string/fast_charge_title"
         android:summary="@string/fast_charge_summary"
