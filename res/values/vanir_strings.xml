@@ -442,4 +442,8 @@
     <!-- SuperSU -->
     <string name="supersu_title">SuperSU</string>
 
+    <!-- QuickSettings: collapse panel -->
+    <string name="quick_settings_collapse_title">Auto close panel</string>
+    <string name="quick_settings_collapse_summary">Close the Quick Settings panel upon toggle</string>
+
 </resources>
