@@ -2258,6 +2258,19 @@
             </intent-filter>
         </activity>
         <activity
+            android:name="com.android.settings.vanir.activities.BackDropActivity"
+            android:label="@string/voodoo_title"
+            android:icon="@drawable/ic_sysbar_dream"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:configChanges="keyboardHidden|orientation"
+            android:fitsSystemWindows="true"
+            android:clipToPadding="false" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.android.systemui.SHORTCUT" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name="com.android.settings.vanir.activities.ProfileActivity"
             android:label="@string/toggle_profile"
             android:icon="@drawable/ic_sysbar_profile"
