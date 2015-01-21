@@ -28,6 +28,7 @@ import android.os.SystemProperties;
 import android.os.Vibrator;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
+import android.preference.PreferenceCategory;
 import android.preference.PreferenceGroup;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
@@ -52,6 +53,7 @@ public class HardwareSettings extends SettingsPreferenceFragment implements
 
     private static final String KEY_SENSORS_MOTORS_CATEGORY = "sensors_motors_category";
     private static final String KEY_SCREEN_GESTURE_SETTINGS = "touch_screen_gesture_settings";
+    private static final String KEY_VIBRATE_ON_TOUCH = "haptic_feedback";
     private static final String KEY_TAP_TO_WAKE = "double_tap_wake_gesture";
     private static final String KEY_PROXIMITY_WAKE = "proximity_on_wake";
     private static final String KEY_LIFT_TO_WAKE = "lift_to_wake";
@@ -72,6 +74,7 @@ public class HardwareSettings extends SettingsPreferenceFragment implements
     private CheckBoxPreference mProxWake;
     private CheckBoxPreference mLiftToWakePreference;
     private CheckBoxPreference mWakeWhenPluggedOrUnplugged;
+    private CheckBoxPreference mHapticFeedback;
     private static CheckBoxPreference mFastCharge;
 
     private Preference mButtonNavigation;
@@ -85,6 +88,8 @@ public class HardwareSettings extends SettingsPreferenceFragment implements
 
         final int deviceKeys = getResources().getInteger(
                 com.android.internal.R.integer.config_deviceHardwareKeys);
+        PreferenceCategory cat =
+                (PreferenceCategory) getPreferenceScreen().findPreference(KEY_SENSORS_MOTORS_CATEGORY);
 
         final boolean hasHomeKey = (deviceKeys & KEY_MASK_HOME) != 0;
         final boolean hasBackKey = (deviceKeys & KEY_MASK_BACK) != 0;
@@ -110,12 +115,20 @@ public class HardwareSettings extends SettingsPreferenceFragment implements
         } else {
             removePreference(KEY_LIFT_TO_WAKE);
         }
+        
+        mHapticFeedback = (CheckBoxPreference) cat.findPreference(KEY_VIBRATE_ON_TOUCH);
+        mHapticFeedback.setChecked(Settings.System.getInt(getContentResolver(),
+                Settings.System.HAPTIC_FEEDBACK_ENABLED, 1) == 1);
 
-        Vibrator vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
-        boolean hasvib = VibratorIntensity.isSupported() && vibrator != null && vibrator.hasVibrator();
+        boolean haptic = hasHaptic(getActivity());
+        boolean hasvib = VibratorIntensity.isSupported();
         if (!hasvib) {
-            removePreference(KEY_SENSORS_MOTORS_CATEGORY);
+			cat.removePreference(findPreference("vibration_intensity"));
         }
+        if (!haptic) {
+			removePreference(KEY_VIBRATE_ON_TOUCH);
+		}
+		if (!hasvib && !haptic) removePreference(KEY_SENSORS_MOTORS_CATEGORY);
 
         boolean proximityCheckOnWait = getResources().getBoolean(
                 com.android.internal.R.bool.config_proximityCheckOnWake);
@@ -174,6 +187,12 @@ public class HardwareSettings extends SettingsPreferenceFragment implements
             writeFastChargeOption();
             return true;
 
+		} else if (preference == mHapticFeedback) {
+			Settings.System.putInt(getContentResolver(),
+					Settings.System.HAPTIC_FEEDBACK_ENABLED,
+					mHapticFeedback.isChecked() ? 1 : 0);
+			return true;
+
         } else if (preference == mProxWake) {
             Settings.System.putInt(getContentResolver(),
                     Settings.System.PROXIMITY_ON_WAKE,
@@ -199,6 +218,11 @@ public class HardwareSettings extends SettingsPreferenceFragment implements
             Settings.Secure.putInt(getContentResolver(), WAKE_GESTURE_ENABLED, value ? 1 : 0);
         }
         return true;
+    }
+
+    private static boolean hasHaptic(Context context) {
+        final Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+        return vibrator != null && vibrator.hasVibrator();
     }
 
     private static boolean isLiftToWakeAvailable(Context context) {

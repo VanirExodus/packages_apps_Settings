@@ -57,6 +57,14 @@
         android:key="sensors_motors_category"
         android:title="@string/sensors_motors_title" >
 
+        <!-- Vibrate on touch -->
+        <CheckBoxPreference
+            android:key="haptic_feedback"
+            android:title="@string/vibrate_on_touch_title"
+            android:switchTextOff=""
+            android:switchTextOn=""
+            android:persistent="false" />
+
         <com.android.settings.hardware.VibratorIntensity
             android:key="vibration_intensity"
             android:title="@string/vibrator_intensity_title"

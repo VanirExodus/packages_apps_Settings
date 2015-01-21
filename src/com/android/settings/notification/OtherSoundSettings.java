@@ -32,6 +32,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
+import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceScreen;
 import android.preference.SwitchPreference;
@@ -43,7 +44,6 @@ import android.telephony.TelephonyManager;
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
 import com.android.settings.Utils;
-import com.android.settings.hardware.VibratorIntensity;
 import com.android.settings.search.BaseSearchIndexProvider;
 import com.android.settings.search.Indexable;
 
@@ -70,10 +70,8 @@ public class OtherSoundSettings extends SettingsPreferenceFragment implements In
     private static final String KEY_DOCKING_SOUNDS = "docking_sounds";
     private static final String KEY_VOLUME_ADJUST_SOUNDS = "volume_adjust_sounds";
     private static final String KEY_TOUCH_SOUNDS = "touch_sounds";
-    private static final String KEY_VIBRATE_ON_TOUCH = "vibrate_on_touch";
     private static final String KEY_DOCK_AUDIO_MEDIA = "dock_audio_media";
     private static final String KEY_EMERGENCY_TONE = "emergency_tone";
-    private static final String KEY_VIBRATION_INTENSITY = "vibration_intensity";
 
     private static final String KEY_POWER_NOTIFICATIONS = "power_notifications";
     private static final String KEY_POWER_NOTIFICATIONS_VIBRATE = "power_notifications_vibrate";
@@ -86,7 +84,7 @@ public class OtherSoundSettings extends SettingsPreferenceFragment implements In
     private static final String POWER_NOTIFICATIONS_SILENT_URI = "silent";
 
     private SwitchPreference mPowerSounds;
-    private SwitchPreference mPowerSoundsVibrate;
+    private CheckBoxPreference mPowerSoundsVibrate;
     private Preference mPowerSoundsRingtone;
 
     private static final SettingPref PREF_DIAL_PAD_TONES = new SettingPref(
@@ -130,23 +128,6 @@ public class OtherSoundSettings extends SettingsPreferenceFragment implements In
             return super.setSetting(context, value);
         }
     };
-
-    private static final SettingPref PREF_VIBRATE_ON_TOUCH = new SettingPref(
-            TYPE_SYSTEM, KEY_VIBRATE_ON_TOUCH, System.HAPTIC_FEEDBACK_ENABLED, DEFAULT_ON) {
-        @Override
-        public boolean isApplicable(Context context) {
-            return hasHaptic(context);
-        }
-    };
-
-    private static final SettingPref PREF_VIBRATION_INTENSITY = new SettingPref(
-            TYPE_SYSTEM, KEY_VIBRATION_INTENSITY, System.HAPTIC_FEEDBACK_ENABLED, DEFAULT_ON) {
-        @Override
-        public boolean isApplicable(Context context) {
-            return VibratorIntensity.isSupported();
-        }
-    };
-
 
     private static final SettingPref PREF_DOCK_AUDIO_MEDIA = new SettingPref(
             TYPE_GLOBAL, KEY_DOCK_AUDIO_MEDIA, Global.DOCK_AUDIO_MEDIA_ENABLED,
@@ -199,10 +180,8 @@ public class OtherSoundSettings extends SettingsPreferenceFragment implements In
         PREF_DOCKING_SOUNDS,
         PREF_VOLUME_ADJUST_SOUNDS,
         PREF_TOUCH_SOUNDS,
-        PREF_VIBRATE_ON_TOUCH,
         PREF_DOCK_AUDIO_MEDIA,
         PREF_EMERGENCY_TONE,
-        PREF_VIBRATION_INTENSITY,
     };
 
     private final SettingsObserver mSettingsObserver = new SettingsObserver();
@@ -221,7 +200,7 @@ public class OtherSoundSettings extends SettingsPreferenceFragment implements In
         mPowerSounds = (SwitchPreference) findPreference(KEY_POWER_NOTIFICATIONS);
         mPowerSounds.setChecked(Global.getInt(getContentResolver(),
                 Global.POWER_NOTIFICATIONS_ENABLED, 0) != 0);
-        mPowerSoundsVibrate = (SwitchPreference) findPreference(KEY_POWER_NOTIFICATIONS_VIBRATE);
+        mPowerSoundsVibrate = (CheckBoxPreference) findPreference(KEY_POWER_NOTIFICATIONS_VIBRATE);
         mPowerSoundsVibrate.setChecked(Global.getInt(getContentResolver(),
                 Global.POWER_NOTIFICATIONS_VIBRATE, 0) != 0);
         Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
