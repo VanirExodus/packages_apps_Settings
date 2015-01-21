@@ -62,6 +62,9 @@ public class CreateShortcut extends LauncherActivity {
         if (c.equals ("FlushMemory")) {
             return R.drawable.vanir_flush_memory;
 
+	    } else if (c.equals ("BackDropActivity")) {
+			return R.drawable.ic_sysbar_dream;
+
         } else if (c.equals ("RingVibToggle")) {
             return R.drawable.ic_lockscreen_vib;
 
