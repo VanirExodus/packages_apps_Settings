@@ -89,6 +89,7 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     private static final String KEY_DISPLAY_ROTATION = "display_rotation";
     private static final String KEY_BRIGHTNESS_ADJUSTMENT = "brightness_adjust";
 
+    private static final String KEY_DISPLAY_SETTINGS = "display_settings";
     private static final String CATEGORY_ADVANCED = "advanced_display_prefs";
     private static final String KEY_DISPLAY_COLOR = "color_calibration";
     private static final String KEY_DISPLAY_GAMMA = "gamma_tuning";
@@ -197,6 +198,13 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
         }
         if (!DisplayGamma.isSupported()) {
             advancedPrefs.removePreference(findPreference(KEY_DISPLAY_GAMMA));
+        }
+
+        if (!DisplayGamma.isSupported() && !DisplayColor.isSupported() 
+         && !isColorEnhancementSupported() && !isSunlightEnhancementSupported()
+         && !isAdaptiveBacklightSupported()) {
+            PreferenceScreen displaySettings = (PreferenceScreen) findPreference(KEY_DISPLAY_SETTINGS);
+            displaySettings.removePreference(advancedPrefs);
         }
 
         if (isDozeAvailable(activity)) {
