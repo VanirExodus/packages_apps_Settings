@@ -192,6 +192,8 @@ public class GeneralButtonSettings extends SettingsPreferenceFragment implements
                 mPowerEndCall = null;
            }
         }
+        Utils.updatePreferenceToSpecificActivityFromMetaDataOrRemove(getActivity(),
+                getPreferenceScreen(), KEY_BLUETOOTH_INPUT_SETTINGS);
     }
 
     @Override
