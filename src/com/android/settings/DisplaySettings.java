@@ -199,6 +199,12 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
             advancedPrefs.removePreference(findPreference(KEY_DISPLAY_GAMMA));
         }
 
+        PreferenceScreen displaySettings = getPreferenceScreen();
+
+        if ((displaySettings.getPreferenceCount()) == 0) {
+            displaySettings.removePreference(advancedPrefs);
+        }
+
         if (isDozeAvailable(activity)) {
             mDozePreference = (SwitchPreference) findPreference(KEY_DOZE);
             mDozePreference.setOnPreferenceChangeListener(this);
