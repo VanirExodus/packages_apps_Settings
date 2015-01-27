@@ -77,4 +77,10 @@
         android:summaryOn="@string/status_bar_show_unused_sims_title_summary_on"
         android:summaryOff="@string/status_bar_show_unused_sims_title_summary_off" />
 
+    <PreferenceScreen
+        android:key="network_traffic_settings"
+        android:title="@string/network_traffic_title"
+        android:fragment="com.android.settings.euphoria.NetworkTrafficSettings" >
+    </PreferenceScreen>
+
 </PreferenceScreen>

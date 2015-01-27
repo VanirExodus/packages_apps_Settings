@@ -2488,4 +2488,22 @@
     <string name="encrypt_talkback_dialog_message_pin" msgid="1890374082842868489">"PINを入力してこの端末を開始しても、<xliff:g id="SERVICE">%1$s</xliff:g>のようなユーザー補助サービスはまだご利用になれません。"</string>
     <string name="encrypt_talkback_dialog_message_pattern" msgid="4474332516537386384">"パターンを入力してこの端末を開始しても、<xliff:g id="SERVICE">%1$s</xliff:g>のようなユーザー補助サービスはまだご利用になれません。"</string>
     <string name="encrypt_talkback_dialog_message_password" msgid="8166099418487083927">"パスワードを入力してこの端末を開始しても、<xliff:g id="SERVICE">%1$s</xliff:g>のようなユーザー補助サービスはまだご利用になれません。"</string>
+	<!-- Network traffic -->
+    <string name="network_traffic_title">ネットワーク通信量</string>
+    <string name="show_network_traffic_state">ステータスバー通信量モニタ</string>
+    <string name="show_network_traffic_unit">表示単位</string>
+    <string name="show_network_traffic_frequency">更新間隔</string>
+    <string name="show_network_traffic_disable">無効</string>
+    <string name="show_network_traffic_up">上り</string>
+    <string name="show_network_traffic_down">下り</string>
+    <string name="show_network_traffic_all">上りと下り</string>
+    <string name="show_network_traffic_bit">ビット/秒</string>
+    <string name="show_network_traffic_byte">バイト/秒</string>
+    <string name="show_network_traffic_500">500 ミリ秒</string>
+    <string name="show_network_traffic_1000">1000 ミリ秒</string>
+    <string name="show_network_traffic_1500">1500 ミリ秒</string>
+    <string name="show_network_traffic_2000">2000 ミリ秒</string>
+    <string name="network_traffic_autohide">自動的に非表示</string>
+    <string name="network_traffic_autohide_summary">非アクティブ時はトラフィックモニタを非表示にする</string>
+    <string name="network_traffic_autohide_threshold">非アクティブのしきい値</string>
 </resources>

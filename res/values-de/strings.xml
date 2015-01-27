@@ -2485,4 +2485,22 @@
     <string name="encrypt_talkback_dialog_message_pin" msgid="1890374082842868489">"Wenn Sie zum Starten dieses Geräts Ihre PIN eingeben, stehen Dienste für Bedienungshilfen wie <xliff:g id="SERVICE">%1$s</xliff:g> noch nicht zur Verfügung."</string>
     <string name="encrypt_talkback_dialog_message_pattern" msgid="4474332516537386384">"Wenn Sie zum Starten dieses Geräts Ihr Muster eingeben, stehen Dienste für Bedienungshilfen wie <xliff:g id="SERVICE">%1$s</xliff:g> noch nicht zur Verfügung."</string>
     <string name="encrypt_talkback_dialog_message_password" msgid="8166099418487083927">"Wenn Sie zum Starten dieses Geräts Ihr Passwort eingeben, stehen Dienste für Bedienungshilfen wie <xliff:g id="SERVICE">%1$s</xliff:g> noch nicht zur Verfügung."</string>
+	<!-- Network traffic -->
+    <string name="network_traffic_title">Netzwerk-Traffic</string>
+    <string name="show_network_traffic_state">Traffic-Monitor</string>
+    <string name="show_network_traffic_unit">Einheit</string>
+    <string name="show_network_traffic_frequency">Aktualisierungsintervall</string>
+    <string name="show_network_traffic_disable">Deaktiviert</string>
+    <string name="show_network_traffic_up">Senden</string>
+    <string name="show_network_traffic_down">Empfangen</string>
+    <string name="show_network_traffic_all">Senden und Empfangen</string>
+    <string name="show_network_traffic_bit">Bits pro Sekunde</string>
+    <string name="show_network_traffic_byte">Bytes pro Sekunde</string>
+    <string name="show_network_traffic_500">500 ms</string>
+    <string name="show_network_traffic_1000">1000 ms</string>
+    <string name="show_network_traffic_1500">1500 ms</string>
+    <string name="show_network_traffic_2000">2000 ms</string>
+    <string name="network_traffic_autohide">Automatisch verbergen</string>
+    <string name="network_traffic_autohide_summary">Blendet den Traffic-Monitor aus wenn keine Aktivität vorhanden ist</string>
+    <string name="network_traffic_autohide_threshold">Inaktivitätsschwelle</string>
 </resources>

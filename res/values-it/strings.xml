@@ -2482,4 +2482,22 @@
     <string name="encrypt_talkback_dialog_message_pin" msgid="1890374082842868489">"Quando inserisci il tuo codice PIN per avviare questo dispositivo, i servizi di accessibilità quali <xliff:g id="SERVICE">%1$s</xliff:g> non saranno ancora disponibili."</string>
     <string name="encrypt_talkback_dialog_message_pattern" msgid="4474332516537386384">"Quando inserisci un pattern per avviare questo dispositivo, i servizi di accessibilità quali <xliff:g id="SERVICE">%1$s</xliff:g> non saranno ancora disponibili."</string>
     <string name="encrypt_talkback_dialog_message_password" msgid="8166099418487083927">"Quando inserisci una password per avviare questo dispositivo, i servizi di accessibilità quali <xliff:g id="SERVICE">%1$s</xliff:g> non saranno ancora disponibili."</string>
+	<!-- Network traffic -->
+    <string name="network_traffic_title">Traffico rete</string>
+    <string name="show_network_traffic_state">Monitor traffico sulla barra di stato</string>
+    <string name="show_network_traffic_unit">Unità di visualizzazione </string>
+    <string name="show_network_traffic_frequency">Intervallo di aggiornamento </string>
+    <string name="show_network_traffic_disable">Disattivato </string>
+    <string name="show_network_traffic_up">In upload</string>
+    <string name="show_network_traffic_down">In download </string>
+    <string name="show_network_traffic_all">In download e in upload </string>
+    <string name="show_network_traffic_bit">Bit per secondo </string>
+    <string name="show_network_traffic_byte">Byte per secondo </string>
+    <string name="show_network_traffic_500">500 ms</string>
+    <string name="show_network_traffic_1000">1000 ms</string>
+    <string name="show_network_traffic_1500">1500 ms</string>
+    <string name="show_network_traffic_2000">2000 ms</string>
+    <string name="network_traffic_autohide">Nascondi automaticamente</string>
+    <string name="network_traffic_autohide_summary">Nascondi il monitor quando non c\'è attvità</string>
+    <string name="network_traffic_autohide_threshold">Limita inattività</string>
 </resources>

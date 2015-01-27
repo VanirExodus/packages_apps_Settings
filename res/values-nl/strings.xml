@@ -2482,4 +2482,22 @@
     <string name="encrypt_talkback_dialog_message_pin" msgid="1890374082842868489">"Wanneer u uw pincode opgeeft om dit apparaat te starten, zijn toegankelijkheidsservices zoals <xliff:g id="SERVICE">%1$s</xliff:g> nog niet beschikbaar."</string>
     <string name="encrypt_talkback_dialog_message_pattern" msgid="4474332516537386384">"Wanneer u uw patroon opgeeft om dit apparaat te starten, zijn toegankelijkheidsservices zoals <xliff:g id="SERVICE">%1$s</xliff:g> nog niet beschikbaar."</string>
     <string name="encrypt_talkback_dialog_message_password" msgid="8166099418487083927">"Wanneer u uw wachtwoord opgeeft om dit apparaat te starten, zijn toegankelijkheidsservices zoals <xliff:g id="SERVICE">%1$s</xliff:g> nog niet beschikbaar."</string>
+	<!-- Network traffic -->
+    <string name="network_traffic_title">Netwerkverkeer</string>
+    <string name="show_network_traffic_state">Netwerkmonitor op statusbalk weergeven</string>
+    <string name="show_network_traffic_unit">Display unit</string>
+    <string name="show_network_traffic_frequency">Vernieuwingsfrequentie</string>
+    <string name="show_network_traffic_disable">Uitgeschakeld</string>
+    <string name="show_network_traffic_up">Uitgaand</string>
+    <string name="show_network_traffic_down">Inkomend</string>
+    <string name="show_network_traffic_all">Uitgaand en inkomend</string>
+    <string name="show_network_traffic_bit">Bits per seconde</string>
+    <string name="show_network_traffic_byte">Bytes per seconde</string>
+    <string name="show_network_traffic_500">500 ms</string>
+    <string name="show_network_traffic_1000">1000 ms</string>
+    <string name="show_network_traffic_1500">1500 ms</string>
+    <string name="show_network_traffic_2000">2000 ms</string>
+    <string name="network_traffic_autohide">Automatisch verbergen</string>
+    <string name="network_traffic_autohide_summary">Netwerkmonitor verbergen bij geen activiteit</string>
+    <string name="network_traffic_autohide_threshold">Inactivity threshold</string>
 </resources>

@@ -2482,4 +2482,22 @@
     <string name="encrypt_talkback_dialog_message_pin" msgid="1890374082842868489">"Cuando introduzcas tu PIN para iniciar este dispositivo, los servicios de accesibilidad como <xliff:g id="SERVICE">%1$s</xliff:g> aún no estarán disponibles."</string>
     <string name="encrypt_talkback_dialog_message_pattern" msgid="4474332516537386384">"Cuando introduzcas tu patrón para iniciar este dispositivo, los servicios de accesibilidad como <xliff:g id="SERVICE">%1$s</xliff:g> aún no estarán disponibles."</string>
     <string name="encrypt_talkback_dialog_message_password" msgid="8166099418487083927">"Cuando introduzcas tu contraseña para iniciar este dispositivo, los servicios de accesibilidad como <xliff:g id="SERVICE">%1$s</xliff:g> aún no estarán disponibles."</string>
+	<!-- Network traffic -->
+    <string name="network_traffic_title">Tráfico de red</string>
+    <string name="show_network_traffic_state">Monitor de tráfico barra de estado</string>
+    <string name="show_network_traffic_unit">Ver unidad</string>
+    <string name="show_network_traffic_frequency">Intervalo de actualización</string>
+    <string name="show_network_traffic_disable">Desactivado</string>
+    <string name="show_network_traffic_up">Saliente</string>
+    <string name="show_network_traffic_down">Entrante</string>
+    <string name="show_network_traffic_all">Saliente y entrante</string>
+    <string name="show_network_traffic_bit">Bits por segundo</string>
+    <string name="show_network_traffic_byte">Bytes por segundo</string>
+    <string name="show_network_traffic_500">500 ms</string>
+    <string name="show_network_traffic_1000">1000 ms</string>
+    <string name="show_network_traffic_1500">1500 ms</string>
+    <string name="show_network_traffic_2000">2000 ms</string>
+    <string name="network_traffic_autohide">Auto ocultar</string>
+    <string name="network_traffic_autohide_summary">Ocultar el monitor de tráfico cuando no hay actividad </string>
+    <string name="network_traffic_autohide_threshold">Umbral de inactividad</string>
 </resources>
