@@ -2512,4 +2512,23 @@
     <string name="imei_information_title" msgid="8499085421609752290">"Dati IMEI"</string>
     <string name="imei_information_summary" msgid="2074095606556565233">"Dati relativi all\'IMEI"</string>
     <string name="slot_number" msgid="3762676044904653577">"(Slot <xliff:g id="SLOT_NUM">%1$d</xliff:g>)"</string>
+
+	<!-- Network traffic -->
+    <string name="network_traffic_title">Traffico rete</string>
+    <string name="show_network_traffic_state">Monitor traffico sulla barra di stato</string>
+    <string name="show_network_traffic_unit">Unità di visualizzazione </string>
+    <string name="show_network_traffic_frequency">Intervallo di aggiornamento </string>
+    <string name="show_network_traffic_disable">Disattivato </string>
+    <string name="show_network_traffic_up">In upload</string>
+    <string name="show_network_traffic_down">In download </string>
+    <string name="show_network_traffic_all">In download e in upload </string>
+    <string name="show_network_traffic_bit">Bit per secondo </string>
+    <string name="show_network_traffic_byte">Byte per secondo </string>
+    <string name="show_network_traffic_500">500 ms</string>
+    <string name="show_network_traffic_1000">1000 ms</string>
+    <string name="show_network_traffic_1500">1500 ms</string>
+    <string name="show_network_traffic_2000">2000 ms</string>
+    <string name="network_traffic_autohide">Nascondi automaticamente</string>
+    <string name="network_traffic_autohide_summary">Nascondi il monitor quando non c\'è attvità</string>
+    <string name="network_traffic_autohide_threshold">Limita inattività</string>
 </resources>

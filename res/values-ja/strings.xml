@@ -2518,4 +2518,23 @@
     <string name="imei_information_title" msgid="8499085421609752290">"IMEI情報"</string>
     <string name="imei_information_summary" msgid="2074095606556565233">"IMEI関連情報"</string>
     <string name="slot_number" msgid="3762676044904653577">"（スロット<xliff:g id="SLOT_NUM">%1$d</xliff:g>）"</string>
+
+	<!-- Network traffic -->
+    <string name="network_traffic_title">ネットワーク通信量</string>
+    <string name="show_network_traffic_state">ステータスバー通信量モニタ</string>
+    <string name="show_network_traffic_unit">表示単位</string>
+    <string name="show_network_traffic_frequency">更新間隔</string>
+    <string name="show_network_traffic_disable">無効</string>
+    <string name="show_network_traffic_up">上り</string>
+    <string name="show_network_traffic_down">下り</string>
+    <string name="show_network_traffic_all">上りと下り</string>
+    <string name="show_network_traffic_bit">ビット/秒</string>
+    <string name="show_network_traffic_byte">バイト/秒</string>
+    <string name="show_network_traffic_500">500 ミリ秒</string>
+    <string name="show_network_traffic_1000">1000 ミリ秒</string>
+    <string name="show_network_traffic_1500">1500 ミリ秒</string>
+    <string name="show_network_traffic_2000">2000 ミリ秒</string>
+    <string name="network_traffic_autohide">自動的に非表示</string>
+    <string name="network_traffic_autohide_summary">非アクティブ時はトラフィックモニタを非表示にする</string>
+    <string name="network_traffic_autohide_threshold">非アクティブのしきい値</string>
 </resources>
