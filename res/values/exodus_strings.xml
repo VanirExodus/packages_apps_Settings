@@ -28,4 +28,7 @@
     <!-- Exodus #RomControl LCD_Density @see cm-string.xml -->
     <string name="lcd_density_summary">Changes your screen resolution and please note upon selection of this screen density device automatically restarts the UI</string>
 
+    <!-- QuickSettings 4 columns -->
+    <string name="qs_four_columns_title">Show four tiles per row</string>
+
 </resources>

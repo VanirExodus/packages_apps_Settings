@@ -737,7 +737,6 @@
   <string name="qs_tile_ambient_display">Ambient-näyttö</string>
   <string name="qs_main_tiles_title">Pienennä ensimmäinen rivi</string>
   <string name="qs_main_tiles_summary_on">Kaksi päätiiltä ensimmäisellä rivillä</string>
-  <string name="qs_main_tiles_summary_off">Kolme tiiltä rivillä</string>
   <string name="qs_advanced_location_title">Tarkemmat sijaintiasetukset</string>
   <string name="qs_advanced_location_summary">Ota tarkemmat sijaintiasetukset käyttöön pika-asetuksiin</string>
   <string name="sim_no_number_set">Numeroa ei asetettu</string>
