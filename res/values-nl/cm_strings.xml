@@ -725,7 +725,6 @@
   <string name="qs_tile_usb_tether">USB-tethering</string>
   <string name="qs_main_tiles_title">Eerste rij vergroten</string>
   <string name="qs_main_tiles_summary_on">Twee hoofdtegels op de eerste rij</string>
-  <string name="qs_main_tiles_summary_off">Drie tegels op elke rij</string>
   <string name="qs_advanced_location_title">Geavanceerde locatie-instellingen</string>
   <string name="qs_advanced_location_summary">Geavanceerde instellingen voor locatie in Snelle instellingen</string>
   <string name="gesture_settings_title">Gebaren</string>

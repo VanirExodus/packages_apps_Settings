@@ -724,7 +724,6 @@
   <string name="qs_tile_usb_tether">USB 共享网络</string>
   <string name="qs_main_tiles_title">扩大第一行</string>
   <string name="qs_main_tiles_summary_on">第一行两个主要瓷块</string>
-  <string name="qs_main_tiles_summary_off">每行三个瓷块</string>
   <string name="qs_advanced_location_title">高级位置设置</string>
   <string name="qs_advanced_location_summary">启用快速设置中的高级位置信息设置</string>
   <string name="gesture_settings_title">手势</string>

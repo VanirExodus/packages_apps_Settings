@@ -725,7 +725,6 @@
   <string name="qs_tile_usb_tether">Πρόσδεση USB</string>
   <string name="qs_main_tiles_title">Μεγέθυνση της πρώτης γραμμής</string>
   <string name="qs_main_tiles_summary_on">Δύο κύρια πλακίδια στην πρώτη γραμμή</string>
-  <string name="qs_main_tiles_summary_off">Τρία πλακίδια σε κάθε γραμμή</string>
   <string name="qs_advanced_location_title">Προηγμένες ρυθμίσεις τοποθεσίας</string>
   <string name="qs_advanced_location_summary">Ενεργοποίηση προηγμένων ρυθμίσεων τοποθεσίας στις Γρήγορες ρυθμίσεις</string>
   <string name="gesture_settings_title">Χειρονομίες</string>

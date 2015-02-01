@@ -725,7 +725,7 @@
   <string name="qs_tile_usb_tether">USB-Tethering</string>
   <string name="qs_main_tiles_title">Erste Zeile vergrößern</string>
   <string name="qs_main_tiles_summary_on">Zwei Hauptkacheln in der ersten Zeile</string>
-  <string name="qs_main_tiles_summary_off">Drei Kacheln pro Zeile</string>
+  <string name="qs_main_tiles_summary_off">Auch erste Zeile normal anzeigen</string>
   <string name="qs_advanced_location_title">Erweiterte Standorteinstellungen</string>
   <string name="qs_advanced_location_summary">Erweiterte Standort-Einstellungen in den Schnelleinstellungen aktivieren</string>
   <string name="gesture_settings_title">Gesten</string>
