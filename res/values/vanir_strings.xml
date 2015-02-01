@@ -476,6 +476,9 @@
     <!-- SuperSU -->
     <string name="supersu_title">SuperSU</string>
 
+	<!-- QuickSettings 4 columns -->
+    <string name="qs_four_columns_title">Show four tiles per row</string>
+
     <!-- Keyguard: Quick Settings -->
     <string name="lockscreen_disable_quick_settings_title">Disable quick settings on lock screen</string>
     <string name="lockscreen_disable_quick_settings_summary">Disable access to quick settings on secure lock screens</string>
