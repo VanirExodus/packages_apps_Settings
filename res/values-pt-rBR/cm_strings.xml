@@ -737,7 +737,6 @@
   <string name="qs_tile_ambient_display">Tela ambiente</string>
   <string name="qs_main_tiles_title">Ampliar a primeira linha</string>
   <string name="qs_main_tiles_summary_on">Dois botões principais na primeira linha</string>
-  <string name="qs_main_tiles_summary_off">Três botões em cada fileira</string>
   <string name="qs_advanced_location_title">Configurações avançadas de localização</string>
   <string name="qs_advanced_location_summary">Ativar as configurações avançadas de localização em Configurações Rápidas</string>
   <string name="sim_no_number_set">Nenhum número atribuído</string>

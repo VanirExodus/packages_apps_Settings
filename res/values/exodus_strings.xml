@@ -17,4 +17,6 @@
     <!-- SuperSU -->
     <string name="supersu_title">SuperSU</string>
 
+    <!-- QuickSettings 4 columns -->
+    <string name="qs_four_columns_title">Show four tiles per row</string>
 </resources>

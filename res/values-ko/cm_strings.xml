@@ -721,7 +721,6 @@
   <string name="qs_tile_screen_timeout">화면 시간 제한</string>
   <string name="qs_main_tiles_title">첫 번째 알림 확대</string>
   <string name="qs_main_tiles_summary_on">첫 줄의 주요 타일 두개</string>
-  <string name="qs_main_tiles_summary_off">각 줄의 타일 세개</string>
   <string name="qs_advanced_location_title">고급 위치 설정</string>
   <string name="qs_advanced_location_summary">빠른 설정에서 고급 위치 설정 사용</string>
   <string name="gesture_settings_title">제스처</string>

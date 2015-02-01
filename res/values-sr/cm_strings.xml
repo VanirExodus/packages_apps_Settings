@@ -725,7 +725,6 @@
   <string name="qs_tile_usb_tether">USB привезивање</string>
   <string name="qs_main_tiles_title">Повећај први ред</string>
   <string name="qs_main_tiles_summary_on">Два главне плочице у првом реду</string>
-  <string name="qs_main_tiles_summary_off">Три плочице у сваком реду</string>
   <string name="qs_advanced_location_title">Напредна подешавања локације</string>
   <string name="qs_advanced_location_summary">Омогући напредне поставке локације у брзом подешавању</string>
   <string name="gesture_settings_title">Гестови</string>
