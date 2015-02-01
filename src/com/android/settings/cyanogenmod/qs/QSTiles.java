@@ -88,6 +88,16 @@ public class QSTiles extends Fragment implements
         mDraggableGridView.setOnItemClickListener(this);
         mDraggableGridView.setUseLargeFirstRow(Settings.Secure.getInt(resolver,
                 Settings.Secure.QS_USE_MAIN_TILES, 1) == 1);
+        mDraggableGridView.setColsCount(obtainQSColumnsCount(resolver));
+    }
+
+    /**
+     * returns no of columns to be set Currently configured to either 3 or 4
+     */
+    private int obtainQSColumnsCount(ContentResolver resolver){
+        boolean shouldUseFourColumns = Settings.Secure.getInt(resolver,
+                Settings.Secure.QS_USE_FOUR_COLUMNS, 0) == 1;
+        return ( (shouldUseFourColumns) ? 4 : 3 );
     }
 
     @Override

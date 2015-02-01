@@ -23,6 +23,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Handler;
+import android.provider.Settings;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -41,7 +42,6 @@ public class DraggableGridView extends ViewGroup implements
 
     private static final float CHILD_RATIO = .95f;
     private static final int ANIM_DURATION = 150;
-    private static final int COL_COUNT = 3;
 
     protected int mChildSize, mPadding, mLeftOffset, mScroll = 0;
     protected float mLastDelta = 0;
@@ -54,6 +54,21 @@ public class DraggableGridView extends ViewGroup implements
     private AdapterView.OnItemClickListener mOnItemClickListener;
     private boolean mUseLargerFirstRow = false;
     private int mDefaultColor;
+    private int colsCount = 3; //Default incase of miss !
+
+    /**
+     * sets the no. of columns to QS tile drawer
+     */
+    public void setColsCount(int noOfcolumns) {
+       colsCount = noOfcolumns;
+    }
+
+    /**
+     * gets the no. of columns for QS tile drawer
+     */
+    public int getColsCount(){
+        return colsCount;
+    }
 
     protected Runnable mUpdateTask = new Runnable() {
         public void run() {
@@ -133,16 +148,16 @@ public class DraggableGridView extends ViewGroup implements
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         int width = r - l;
-        mPadding = Math.min((width - (mChildSize * COL_COUNT)) / (COL_COUNT + 1),
+        mPadding = Math.min((width - (mChildSize * getColsCount())) / (getColsCount() + 1),
                 getResources().getDimensionPixelSize(R.dimen.qs_tile_max_padding));
-        mLeftOffset = (width - mChildSize * COL_COUNT - mPadding * (COL_COUNT - 1)) / 2;
+        mLeftOffset = (width - mChildSize * getColsCount() - mPadding * (getColsCount() - 1)) / 2;
 
         for (int i = 0; i < getChildCount(); i++) {
             if (i != mDragged) {
                 Point xy = getCoordinateFromIndex(i);
                 int left = xy.x;
                 // If using main tiles and index == 0 or 1, we need to offset the tiles
-                if (mUseLargerFirstRow && i < (COL_COUNT - 1)) {
+                if (mUseLargerFirstRow && i < (getColsCount() - 1)) {
                     left += mChildSize / 2;
                 }
                 getChildAt(i).layout(left, xy.y, left + mChildSize, xy.y + mChildSize);
@@ -155,7 +170,7 @@ public class DraggableGridView extends ViewGroup implements
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
         int availableWidth = getMeasuredWidth() - getPaddingLeft() - getPaddingRight();
-        mChildSize = Math.min(Math.round((float) availableWidth * CHILD_RATIO / COL_COUNT),
+        mChildSize = Math.min(Math.round((float) availableWidth * CHILD_RATIO / getColsCount()),
                 getResources().getDimensionPixelSize(R.dimen.qs_tile_max_size));
 
         // Update each of the children's widths accordingly to the cell width
@@ -198,12 +213,12 @@ public class DraggableGridView extends ViewGroup implements
         }
         int index = 0;
 
-        index = row * COL_COUNT + col;
+        index = row * getColsCount() + col;
 
         if (mUseLargerFirstRow) {
             // If we click on (0, 2) and are using main tiles, that
             // position is empty
-            if (row == 0 && col == COL_COUNT - 1) {
+            if (row == 0 && col == getColsCount() - 1) {
                 return -1;
             }
 
@@ -270,22 +285,22 @@ public class DraggableGridView extends ViewGroup implements
     }
 
     protected Point getCoordinateFromIndex(int index) {
-        int col = index % COL_COUNT;
-        int row = index / COL_COUNT;
+        int col = index % getColsCount();
+        int row = index / getColsCount();
 
         if (mUseLargerFirstRow) {
             // If on (0,2) and main tiles, (0,2) -> (1,0)
-            if (row == 0 && col == COL_COUNT - 1) {
+            if (row == 0 && col == getColsCount() - 1) {
                 col = 0;
                 row = 1;
             }
             // If on row > 0, we skipped a column
-            if (index >= COL_COUNT) {
+            if (index >= getColsCount()) {
                 col++;
             }
         }
 
-        if (col == COL_COUNT) {
+        if (col == getColsCount()) {
             col = 0;
             row++;
         }
@@ -313,7 +328,7 @@ public class DraggableGridView extends ViewGroup implements
             if (mOnItemClickListener != null) {
                 mOnItemClickListener.onItemClick(null,
                         getChildAt(getLastIndex()), getLastIndex(),
-                        getLastIndex() / COL_COUNT);
+                        getLastIndex() / getColsCount());
             }
         }
     }
@@ -586,10 +601,10 @@ public class DraggableGridView extends ViewGroup implements
 
     protected int getMaxScroll() {
         int childCount = getChildCount();
-        if (childCount >= COL_COUNT && mUseLargerFirstRow) {
+        if (childCount >= getColsCount() && mUseLargerFirstRow) {
             childCount++;
         }
-        int rowCount = (childCount + COL_COUNT - 1 /* round up */) / COL_COUNT;
+        int rowCount = (childCount + getColsCount() - 1 /* round up */) / getColsCount();
         return rowCount * mChildSize + (rowCount + 1) * mPadding - getHeight();
     }
 

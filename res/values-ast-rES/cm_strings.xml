@@ -657,7 +657,6 @@ Calca pa empareyar el preséu Bluetooth enantes de configurar los disparadores.<
   <string name="qs_tile_screen_timeout">Tiempu d\'espera de pantalla</string>
   <string name="qs_main_tiles_title">Ampliar la primer filera</string>
   <string name="qs_main_tiles_summary_on">Dos controles principales na primer filera</string>
-  <string name="qs_main_tiles_summary_off">Tres controles en cada filera</string>
   <string name="qs_advanced_location_title">Axustes de llocalización avanzada</string>
   <string name="qs_advanced_location_summary">Habilitar la configuración avanzada pa llocalización nos axustes rápidos</string>
   <string name="gesture_settings_title">Xestos</string>

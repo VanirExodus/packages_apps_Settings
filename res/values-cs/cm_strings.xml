@@ -742,7 +742,6 @@
   <string name="qs_dynamic_tile_su">Root přístup</string>
   <string name="qs_main_tiles_title">Zvětšit první řádek</string>
   <string name="qs_main_tiles_summary_on">Dvě hlavní dlaždice na prvním řádku</string>
-  <string name="qs_main_tiles_summary_off">Tři dlaždice na řádek</string>
   <string name="qs_advanced_location_title">Upřesnit nastavení polohy</string>
   <string name="qs_advanced_location_summary">Povolit upřesňující nastavení pro polohu v rychlém nastavení</string>
   <string name="sim_no_number_set">Není přiřazení žádné číslo</string>

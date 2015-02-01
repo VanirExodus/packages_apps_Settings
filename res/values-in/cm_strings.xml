@@ -717,7 +717,6 @@
   <string name="qs_tile_usb_tether">Peranggitan USB</string>
   <string name="qs_main_tiles_title">Perbesar baris pertama</string>
   <string name="qs_main_tiles_summary_on">Dua tiles utama pada baris pertama</string>
-  <string name="qs_main_tiles_summary_off">Tiga tiles pada setiap baris</string>
   <string name="qs_advanced_location_title">Setelan lokasi lanjutan</string>
   <string name="qs_advanced_location_summary">Aktifkan pengaturan lanjutan untuk lokasi di Setelan Cepat</string>
   <string name="gesture_settings_title">Gerakan</string>

@@ -743,7 +743,6 @@
   <string name="qs_dynamic_tile_su">Root приступ</string>
   <string name="qs_main_tiles_title">Повећај први ред</string>
   <string name="qs_main_tiles_summary_on">Два главне плочице у првом реду</string>
-  <string name="qs_main_tiles_summary_off">Три плочице у сваком реду</string>
   <string name="qs_advanced_location_title">Напредна подешавања локације</string>
   <string name="qs_advanced_location_summary">Омогући напредне поставке локације у брзом подешавању</string>
   <string name="sim_no_number_set">Нема додељеног броја</string>
