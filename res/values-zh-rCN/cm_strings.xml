@@ -737,7 +737,6 @@
   <string name="qs_tile_sync">同步</string>
   <string name="qs_main_tiles_title">扩大第一行</string>
   <string name="qs_main_tiles_summary_on">第一行两个主要瓷块</string>
-  <string name="qs_main_tiles_summary_off">每行三个瓷块</string>
   <string name="qs_advanced_location_title">高级位置设置</string>
   <string name="qs_advanced_location_summary">启用快速设置中的高级位置信息设置</string>
   <string name="sim_no_number_set">没有分配号码</string>

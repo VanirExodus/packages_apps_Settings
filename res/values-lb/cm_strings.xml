@@ -713,7 +713,6 @@
   <string name="qs_tile_usb_tether">USB-Tethering</string>
   <string name="qs_main_tiles_title">Éischt Rei vergréisseren</string>
   <string name="qs_main_tiles_summary_on">Zwou Haaptkachelen an der éischter Rei</string>
-  <string name="qs_main_tiles_summary_off">Dräi Kachelen an all Rei</string>
   <string name="qs_advanced_location_title">Erweidert Standuertastellungen</string>
   <string name="qs_advanced_location_summary">Erweidert Standuertastellungen an de séieren Astellungen aktivéieren</string>
   <string name="sim_no_number_set">Keng Nummer zougewisen</string>

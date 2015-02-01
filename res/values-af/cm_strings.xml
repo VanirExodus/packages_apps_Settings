@@ -738,7 +738,6 @@
   <string name="qs_tile_sync">Sinkroniseer</string>
   <string name="qs_main_tiles_title">Vergroot eerste ry</string>
   <string name="qs_main_tiles_summary_on">Twee hoof teëls op die eerste ry</string>
-  <string name="qs_main_tiles_summary_off">Drie teëls op elke ry</string>
   <string name="qs_advanced_location_title">Gevorderde ligging-instellings</string>
   <string name="qs_advanced_location_summary">Aktiveer gevorderde instellings vir ligging in Vinnige instellings</string>
   <string name="sim_no_number_set">Geen nommer toegeken</string>

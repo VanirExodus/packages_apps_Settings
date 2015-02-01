@@ -732,7 +732,6 @@
   <string name="qs_tile_ambient_display">Ambient skjerm</string>
   <string name="qs_main_tiles_title">Forstørre første rad</string>
   <string name="qs_main_tiles_summary_on">To viktigste brikker på første rad</string>
-  <string name="qs_main_tiles_summary_off">Tre fliser på hver rad</string>
   <string name="qs_advanced_location_title">Avanserte lokasjonsinnstillinger</string>
   <string name="qs_advanced_location_summary">Aktiver avanserte lokasjonsinnstillinger for lokasjoner i hurtiginnstillinger</string>
   <string name="sim_no_number_set">Ingen nummer som er tildelt</string>

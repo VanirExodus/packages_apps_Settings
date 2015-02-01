@@ -731,7 +731,6 @@
   <string name="qs_tile_heads_up">Svævende meddelelser</string>
   <string name="qs_main_tiles_title">Forstør første række</string>
   <string name="qs_main_tiles_summary_on">To vigtige fliser i den første række</string>
-  <string name="qs_main_tiles_summary_off">Tre fliser på hver række</string>
   <string name="qs_advanced_location_title">Avancerede lokationsindstillinger</string>
   <string name="qs_advanced_location_summary">Aktiver avancerede indstilling for lokation i hurtigindstillinger</string>
   <string name="sim_no_number_set">Intet nummer tildelt</string>

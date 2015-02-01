@@ -739,7 +739,6 @@
   <string name="qs_tile_sync">Synchronizácia</string>
   <string name="qs_main_tiles_title">Zväčšiť prvý riadok</string>
   <string name="qs_main_tiles_summary_on">Dve hlavné dlaždice na prvom riadku</string>
-  <string name="qs_main_tiles_summary_off">Tri dlaždice na každom riadku</string>
   <string name="qs_advanced_location_title">Rozšírené nastavenia polohy</string>
   <string name="qs_advanced_location_summary">Povoliť rozšírené nastavenia polohy v rýchlych nastaveniach</string>
   <string name="sim_no_number_set">Žiadne priradené číslo</string>
