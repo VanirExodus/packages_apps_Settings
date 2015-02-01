@@ -726,7 +726,6 @@
   <string name="qs_tile_usb_tether">USB-модем</string>
   <string name="qs_main_tiles_title">Збільшений перший рядок</string>
   <string name="qs_main_tiles_summary_on">Дві основні плитки на першому рядку</string>
-  <string name="qs_main_tiles_summary_off">Три плитки на кожному рядку</string>
   <string name="qs_advanced_location_title">Розширені налаштування місцезнаходження</string>
   <string name="qs_advanced_location_summary">Увімкнути додаткові параметри розташування у Швидких Налаштуваннях</string>
   <string name="gesture_settings_title">Жести</string>
