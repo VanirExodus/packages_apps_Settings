@@ -737,7 +737,6 @@
   <string name="qs_tile_ambient_display">Visualização de ambiente</string>
   <string name="qs_main_tiles_title">Ampliar a primeira linha</string>
   <string name="qs_main_tiles_summary_on">Dois botões na primeira linha</string>
-  <string name="qs_main_tiles_summary_off">Três botões em cada linha</string>
   <string name="qs_advanced_location_title">Definições avançadas de localização</string>
   <string name="qs_advanced_location_summary">Ativar as definições avançadas para a localização no painel de definições rápidas</string>
   <string name="sim_no_number_set">Nenhum número atribuído</string>

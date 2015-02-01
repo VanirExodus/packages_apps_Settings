@@ -693,7 +693,6 @@
   <string name="qs_tile_screen_timeout">ئېكران مۆھلىتى</string>
   <string name="qs_main_tiles_title">بىرىنچى قۇرنى چوڭايت</string>
   <string name="qs_main_tiles_summary_on">بىرىنچى قۇردا ئىككى ئاساسىي خىش</string>
-  <string name="qs_main_tiles_summary_off">ھەر قۇردا ئۈچ خىش</string>
   <string name="qs_advanced_location_title">ئالىي ئورۇن تەڭشەكلەر</string>
   <string name="qs_advanced_location_summary">تېز قوزغىتىش تەڭشەكلىرىدىكى ئالىي تەڭشەكلەرنى قوزغىتىدۇ</string>
   <string name="gesture_settings_title">قول ئىشارەت</string>

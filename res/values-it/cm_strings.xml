@@ -737,9 +737,9 @@
   <string name="qs_main_tiles_title">Ingrandisci prima riga</string>
   <string name="qs_main_tiles_summary_on">Due tile principali nella prima riga</string>
   <string name="qs_main_tiles_summary_off">Tre tile su ogni riga</string>
-  <string name="qs_advanced_location_title">Impostazioni avanzate localizzazione</string>
-  <string name="qs_advanced_location_summary">Attiva le impostazioni avanzate per la localizzazione in Impostazioni rapide</string>
   <string name="sim_no_number_set">Nessun numero assegnato</string>
+  <string name="qs_advanced_location_title">Impostazioni avanzate di localizzazione</string>
+  <string name="qs_advanced_location_summary">Attiva le impostazioni avanzate per la localizzazione in impostazioni rapide</string>
   <string name="gesture_settings_title">Gesture</string>
   <string name="themes_settings_title">Temi</string>
   <string name="wifi_mode">Modalità</string>

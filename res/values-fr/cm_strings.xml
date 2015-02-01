@@ -716,7 +716,6 @@
   <string name="qs_tile_usb_tether">Modem USB</string>
   <string name="qs_main_tiles_title">Agrandir la première ligne</string>
   <string name="qs_main_tiles_summary_on">Deux raccourcis principaux sur la première ligne</string>
-  <string name="qs_main_tiles_summary_off">Trois raccourcis par ligne</string>
   <string name="qs_advanced_location_title">Paramètres de localisation avancés</string>
   <string name="qs_advanced_location_summary">Activer les paramètres avancés de localisation dans les raccourcis</string>
   <string name="gesture_settings_title">Gestes</string>
