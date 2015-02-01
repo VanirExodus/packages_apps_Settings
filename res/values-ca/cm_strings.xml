@@ -736,7 +736,6 @@
   <string name="qs_tile_heads_up">Notificacions emergents</string>
   <string name="qs_main_tiles_title">Engrandeix la primera fila</string>
   <string name="qs_main_tiles_summary_on">Dues cel·les principals en la primera fila</string>
-  <string name="qs_main_tiles_summary_off">Tres cel·les en cada fila</string>
   <string name="qs_advanced_location_title">Configuració d\'ubicació avançada</string>
   <string name="qs_advanced_location_summary">Habilita la configuració avançada d\'ubicació en els ajustos ràpids</string>
   <string name="sim_no_number_set">Sense número assignat</string>

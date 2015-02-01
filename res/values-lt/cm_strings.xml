@@ -738,7 +738,6 @@
   <string name="qs_tile_ambient_display">Ambient display</string>
   <string name="qs_main_tiles_title">Padidinti pirmąją eilę</string>
   <string name="qs_main_tiles_summary_on">Dvi pagrindines plyteles pirmoje eilėje</string>
-  <string name="qs_main_tiles_summary_off">Trys plytelės kiekvienoje eilėje</string>
   <string name="qs_advanced_location_title">Išplėstiniai vietovės nustatymai</string>
   <string name="qs_advanced_location_summary">Įgalinti vietovės išplėstinius nustatymus greituosiuose nustatymuose</string>
   <string name="sim_no_number_set">Nėra priskirto numerio</string>

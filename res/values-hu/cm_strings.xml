@@ -737,7 +737,6 @@
   <string name="qs_tile_ambient_display">Környezeti kijelző</string>
   <string name="qs_main_tiles_title">Első sor nagyítása</string>
   <string name="qs_main_tiles_summary_on">Az első sorban két fő csempe</string>
-  <string name="qs_main_tiles_summary_off">Három csempe minden sorban</string>
   <string name="qs_advanced_location_title">Speciális helymeghatározási beállítások</string>
   <string name="qs_advanced_location_summary">Engedélyezi a helymeghatározás speciális beállításat a Gyors beállításokban</string>
   <string name="sim_no_number_set">Nincs hozzárendelt szám</string>
