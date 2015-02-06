@@ -34,12 +34,14 @@ public class DisplayRotation extends SettingsPreferenceFragment {
 
     private static final String KEY_ACCELEROMETER = "accelerometer";
     private static final String KEY_LOCKSCREEN_ROTATION = "lockscreen_rotation";
+    private static final String KEY_DEFAULT_LANDSCAPE = "default_landscape_orientation";
     private static final String ROTATION_0_PREF = "display_rotation_0";
     private static final String ROTATION_90_PREF = "display_rotation_90";
     private static final String ROTATION_180_PREF = "display_rotation_180";
     private static final String ROTATION_270_PREF = "display_rotation_270";
 
     private SwitchPreference mAccelerometer;
+    private SwitchPreference mLandscape;
     private SwitchPreference mRotation0Pref;
     private SwitchPreference mRotation90Pref;
     private SwitchPreference mRotation180Pref;
@@ -67,6 +69,8 @@ public class DisplayRotation extends SettingsPreferenceFragment {
 
         mAccelerometer = (SwitchPreference) findPreference(KEY_ACCELEROMETER);
         mAccelerometer.setPersistent(false);
+
+        mLandscape = (SwitchPreference) findPreference(KEY_DEFAULT_LANDSCAPE);
 
         mRotation0Pref = (SwitchPreference) prefSet.findPreference(ROTATION_0_PREF);
         mRotation90Pref = (SwitchPreference) prefSet.findPreference(ROTATION_90_PREF);
@@ -153,6 +157,9 @@ public class DisplayRotation extends SettingsPreferenceFragment {
         if (preference == mAccelerometer) {
             RotationPolicy.setRotationLockForAccessibility(getActivity(),
                     !mAccelerometer.isChecked());
+        } else if (preference == mLandscape) {
+			Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.DEFAULT_LANDSCAPE_ORIENTATION, mLandscape.isChecked() ? 1 : 0);
         } else if (preference == mRotation0Pref ||
                 preference == mRotation90Pref ||
                 preference == mRotation180Pref ||
