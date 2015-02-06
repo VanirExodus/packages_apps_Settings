@@ -19,11 +19,14 @@ package com.android.settings.cyanogenmod;
 import android.database.ContentObserver;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceScreen;
 import android.preference.SwitchPreference;
 import android.provider.Settings;
+
+import com.vanir.util.DeviceUtils;
 
 import com.android.internal.view.RotationPolicy;
 import com.android.settings.R;
@@ -34,16 +37,18 @@ public class DisplayRotation extends SettingsPreferenceFragment {
 
     private static final String KEY_ACCELEROMETER = "accelerometer";
     private static final String KEY_LOCKSCREEN_ROTATION = "lockscreen_rotation";
+    private static final String KEY_DEFAULT_LANDSCAPE = "default_landscape_orientation";
     private static final String ROTATION_0_PREF = "display_rotation_0";
     private static final String ROTATION_90_PREF = "display_rotation_90";
     private static final String ROTATION_180_PREF = "display_rotation_180";
     private static final String ROTATION_270_PREF = "display_rotation_270";
 
     private SwitchPreference mAccelerometer;
-    private SwitchPreference mRotation0Pref;
-    private SwitchPreference mRotation90Pref;
-    private SwitchPreference mRotation180Pref;
-    private SwitchPreference mRotation270Pref;
+    private SwitchPreference mLandscape;
+    private CheckBoxPreference mRotation0Pref;
+    private CheckBoxPreference mRotation90Pref;
+    private CheckBoxPreference mRotation180Pref;
+    private CheckBoxPreference mRotation270Pref;
 
     public static final int ROTATION_0_MODE = 1;
     public static final int ROTATION_90_MODE = 2;
@@ -68,10 +73,17 @@ public class DisplayRotation extends SettingsPreferenceFragment {
         mAccelerometer = (SwitchPreference) findPreference(KEY_ACCELEROMETER);
         mAccelerometer.setPersistent(false);
 
-        mRotation0Pref = (SwitchPreference) prefSet.findPreference(ROTATION_0_PREF);
-        mRotation90Pref = (SwitchPreference) prefSet.findPreference(ROTATION_90_PREF);
-        mRotation180Pref = (SwitchPreference) prefSet.findPreference(ROTATION_180_PREF);
-        mRotation270Pref = (SwitchPreference) prefSet.findPreference(ROTATION_270_PREF);
+        mLandscape = (SwitchPreference) findPreference(KEY_DEFAULT_LANDSCAPE);
+        mLandscape.setChecked(Settings.System.getInt(getActivity().getContentResolver(),
+                    Settings.System.DEFAULT_LANDSCAPE_ORIENTATION, 0) == 1);
+        if (DeviceUtils.isTablet(getActivity())) {
+			prefSet.removePreference(mLandscape);
+		}
+
+        mRotation0Pref = (CheckBoxPreference) prefSet.findPreference(ROTATION_0_PREF);
+        mRotation90Pref = (CheckBoxPreference) prefSet.findPreference(ROTATION_90_PREF);
+        mRotation180Pref = (CheckBoxPreference) prefSet.findPreference(ROTATION_180_PREF);
+        mRotation270Pref = (CheckBoxPreference) prefSet.findPreference(ROTATION_270_PREF);
 
         int mode = Settings.System.getInt(getContentResolver(),
                 Settings.System.ACCELEROMETER_ROTATION_ANGLES,
@@ -153,6 +165,9 @@ public class DisplayRotation extends SettingsPreferenceFragment {
         if (preference == mAccelerometer) {
             RotationPolicy.setRotationLockForAccessibility(getActivity(),
                     !mAccelerometer.isChecked());
+        } else if (preference == mLandscape) {
+			Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.DEFAULT_LANDSCAPE_ORIENTATION, mLandscape.isChecked() ? 1 : 0);
         } else if (preference == mRotation0Pref ||
                 preference == mRotation90Pref ||
                 preference == mRotation180Pref ||

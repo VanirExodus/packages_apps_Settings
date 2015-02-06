@@ -184,6 +184,9 @@
     <string name="navbar_use_gallary_warning">Info: please select Gallery to save image</string>
     <string name="navring_not_available">Install google now to enable navring</string>
 
+    <string name="default_landscape_orientation_title">Default orientation</string>
+    <string name="default_landscape_orientation_summary">Use landscape as default orientation</string>
+
     <!-- Power menu enable disable -->
     <string name="power_menu_settings">Power menu</string>
     <string name="power_menu_reboot_title">Reboot menu</string>

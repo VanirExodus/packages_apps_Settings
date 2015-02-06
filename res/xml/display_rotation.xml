@@ -25,25 +25,28 @@
         android:key="lockscreen_rotation"
         android:title="@string/display_lockscreen_rotation_title"
         android:dependency="accelerometer" />
+    <SwitchPreference
+        android:key="default_landscape_orientation"
+        android:title="@string/default_landscape_orientation_title" />
     <PreferenceCategory
         android:key="display_rotation_category"
         android:title="@string/display_rotation_category_title" />
-    <SwitchPreference
+    <CheckBoxPreference
         android:key="display_rotation_0"
         android:title="@string/display_rotation_0_title"
         android:layout="?android:attr/preferenceLayoutChild"
         android:dependency="accelerometer" />
-    <SwitchPreference
+    <CheckBoxPreference
         android:key="display_rotation_90"
         android:title="@string/display_rotation_90_title"
         android:layout="?android:attr/preferenceLayoutChild"
         android:dependency="accelerometer" />
-    <SwitchPreference
+    <CheckBoxPreference
         android:key="display_rotation_180"
         android:title="@string/display_rotation_180_title"
         android:layout="?android:attr/preferenceLayoutChild"
         android:dependency="accelerometer" />
-    <SwitchPreference
+    <CheckBoxPreference
         android:key="display_rotation_270"
         android:title="@string/display_rotation_270_title"
         android:layout="?android:attr/preferenceLayoutChild"
