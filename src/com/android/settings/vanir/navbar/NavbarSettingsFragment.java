@@ -25,12 +25,14 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.database.ContentObserver;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.UserHandle;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.Gravity;
@@ -46,6 +48,8 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
+
+import org.cyanogenmod.hardware.KeyDisabler;
 
 import com.android.internal.util.vanir.NavbarConstants.NavbarConstant;
 import com.android.settings.R;
@@ -116,6 +120,10 @@ public class NavbarSettingsFragment extends Fragment implements SeekBar.OnSeekBa
             boolean enabled = Settings.System.getInt(resolver,
                          Settings.System.DEV_FORCE_SHOW_NAVBAR, 0) == 1;
             mEnabledSwitch.setChecked(enabled);
+            if (Settings.System.getIntForUser(resolver,
+                    Settings.System.DEV_FORCE_DISABLE_HARDKEYS, 0, UserHandle.USER_CURRENT) == 1) {
+			    KeyDisabler.setActive(enabled);
+			}
         }
     }
 
@@ -346,6 +354,8 @@ public class NavbarSettingsFragment extends Fragment implements SeekBar.OnSeekBa
                     mEnabledSwitch.setEnabled(true);
                 }
             }, 1000);
+            getActivity().sendBroadcast(new Intent(
+                    "vanir.android.settings.CHECK_KEYDISABLER_STATE"));
         }
     }
 

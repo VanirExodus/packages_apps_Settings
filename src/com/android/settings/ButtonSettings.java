@@ -41,6 +41,8 @@ import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
 import com.android.settings.Utils;
 
+import static com.android.internal.util.vanir.HardwareButtonConstants.*;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -65,19 +67,6 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
     private static final String CATEGORY_MENU = "menu_key";
     private static final String CATEGORY_ASSIST = "assist_key";
     private static final String CATEGORY_APPSWITCH = "app_switch_key";
-
-    // Available custom actions to perform on a key press.
-    // Must match values for KEY_HOME_LONG_PRESS_ACTION in:
-    // frameworks/base/core/java/android/provider/Settings.java
-    private static final int ACTION_NOTHING = 0;
-    private static final int ACTION_MENU = 1;
-    private static final int ACTION_APP_SWITCH = 2;
-    private static final int ACTION_SEARCH = 3;
-    private static final int ACTION_VOICE_SEARCH = 4;
-    private static final int ACTION_IN_APP_SEARCH = 5;
-    private static final int ACTION_LAUNCH_CAMERA = 6;
-    private static final int ACTION_SLEEP = 7;
-    private static final int ACTION_LAST_APP = 8;
 
     // Masks for checking presence of hardware keys.
     // Must match values in frameworks/base/core/res/res/values/config.xml
@@ -168,16 +157,16 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
 
             int defaultLongPressAction = res.getInteger(
                     com.android.internal.R.integer.config_longPressOnHomeBehavior);
-            if (defaultLongPressAction < ACTION_NOTHING ||
-                    defaultLongPressAction > ACTION_LAST_APP) {
-                defaultLongPressAction = ACTION_NOTHING;
+            if (defaultLongPressAction < KEY_ACTION_NOTHING ||
+                    defaultLongPressAction > KEY_ACTION_LAST_APP) {
+                defaultLongPressAction = KEY_ACTION_NOTHING;
             }
 
             int defaultDoubleTapAction = res.getInteger(
                     com.android.internal.R.integer.config_doubleTapOnHomeBehavior);
-            if (defaultDoubleTapAction < ACTION_NOTHING ||
-                    defaultDoubleTapAction > ACTION_LAST_APP) {
-                defaultDoubleTapAction = ACTION_NOTHING;
+            if (defaultDoubleTapAction < KEY_ACTION_NOTHING ||
+                    defaultDoubleTapAction > KEY_ACTION_LAST_APP) {
+                defaultDoubleTapAction = KEY_ACTION_NOTHING;
             }
 
             if (settings != null) {
@@ -214,13 +203,13 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
 
             if (settings != null) {
                 int pressAction = Settings.System.getInt(resolver,
-                        Settings.System.KEY_MENU_ACTION, ACTION_MENU);
+                        Settings.System.KEY_MENU_ACTION, KEY_ACTION_MENU);
                 settings.mMenuPressAction = settings.initActionList(
                         KEY_MENU_PRESS, pressAction);
 
                 int longPressAction = Settings.System.getInt(resolver,
                         Settings.System.KEY_MENU_LONG_PRESS_ACTION,
-                        hasAssistKey ? ACTION_NOTHING : ACTION_SEARCH);
+                        hasAssistKey ? KEY_ACTION_NOTHING : KEY_ACTION_SEARCH);
                 settings.mMenuLongPressAction = settings.initActionList(
                         KEY_MENU_LONG_PRESS, longPressAction);
             }
@@ -235,12 +224,12 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
 
             if (settings != null) {
                 int pressAction = Settings.System.getInt(resolver,
-                        Settings.System.KEY_ASSIST_ACTION, ACTION_SEARCH);
+                        Settings.System.KEY_ASSIST_ACTION, KEY_ACTION_SEARCH);
                 settings.mAssistPressAction = settings.initActionList(
                         KEY_ASSIST_PRESS, pressAction);
 
                 int longPressAction = Settings.System.getInt(resolver,
-                        Settings.System.KEY_ASSIST_LONG_PRESS_ACTION, ACTION_VOICE_SEARCH);
+                        Settings.System.KEY_ASSIST_LONG_PRESS_ACTION, KEY_ACTION_VOICE_SEARCH);
                 settings.mAssistLongPressAction = settings.initActionList(
                         KEY_ASSIST_LONG_PRESS, longPressAction);
             }
@@ -255,12 +244,12 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
 
             if (settings != null) {
                 int pressAction = Settings.System.getInt(resolver,
-                        Settings.System.KEY_APP_SWITCH_ACTION, ACTION_APP_SWITCH);
+                        Settings.System.KEY_APP_SWITCH_ACTION, KEY_ACTION_APP_SWITCH);
                 settings.mAppSwitchPressAction = settings.initActionList(
                         KEY_APP_SWITCH_PRESS, pressAction);
 
                 int longPressAction = Settings.System.getInt(resolver,
-                        Settings.System.KEY_APP_SWITCH_LONG_PRESS_ACTION, ACTION_NOTHING);
+                        Settings.System.KEY_APP_SWITCH_LONG_PRESS_ACTION, KEY_ACTION_NOTHING);
                 settings.mAppSwitchLongPressAction = settings.initActionList(
                         KEY_APP_SWITCH_LONG_PRESS, longPressAction);
             }
@@ -338,7 +327,7 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
         }
         return false;
     }
-    
+
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         if (preference == mHomeAnswerCall) {

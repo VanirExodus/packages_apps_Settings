@@ -27,6 +27,12 @@
         android:summary="@string/disable_navkeys_summary"
         android:defaultValue="false" />
 
+    <CheckBoxPreference
+        android:key="force_disable_hardware_keys"
+        android:title="@string/force_disable_hardware_keys_title"
+        android:summary="@string/force_disable_hardware_keys_summary"
+        android:defaultValue="false" />
+
     <com.android.settings.cyanogenmod.ButtonBacklightBrightness
         android:key="button_backlight"
         android:title="@string/button_backlight_title"
