@@ -24,6 +24,7 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.database.ContentObserver;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.os.UserHandle;
@@ -69,6 +70,7 @@ public class GeneralButtonSettings extends SettingsPreferenceFragment implements
     private static final String KEY_BLUETOOTH_INPUT_SETTINGS = "bluetooth_input_settings";
     private static final String HEADSET_CONNECT_MUSIC_PLAYER = "headset_connect_player";
     private static final String DISABLE_NAV_KEYS = "disable_nav_keys";
+    private static final String FORCE_DISABLE_HARDWARE_KEYS = "force_disable_hardware_keys";
 
     private static final String KEY_POWER_END_CALL = "power_end_call";
     private static final String CATEGORY_POWER = "power_key";
@@ -82,6 +84,7 @@ public class GeneralButtonSettings extends SettingsPreferenceFragment implements
     public static final int KEY_MASK_VOLUME = 0x40;
 
     private SwitchPreference mDisableNavigationKeys;
+    private CheckBoxPreference mForceDisableHardkeys;
     private PreferenceCategory mNavigationPreferencesCat;
     private CheckBoxPreference mHeadsetConnectPlayer;
     private ListPreference mVolumeKeyCursorControl;
@@ -91,6 +94,32 @@ public class GeneralButtonSettings extends SettingsPreferenceFragment implements
     private CheckBoxPreference mVolWake;
 
     Handler mHandler = new Handler();
+
+    private SettingsObserver mSettingsObserver;
+
+    class SettingsObserver extends ContentObserver {
+        SettingsObserver(Handler handler) {
+            super(handler);
+        }
+
+        void observe() {
+            ContentResolver resolver = getActivity().getContentResolver();
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.DEV_FORCE_SHOW_NAVBAR), false, this);
+        }
+
+        @Override
+        public void onChange(boolean selfChange) {
+            ContentResolver resolver = getActivity().getContentResolver();
+
+            boolean enabled = Settings.System.getInt(resolver,
+                         Settings.System.DEV_FORCE_SHOW_NAVBAR, 0) == 1;
+
+            if (mDisableNavigationKeys != null) {
+                mDisableNavigationKeys.setChecked(enabled);
+            }
+        }
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -121,6 +150,9 @@ public class GeneralButtonSettings extends SettingsPreferenceFragment implements
         // Force Navigation bar related options
         mNavigationPreferencesCat = (PreferenceCategory) findPreference(CATEGORY_NAVBAR);
         mDisableNavigationKeys = (SwitchPreference) findPreference(DISABLE_NAV_KEYS);
+        mForceDisableHardkeys = (CheckBoxPreference) findPreference(FORCE_DISABLE_HARDWARE_KEYS);
+        mForceDisableHardkeys.setChecked(Settings.System.getIntForUser(resolver,
+                Settings.System.DEV_FORCE_DISABLE_HARDKEYS, 0, UserHandle.USER_CURRENT) == 1);
 
         final ButtonBacklightBrightness backlight =
                 (ButtonBacklightBrightness) findPreference(KEY_BUTTON_BACKLIGHT);
@@ -141,11 +173,13 @@ public class GeneralButtonSettings extends SettingsPreferenceFragment implements
 
             if (needsNavigationBar) {
                 prefScreen.removePreference(mDisableNavigationKeys);
+                prefScreen.removePreference(mForceDisableHardkeys);
                 if (backlight != null) prefScreen.removePreference(backlight);
                 prefScreen.removePreference(mNavigationPreferencesCat);
             }
         } else {
             prefScreen.removePreference(mDisableNavigationKeys);
+            prefScreen.removePreference(mForceDisableHardkeys);
             if (backlight != null) prefScreen.removePreference(backlight);
             prefScreen.removePreference(mNavigationPreferencesCat);
         }
@@ -218,6 +252,32 @@ public class GeneralButtonSettings extends SettingsPreferenceFragment implements
                     (incallPowerBehavior == Settings.Secure.INCALL_POWER_BUTTON_BEHAVIOR_HANGUP);
             mPowerEndCall.setChecked(powerButtonEndsCall);
         }
+        
+        if (mSettingsObserver == null) {
+            mSettingsObserver = new SettingsObserver(mHandler);
+            mSettingsObserver.observe();
+            mSettingsObserver.onChange(true);
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (mSettingsObserver != null) {
+            ContentResolver resolver = getActivity().getContentResolver();
+            resolver.unregisterContentObserver(mSettingsObserver);
+            mSettingsObserver = null;
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mSettingsObserver != null) {
+            ContentResolver resolver = getActivity().getContentResolver();
+            resolver.unregisterContentObserver(mSettingsObserver);
+            mSettingsObserver = null;
+        }
     }
 
     private ListPreference initActionList(String key, int value) {
@@ -263,6 +323,15 @@ public class GeneralButtonSettings extends SettingsPreferenceFragment implements
             }, 1000);
             return true;
 
+        } else if (preference == mForceDisableHardkeys) {
+            boolean force = mForceDisableHardkeys.isChecked();
+            Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.DEV_FORCE_DISABLE_HARDKEYS,
+                    force ? 1 : 0);
+            getActivity().sendBroadcast(new Intent(
+                "vanir.android.settings.TOGGLE_NAVBAR_FOR_HARDKEYS"));
+            return true;
+
         } else if (preference == mSwapVolumeButtons) {
             int value = mSwapVolumeButtons.isChecked()
                     ? (Utils.isTablet(getActivity()) ? 2 : 1) : 0;
@@ -297,29 +366,37 @@ public class GeneralButtonSettings extends SettingsPreferenceFragment implements
 
     private static void writeDisableNavkeysOption(Context context, boolean enabled) {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        final ContentResolver resolver = context.getContentResolver();
         final int defaultBrightness = context.getResources().getInteger(
                 com.android.internal.R.integer.config_buttonBrightnessSettingDefault);
 
-        Settings.System.putInt(context.getContentResolver(),
+		boolean forceDisabled = Settings.System.getIntForUser(resolver,
+                Settings.System.DEV_FORCE_DISABLE_HARDKEYS, 0, UserHandle.USER_CURRENT) == 1;
+
+        Settings.System.putInt(resolver,
                 Settings.System.DEV_FORCE_SHOW_NAVBAR, enabled ? 1 : 0);
-        KeyDisabler.setActive(enabled);
+        context.sendBroadcast(new Intent("vanir.android.settings.TOGGLE_NAVBAR_FOR_HARDKEYS"));
 
         /* Save/restore button timeouts to disable them in softkey mode */
         Editor editor = prefs.edit();
 
         if (enabled) {
-            int currentBrightness = Settings.System.getInt(context.getContentResolver(),
+            int currentBrightness = Settings.System.getInt(resolver,
                     Settings.System.BUTTON_BRIGHTNESS, defaultBrightness);
             if (!prefs.contains("pre_navbar_button_backlight")) {
                 editor.putInt("pre_navbar_button_backlight", currentBrightness);
             }
-            Settings.System.putInt(context.getContentResolver(),
-                    Settings.System.BUTTON_BRIGHTNESS, 0);
+            if (forceDisabled) {
+                Settings.System.putInt(resolver,
+                        Settings.System.BUTTON_BRIGHTNESS, 0);
+			}
         } else {
-            Settings.System.putInt(context.getContentResolver(),
-                    Settings.System.BUTTON_BRIGHTNESS,
-                    prefs.getInt("pre_navbar_button_backlight", defaultBrightness));
-            editor.remove("pre_navbar_button_backlight");
+			if (forceDisabled) {
+				Settings.System.putInt(resolver,
+						Settings.System.BUTTON_BRIGHTNESS,
+						prefs.getInt("pre_navbar_button_backlight", defaultBrightness));
+				editor.remove("pre_navbar_button_backlight");
+		    }
         }
         editor.commit();
     }

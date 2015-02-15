@@ -2161,6 +2161,12 @@
             </intent-filter>
         </receiver>
 
+        <receiver android:name=".vanir.KeyDisablerReceiver" android:enabled="true">
+            <intent-filter>
+                <action android:name="vanir.android.settings.TOGGLE_NAVBAR_FOR_HARDKEYS" />
+            </intent-filter>
+        </receiver>
+
         <!-- Watch for ContactsContract.Profile changes and update the user's photo.  -->
         <receiver android:name=".users.ProfileUpdateReceiver">
             <intent-filter>

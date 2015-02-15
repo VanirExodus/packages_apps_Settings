@@ -80,6 +80,19 @@
     <string name="gestures_rename_label">Gesture name</string>
     <string name="gestures_error_loading">Could not load %s. Make sure you have storage available.</string>
 
+    <!-- Additional hardware actions -->
+    <string name="hardware_keys_action_kill">Kill target</string>
+    <string name="hardware_keys_action_back">Navigate back</string>
+    <string name="hardware_keys_action_home">Navigate home</string>
+    <string name="hardware_keys_action_lastapp">Last app</string>
+    <string name="hardware_keys_action_ime">IME switcher</string>
+    <string name="hardware_keys_action_powermenu">Power menu</string>
+    <string name="hardware_keys_action_navbar">Toggle the navbar</string>
+
+    <!-- force disable hardware keys with navbar -->
+    <string name="force_disable_hardware_keys_title">Control style</string>
+    <string name="force_disable_hardware_keys_summary">Force disable the hardware keys if the navigation bar is enabled</string>
+
     <!-- vanir actions and utilities -->
     <string name="shortcut_label">Actions &amp; Utilities</string>
     <string name="toggle_flushmemory">GC memory</string>
