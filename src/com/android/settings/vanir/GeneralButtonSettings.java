@@ -229,9 +229,9 @@ public class GeneralButtonSettings extends SettingsPreferenceFragment implements
 
         final boolean hasAnyPowerButtonOptions = isTorchSupported  || isCameraPresent /* || etc. */;
         if (!hasAnyPowerButtonOptions) {
-            prefScreen.removePreference(powerButtonCategory);
             if (!Utils.isVoiceCapable(getActivity())) {
                 powerButtonCategory.removePreference(mPowerEndCall);
+                prefScreen.removePreference(powerButtonCategory);
                 mPowerEndCall = null;
            }
         }
