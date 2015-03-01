@@ -88,6 +88,8 @@
     <string name="hardware_keys_action_ime">IME switcher</string>
     <string name="hardware_keys_action_powermenu">Power menu</string>
     <string name="hardware_keys_action_navbar">Toggle the navbar</string>
+    <!-- Hardware button switches -->
+    <string name="key_enabled">Enable key</string>
 
     <!-- force disable hardware keys with navbar -->
     <string name="force_disable_hardware_keys_title">Control style</string>

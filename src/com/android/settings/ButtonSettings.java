@@ -52,15 +52,23 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
         Preference.OnPreferenceChangeListener {
     private static final String TAG = "SystemSettings";
 
+    private static final String KEY_HOME_SWITCH = "key_home_enabled";
+    private static final String KEY_HOME_ANSWER_CALL = "home_answer_call";
+    private static final String KEY_HOME_SHORT_PRESS = "hardware_keys_home_press";
     private static final String KEY_HOME_LONG_PRESS = "hardware_keys_home_long_press";
     private static final String KEY_HOME_DOUBLE_TAP = "hardware_keys_home_double_tap";
+    private static final String KEY_BACK_SWITCH = "key_back_enabled";
+    private static final String KEY_BACK_PRESS = "hardware_keys_back_press";
+    private static final String KEY_BACK_LONG_PRESS = "hardware_keys_back_long_press";
+    private static final String KEY_MENU_SWITCH = "key_menu_enabled";
     private static final String KEY_MENU_PRESS = "hardware_keys_menu_press";
     private static final String KEY_MENU_LONG_PRESS = "hardware_keys_menu_long_press";
+    private static final String KEY_ASSIST_SWITCH = "key_assist_enabled";
     private static final String KEY_ASSIST_PRESS = "hardware_keys_assist_press";
     private static final String KEY_ASSIST_LONG_PRESS = "hardware_keys_assist_long_press";
+    private static final String KEY_APP_SWITCH_SWITCH = "key_appswitch_enabled";
     private static final String KEY_APP_SWITCH_PRESS = "hardware_keys_app_switch_press";
     private static final String KEY_APP_SWITCH_LONG_PRESS = "hardware_keys_app_switch_long_press";
-    private static final String KEY_HOME_ANSWER_CALL = "home_answer_call";
 
     private static final String CATEGORY_HOME = "home_key";
     private static final String CATEGORY_BACK = "back_key";
@@ -76,8 +84,11 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
     public static final int KEY_MASK_ASSIST = 0x08;
     public static final int KEY_MASK_APP_SWITCH = 0x10;
 
+    private ListPreference mHomePressAction;
     private ListPreference mHomeLongPressAction;
     private ListPreference mHomeDoubleTapAction;
+    private ListPreference mBackPressAction;
+    private ListPreference mBackLongPressAction;
     private ListPreference mMenuPressAction;
     private ListPreference mMenuLongPressAction;
     private ListPreference mAssistPressAction;
@@ -155,21 +166,31 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
                 result.put(KEY_HOME_ANSWER_CALL, CATEGORY_HOME);
             }
 
+            int defaultPressAction = KEY_ACTION_HOME;
+            if (defaultPressAction < KEY_ACTION_NOTHING ||
+                    defaultPressAction > KEY_ACTION_BACK) {
+                defaultPressAction = KEY_ACTION_NOTHING;
+            }
+
             int defaultLongPressAction = res.getInteger(
                     com.android.internal.R.integer.config_longPressOnHomeBehavior);
             if (defaultLongPressAction < KEY_ACTION_NOTHING ||
-                    defaultLongPressAction > KEY_ACTION_LAST_APP) {
+                    defaultLongPressAction > KEY_ACTION_BACK) {
                 defaultLongPressAction = KEY_ACTION_NOTHING;
             }
 
             int defaultDoubleTapAction = res.getInteger(
                     com.android.internal.R.integer.config_doubleTapOnHomeBehavior);
             if (defaultDoubleTapAction < KEY_ACTION_NOTHING ||
-                    defaultDoubleTapAction > KEY_ACTION_LAST_APP) {
+                    defaultDoubleTapAction > KEY_ACTION_BACK) {
                 defaultDoubleTapAction = KEY_ACTION_NOTHING;
             }
 
             if (settings != null) {
+                int pressAction = Settings.System.getInt(resolver,
+                        Settings.System.KEY_HOME_ACTION, defaultPressAction);
+                settings.mHomePressAction = settings.initActionList(KEY_HOME_SHORT_PRESS, pressAction);
+
                 int longPressAction = Settings.System.getInt(resolver,
                         Settings.System.KEY_HOME_LONG_PRESS_ACTION,
                         defaultLongPressAction);
@@ -190,7 +211,30 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
         if (hasBackKey) {
             if (!showBackWake) {
                 result.put(Settings.System.BACK_WAKE_SCREEN, CATEGORY_BACK);
-                result.put(CATEGORY_BACK, null);
+            }
+
+            int defaultPressAction = KEY_ACTION_BACK;
+            if (defaultPressAction < KEY_ACTION_NOTHING ||
+                    defaultPressAction > KEY_ACTION_BACK) {
+                defaultPressAction = KEY_ACTION_NOTHING;
+            }
+
+            int defaultLongPressAction = KEY_ACTION_KILL;
+            if (defaultLongPressAction < KEY_ACTION_NOTHING ||
+                    defaultLongPressAction > KEY_ACTION_BACK) {
+                defaultLongPressAction = KEY_ACTION_NOTHING;
+            }
+
+            if (settings != null) {
+                int pressAction = Settings.System.getInt(resolver,
+                        Settings.System.KEY_BACK_ACTION, defaultPressAction);
+                settings.mBackPressAction = settings.initActionList(KEY_BACK_PRESS, pressAction);
+
+                int longPressAction = Settings.System.getInt(resolver,
+                        Settings.System.KEY_BACK_LONG_PRESS_ACTION,
+                        defaultLongPressAction);
+                settings.mBackLongPressAction = settings.initActionList(
+                        KEY_BACK_LONG_PRESS, longPressAction);
             }
         } else {
             result.put(CATEGORY_BACK, null);
@@ -292,40 +336,69 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
-        if (preference == mHomeLongPressAction) {
+        if (preference == mHomePressAction) {
+            handleActionListChange(mHomePressAction, newValue,
+                    Settings.System.KEY_HOME_ACTION);
+            sendUpdateBroadcast();
+            return true;
+        } else if (preference == mHomeLongPressAction) {
             handleActionListChange(mHomeLongPressAction, newValue,
                     Settings.System.KEY_HOME_LONG_PRESS_ACTION);
+            sendUpdateBroadcast();
             return true;
         } else if (preference == mHomeDoubleTapAction) {
             handleActionListChange(mHomeDoubleTapAction, newValue,
                     Settings.System.KEY_HOME_DOUBLE_TAP_ACTION);
+            sendUpdateBroadcast();
+            return true;
+        } else if (preference == mBackPressAction) {
+            handleActionListChange(mBackPressAction, newValue,
+                    Settings.System.KEY_BACK_ACTION);
+            sendUpdateBroadcast();
+            return true;
+        } else if (preference == mBackLongPressAction) {
+            handleActionListChange(mBackLongPressAction, newValue,
+                    Settings.System.KEY_BACK_LONG_PRESS_ACTION);
+            sendUpdateBroadcast();
             return true;
         } else if (preference == mMenuPressAction) {
             handleActionListChange(mMenuPressAction, newValue,
                     Settings.System.KEY_MENU_ACTION);
+            sendUpdateBroadcast();
             return true;
         } else if (preference == mMenuLongPressAction) {
             handleActionListChange(mMenuLongPressAction, newValue,
                     Settings.System.KEY_MENU_LONG_PRESS_ACTION);
+            sendUpdateBroadcast();
             return true;
         } else if (preference == mAssistPressAction) {
             handleActionListChange(mAssistPressAction, newValue,
                     Settings.System.KEY_ASSIST_ACTION);
+            sendUpdateBroadcast();
             return true;
         } else if (preference == mAssistLongPressAction) {
             handleActionListChange(mAssistLongPressAction, newValue,
                     Settings.System.KEY_ASSIST_LONG_PRESS_ACTION);
+            sendUpdateBroadcast();
             return true;
         } else if (preference == mAppSwitchPressAction) {
             handleActionListChange(mAppSwitchPressAction, newValue,
                     Settings.System.KEY_APP_SWITCH_ACTION);
+            sendUpdateBroadcast();
             return true;
         } else if (preference == mAppSwitchLongPressAction) {
             handleActionListChange(mAppSwitchLongPressAction, newValue,
                     Settings.System.KEY_APP_SWITCH_LONG_PRESS_ACTION);
+            sendUpdateBroadcast();
             return true;
         }
         return false;
+    }
+
+    private void sendUpdateBroadcast() {
+        Intent u = new Intent();
+        u.setAction(Intent.ACTION_UPDATE_KEYS);
+        mContext.sendBroadcastAsUser(u, UserHandle.ALL);
     }
 
     @Override
