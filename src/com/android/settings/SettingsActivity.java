@@ -314,7 +314,7 @@ public class SettingsActivity extends Activity
             BlacklistSettings.class.getName(),
             ProfilesSettings.class.getName(),
             com.android.settings.cyanogenmod.PrivacySettings.class.getName(),
-            com.android.settings.vanir.ScreenRecorderSettings.class.getName()
+            com.android.settings.vanir.ScreenRecorderSettings.class.getName(),
             LiveDisplay.class.getName()
     };
 

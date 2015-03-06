@@ -69,7 +69,6 @@ public class BootReceiver extends BroadcastReceiver {
         }
 
         /* Restore the hardware tunable values */
-        DisplaySettings.restore(ctx);
         HardwareSettings.restore(ctx);
         GeneralButtonSettings.restoreKeyDisabler(ctx);
         DisplayGamma.restore(ctx);

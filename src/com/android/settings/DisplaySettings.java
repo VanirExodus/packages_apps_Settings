@@ -54,7 +54,6 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.preference.SwitchPreference;
-import android.provider.SearchIndexableResource;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
@@ -69,7 +68,7 @@ import org.cyanogenmod.hardware.ColorEnhancement;
 import org.cyanogenmod.hardware.SunlightEnhancement;
 
 public class DisplaySettings extends SettingsPreferenceFragment implements
-        Preference.OnPreferenceChangeListener, OnPreferenceClickListener, Indexable {
+        Preference.OnPreferenceChangeListener, OnPreferenceClickListener {
     private static final String TAG = "DisplaySettings";
 
     /** If there is no setting in the provider, use this. */
@@ -164,8 +163,8 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
         if (mDozePreference != null && isDozeAvailable(activity)) {
             mDozePreference.setOnPreferenceChangeListener(this);
         } else {
-            if (displayPrefs != null && mDozePreference != null) {
-                displayPrefs.removePreference(mDozePreference);
+            if (mDozePreference != null) {
+                getPreferenceScreen().removePreference(mDozePreference);
             }
         }
 
@@ -174,11 +173,6 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
             mDozePreference.setOnPreferenceChangeListener(this);
         } else {
             removePreference(KEY_DOZE);
-        }
-
-        mScreenColorSettings = (PreferenceScreen) findPreference(KEY_SCREEN_COLOR_SETTINGS);
-        if (!isPostProcessingSupported(activity)) {
-            getPreferenceScreen().removePreference(mScreenColorSettings);
         }
     }
 
@@ -410,10 +404,6 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
 
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
-        if (preference == mAccelerometer) {
-            RotationPolicy.setRotationLockForAccessibility(getActivity(),
-                    !mAccelerometer.isChecked());
-        }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
 
