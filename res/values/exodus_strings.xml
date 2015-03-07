@@ -20,4 +20,8 @@
     <!-- Screen shutter sound -->
     <string name="screenshot_shutter_sound_title">Screenshot shutter sound</string>
 
+    <!-- Force expanded notifications -->
+    <string name="notification_force_expand_title">Force expanded notification</string>
+    <string name="notification_force_expand_summary">Force expanded notifications on all supported apps</string>
+
 </resources>
