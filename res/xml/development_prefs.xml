@@ -43,6 +43,11 @@
         android:summary="@string/enable_quickboot_summary" />
 
     <PreferenceScreen
+        android:key="wakelock_blocker"
+        android:fragment="com.android.settings.exodus.WakeLockBlocker"
+        android:title="@string/wakelock_blocker_title" />
+
+    <PreferenceScreen
             android:key="local_backup_password"
             android:title="@string/local_backup_password_title"
             android:summary="@string/local_backup_password_summary_none"
