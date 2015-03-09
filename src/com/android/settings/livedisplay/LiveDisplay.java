@@ -20,6 +20,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.res.Resources;
 import android.database.ContentObserver;
+import android.hardware.CmHardwareManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -32,6 +33,11 @@ import android.preference.PreferenceScreen;
 import android.preference.SwitchPreference;
 import android.provider.SearchIndexableResource;
 import android.provider.Settings;
+
+import static android.hardware.CmHardwareManager.FEATURE_ADAPTIVE_BACKLIGHT;
+import static android.hardware.CmHardwareManager.FEATURE_COLOR_ENHANCEMENT;
+import static android.hardware.CmHardwareManager.FEATURE_DISPLAY_GAMMA_CALIBRATION;
+import static android.hardware.CmHardwareManager.FEATURE_SUNLIGHT_ENHANCEMENT;
 
 import com.android.internal.util.ArrayUtils;
 import com.android.settings.R;
@@ -90,6 +96,8 @@ public class LiveDisplay extends SettingsPreferenceFragment implements
     private int mDefaultDayTemperature;
     private int mDefaultNightTemperature;
 
+    private CmHardwareManager mCmHardwareManager;
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,7 +109,9 @@ public class LiveDisplay extends SettingsPreferenceFragment implements
                 com.android.internal.R.integer.config_dayColorTemperature);
         mDefaultNightTemperature = res.getInteger(
                 com.android.internal.R.integer.config_nightColorTemperature);
-
+        
+        mCmHardwareManager = (CmHardwareManager) activity.getSystemService(Context.CMHW_SERVICE);
+        
         addPreferencesFromResource(R.xml.livedisplay);
 
         PreferenceCategory liveDisplayPrefs = (PreferenceCategory)
@@ -123,7 +133,7 @@ public class LiveDisplay extends SettingsPreferenceFragment implements
                 com.android.internal.R.array.live_display_summaries);
 
         // Remove outdoor mode from lists if there is no support
-        if (!SunlightEnhancement.isSupported()) {
+        if (!mCmHardwareManager.isSupported(FEATURE_SUNLIGHT_ENHANCEMENT)) {
             int idx = ArrayUtils.indexOf(mModeValues, String.valueOf(MODE_OUTDOOR));
             String[] entriesTemp = new String[mModeEntries.length - 1];
             String[] valuesTemp = new String[mModeValues.length - 1];
@@ -151,26 +161,27 @@ public class LiveDisplay extends SettingsPreferenceFragment implements
 
         mLowPower = (SwitchPreference) findPreference(KEY_LIVE_DISPLAY_LOW_POWER);
         if (liveDisplayPrefs != null && mLowPower != null
-                && !isAdaptiveBacklightSupported()) {
+                && !mCmHardwareManager.isSupported(FEATURE_ADAPTIVE_BACKLIGHT)) {
             liveDisplayPrefs.removePreference(mLowPower);
             mLowPower = null;
         }
 
         mOutdoorMode = (SwitchPreference) findPreference(KEY_LIVE_DISPLAY_AUTO_OUTDOOR_MODE);
         if (liveDisplayPrefs != null && mOutdoorMode != null
-                && !isSunlightEnhancementSupported()) {
+                && !mCmHardwareManager.isSupported(FEATURE_SUNLIGHT_ENHANCEMENT)) {
             liveDisplayPrefs.removePreference(mOutdoorMode);
             mOutdoorMode = null;
         }
 
         mColorEnhancement = (SwitchPreference) findPreference(KEY_LIVE_DISPLAY_COLOR_ENHANCE);
         if (liveDisplayPrefs != null && mColorEnhancement != null
-                && !isColorEnhancementSupported()) {
+                && !mCmHardwareManager.isSupported(FEATURE_COLOR_ENHANCEMENT)) {
             liveDisplayPrefs.removePreference(mColorEnhancement);
             mColorEnhancement = null;
         }
 
-        if (calibrationPrefs != null && !DisplayGamma.isSupported()) {
+        if (calibrationPrefs != null
+                && !mCmHardwareManager.isSupported(FEATURE_DISPLAY_GAMMA_CALIBRATION)) {
             Preference gammaPref = findPreference(KEY_DISPLAY_GAMMA);
             if (gammaPref != null) {
                 calibrationPrefs.removePreference(gammaPref);
@@ -238,33 +249,6 @@ public class LiveDisplay extends SettingsPreferenceFragment implements
         return true;
     }
 
-    private static boolean isAdaptiveBacklightSupported() {
-        try {
-            return AdaptiveBacklight.isSupported();
-        } catch (NoClassDefFoundError e) {
-            // Hardware abstraction framework not installed
-            return false;
-        }
-    }
-
-    private static boolean isSunlightEnhancementSupported() {
-        try {
-            return SunlightEnhancement.isSupported();
-        } catch (NoClassDefFoundError e) {
-            // Hardware abstraction framework not installed
-            return false;
-        }
-    }
-
-    private static boolean isColorEnhancementSupported() {
-        try {
-            return ColorEnhancement.isSupported();
-        } catch (NoClassDefFoundError e) {
-            // Hardware abstraction framework not installed
-            return false;
-        }
-    }
-
     private static boolean isPostProcessingSupported(Context context) {
         return Utils.isPackageInstalled(context, "com.qualcomm.display");
     }
@@ -306,14 +290,6 @@ public class LiveDisplay extends SettingsPreferenceFragment implements
         private boolean mHasDisplayGamma;
 
         @Override
-        public void prepare() {
-            mHasSunlightEnhancement = isSunlightEnhancementSupported();
-            mHasColorEnhancement = isColorEnhancementSupported();
-            mHasLowPower = isAdaptiveBacklightSupported();
-            mHasDisplayGamma = DisplayGamma.isSupported();
-        }
-
-        @Override
         public List<SearchIndexableResource> getXmlResourcesToIndex(Context context,
                 boolean enabled) {
             ArrayList<SearchIndexableResource> result =
@@ -328,11 +304,14 @@ public class LiveDisplay extends SettingsPreferenceFragment implements
 
         @Override
         public List<String> getNonIndexableKeys(Context context) {
+            CmHardwareManager cmHardwareManager =
+                    (CmHardwareManager) context.getSystemService(Context.CMHW_SERVICE);
+                    
             ArrayList<String> result = new ArrayList<String>();
-            if (!mHasSunlightEnhancement) {
+            if (!cmHardwareManager.isSupported(FEATURE_SUNLIGHT_ENHANCEMENT)) {
                 result.add(KEY_LIVE_DISPLAY_AUTO_OUTDOOR_MODE);
             }
-            if (!mHasColorEnhancement) {
+            if (!cmHardwareManager.isSupported(FEATURE_COLOR_ENHANCEMENT)) {
                 result.add(KEY_LIVE_DISPLAY_COLOR_ENHANCE);
             }
             if (!mHasLowPower) {
@@ -340,8 +319,10 @@ public class LiveDisplay extends SettingsPreferenceFragment implements
             }
             if (!isPostProcessingSupported(context)) {
                 result.add(KEY_SCREEN_COLOR_SETTINGS);
+            } else {
+                result.add(KEY_DISPLAY_COLOR);
             }
-            if (!mHasDisplayGamma) {
+            if (!cmHardwareManager.isSupported(FEATURE_DISPLAY_GAMMA_CALIBRATION)) {
                 result.add(KEY_DISPLAY_GAMMA);
             }
             return result;

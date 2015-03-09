@@ -23,6 +23,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.hardware.CmHardwareManager;
 import android.os.PowerManager;
 import android.os.SystemProperties;
 import android.os.UserHandle;
@@ -35,12 +36,10 @@ import com.android.settings.R;
 import java.util.Arrays;
 import java.util.List;
 
-import org.cyanogenmod.hardware.KeyDisabler;
 
 public class KeyDisablerReceiver extends BroadcastReceiver {
 
     private static final String TAG = "KeyDisablerReceiver";
-
     @Override
     public void onReceive(Context ctx, Intent intent) {
         if (intent.getAction().equals("vanir.android.settings.TOGGLE_NAVBAR_FOR_HARDKEYS")) {
@@ -53,9 +52,11 @@ public class KeyDisablerReceiver extends BroadcastReceiver {
                     Settings.System.DEV_FORCE_DISABLE_HARDKEYS, 0, UserHandle.USER_CURRENT) == 1;
             boolean enabled = Settings.System.getInt(resolver,
                     Settings.System.DEV_FORCE_SHOW_NAVBAR, 0) == 1;
+            final CmHardwareManager cmHardwareManager =
+                        (CmHardwareManager) context.getSystemService(Context.CMHW_SERVICE);
 
             Settings.System.putInt(resolver, Settings.System.DEV_FORCE_SHOW_NAVBAR, enabled ? 1 : 0);
-            KeyDisabler.setActive(forceDisabled && enabled);
+            cmHardwareManager.set(CmHardwareManager.FEATURE_KEY_DISABLE, forceDisabled && enabled);
 
             Editor editor = prefs.edit();
             if (enabled) {

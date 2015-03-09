@@ -25,6 +25,7 @@ import android.content.res.Resources;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.database.ContentObserver;
+import android.hardware.CmHardwareManager;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.os.UserHandle;
@@ -51,7 +52,6 @@ import com.android.settings.search.Indexable;
 import com.android.settings.SettingsPreferenceFragment;
 import com.android.settings.Utils;
 
-import org.cyanogenmod.hardware.KeyDisabler;
 import com.vanir.util.DeviceUtils;
 
 import java.util.ArrayList;
@@ -96,6 +96,9 @@ public class GeneralButtonSettings extends SettingsPreferenceFragment implements
 
     private SettingsObserver mSettingsObserver;
 
+    final CmHardwareManager cmHardwareManager =
+            (CmHardwareManager) context.getSystemService(Context.CMHW_SERVICE);
+            
     class SettingsObserver extends ContentObserver {
         SettingsObserver(Handler handler) {
             super(handler);
@@ -163,7 +166,7 @@ public class GeneralButtonSettings extends SettingsPreferenceFragment implements
         // Only visible on devices that does not have a navigation bar already,
         // and don't even try unless the existing keys can be disabled
         boolean needsNavigationBar = false;
-        if (KeyDisabler.isSupported()) {
+        if (cmHardwareManager.isSupported(CmHardwareManager.FEATURE_KEY_DISABLE)) {
             try {
                 IWindowManager wm = WindowManagerGlobal.getWindowManagerService();
                 needsNavigationBar = wm.needsNavigationBar();
@@ -398,21 +401,14 @@ public class GeneralButtonSettings extends SettingsPreferenceFragment implements
     }
 
     public static void restoreKeyDisabler(Context context) {
-        if (!KeyDisabler.isSupported()) {
+        CmHardwareManager cmHardwareManager =
+                (CmHardwareManager) context.getSystemService(Context.CMHW_SERVICE);
+        if (!cmHardwareManager.isSupported(CmHardwareManager.FEATURE_KEY_DISABLE)) {
             return;
         }
 
         writeDisableNavkeysOption(context, Settings.System.getInt(context.getContentResolver(),
                 Settings.System.DEV_FORCE_SHOW_NAVBAR, 0) != 0);
-    }
-
-    private static boolean isKeyDisablerSupported() {
-        try {
-            return KeyDisabler.isSupported();
-        } catch (NoClassDefFoundError e) {
-            // Hardware abstraction framework not installed
-            return false;
-        }
     }
 
     private void handleTogglePowerButtonEndsCallPreferenceClick() {

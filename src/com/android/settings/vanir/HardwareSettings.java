@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.hardware.CmHardwareManager;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.Bundle;
@@ -36,14 +37,12 @@ import android.provider.Settings;
 import android.util.Log;
 
 import static android.provider.Settings.Secure.WAKE_GESTURE_ENABLED;
+import static android.hardware.CmHardwareManager.FEATURE_TAP_TO_WAKE;
 
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
 import com.android.settings.Utils;
-import com.android.settings.hardware.VibratorIntensity;
 import com.vanir.util.CMDProcessor;
-
-import org.cyanogenmod.hardware.TapToWake;
 
 import java.io.File;
 
@@ -78,14 +77,16 @@ public class HardwareSettings extends SettingsPreferenceFragment implements
     private static CheckBoxPreference mFastCharge;
 
     private Preference mButtonNavigation;
-
+    private CmHardwareManager mCmHardwareManager;
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         addPreferencesFromResource(R.xml.hardware_settings);
         ContentResolver resolver = getContentResolver();
-
+        mCmHardwareManager = (CmHardwareManager) getActivity().getSystemService(Context.CMHW_SERVICE);
+        
         final int deviceKeys = getResources().getInteger(
                 com.android.internal.R.integer.config_deviceHardwareKeys);
         PreferenceCategory cat =
@@ -121,7 +122,7 @@ public class HardwareSettings extends SettingsPreferenceFragment implements
                 Settings.System.HAPTIC_FEEDBACK_ENABLED, 1) == 1);
 
         boolean haptic = hasHaptic(getActivity());
-        boolean hasvib = VibratorIntensity.isSupported();
+        boolean hasvib = cmHardwareManager.isSupported(CmHardwareManager.FEATURE_VIBRATOR);
         if (!hasvib) {
             cat.removePreference(findPreference("vibration_intensity"));
         }
@@ -143,7 +144,7 @@ public class HardwareSettings extends SettingsPreferenceFragment implements
 
         // this was abandoned by CM.. but i guess we'll keep it anyways even though kernel apps do it too
         mTapToWake = (CheckBoxPreference) findPreference(KEY_TAP_TO_WAKE);
-        if (!isTapToWakeSupported()) {
+        if (!mCmHardwareManager.isSupported(FEATURE_TAP_TO_WAKE)) {
             getPreferenceScreen().removePreference(mTapToWake);
             mTapToWake = null;
         }
@@ -171,8 +172,7 @@ public class HardwareSettings extends SettingsPreferenceFragment implements
         }
 
         if (mTapToWake != null) {
-            final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-            mTapToWake.setChecked(prefs.getBoolean(KEY_TAP_TO_WAKE, true));
+            mTapToWake.setChecked(mCmHardwareManager.get(FEATURE_TAP_TO_WAKE));
         }
     }
 
@@ -180,8 +180,8 @@ public class HardwareSettings extends SettingsPreferenceFragment implements
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         if (preference == mTapToWake) {
             final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-            prefs.edit().putBoolean(KEY_TAP_TO_WAKE, mTapToWake.isChecked()).commit();
-            return TapToWake.setEnabled(mTapToWake.isChecked());
+            prefs.edit().putBoolean(KEY_TAP_TO_WAKE, mTapToWake.isChecked()).commit();        
+            return mCmHardwareManager.set(FEATURE_TAP_TO_WAKE, mTapToWake.isChecked());
 
         } else if (preference == mFastCharge) {
             writeFastChargeOption();
@@ -230,15 +230,6 @@ public class HardwareSettings extends SettingsPreferenceFragment implements
         return sensors != null && sensors.getDefaultSensor(Sensor.TYPE_WAKE_GESTURE) != null;
     }
 
-    private static boolean isTapToWakeSupported() {
-        try {
-            return TapToWake.isSupported();
-        } catch (NoClassDefFoundError e) {
-            // Hardware abstraction framework not installed
-            return false;
-        }
-    }
-
     private void writeFastChargeOption() {
 
         if (mFastCharge.isChecked()) {
@@ -263,10 +254,11 @@ public class HardwareSettings extends SettingsPreferenceFragment implements
      */
     public static void restore(Context ctx) {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
-
-        if (isTapToWakeSupported()) {
+        CmHardwareManager cmHardwareManager =
+            (CmHardwareManager) ctx.getSystemService(Context.CMHW_SERVICE);
+         if (cmHardwareManager.isSupported(FEATURE_TAP_TO_WAKE)) {   
             final boolean enabled = prefs.getBoolean(KEY_TAP_TO_WAKE, true);
-            if (!TapToWake.setEnabled(enabled)) {
+            if (!cmHardwareManager.set(FEATURE_TAP_TO_WAKE, enabled)) {
                 Log.e(TAG, "Failed to restore tap-to-wake settings.");
             } else {
                 Log.d(TAG, "Tap-to-wake settings restored.");
