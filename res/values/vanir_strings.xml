@@ -38,6 +38,8 @@
     <string name="userpsace_title">Userspace</string>
     <string name="general">General</string>
     <string name="wake_options_title">Device wake up</string>
+    <string name="rom_controls">Rom controls</string>
+    <string name="equalizer_settings_title">Viper4Android Equalizer</string>
 
     <!-- Other device settings -->
     <string name="more_device_controls_title">More\u2026</string>

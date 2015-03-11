@@ -62,7 +62,6 @@ public class VanirInterface extends SettingsPreferenceFragment implements
     private static final String HARDWARE_IMMERSIVE_STYLE = "hardware_immersive_style";
     private static final String IMMERSIVE_ENABLED = "immersive_enabled";
     private static final String IMMERSIVE_DISABLED = "immersive_disabled";
-    private static final String KEY_LCD_SETUP = "lcd_density_setup";
 
     private ListPreference mExpandedDesktopPref;
     private CheckBoxPreference mExpandedDesktopNoNavbarPref;
@@ -74,8 +73,6 @@ public class VanirInterface extends SettingsPreferenceFragment implements
 
     Context mContext;
     private int immersiveModeValue;
-
-    int newDensityValue;
 
     private SettingsObserver mSettingsObserver;
 
@@ -120,14 +117,6 @@ public class VanirInterface extends SettingsPreferenceFragment implements
         addPreferencesFromResource(R.xml.vanir_interface);
         PreferenceScreen prefSet = getPreferenceScreen();
         mContext = getActivity().getApplicationContext();
-
-        String currentProperty = SystemProperties.get("ro.sf.lcd_density");
-        try {
-            newDensityValue = Integer.parseInt(currentProperty);
-        } catch (Exception e) {
-            getPreferenceScreen().removePreference(findPreference(KEY_LCD_SETUP));
-        }
-        findPreference(KEY_LCD_SETUP).setSummary(getResources().getString(R.string.current_lcd_density) + currentProperty);
 
         mImmersiveModeState = (SwitchPreference) findPreference(KEY_IMMERSIVE_MODE_STATE);
         mImmersiveModeState.setChecked(Settings.System.getInt(getContentResolver(),
