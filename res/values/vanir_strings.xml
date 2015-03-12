@@ -480,6 +480,9 @@
     <string name="lockscreen_disable_quick_settings_title">Disable quick settings on lock screen</string>
     <string name="lockscreen_disable_quick_settings_summary">Disable access to quick settings on secure lock screens</string>
 
+    <!-- Xposed check receiver -->
+    <string name="xposed_detected">Xposed package detected</string>
+
     <!-- Keyguard: Power Menu -->
     <string name="lockscreen_disable_power_menu_title">Disable power menu on lock screen</string>
     <string name="lockscreen_disable_power_menu_summary">Disable access to power menu on secure lock screens</string>
