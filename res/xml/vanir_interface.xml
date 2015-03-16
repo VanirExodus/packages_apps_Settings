@@ -42,6 +42,11 @@
     <PreferenceCategory
         android:title="@string/general" />
 
+	   <PreferenceScreen
+			    android:id="@+id/ad_blocker"
+				android:title="@string/hfm_disable_ads_title"
+				android:fragment="com.android.settings.vanir.hfm.HfmSettings" />
+
         <PreferenceScreen
             android:id="@+id/notification_drawer_settings"
             android:title="@string/notification_drawer_title"
