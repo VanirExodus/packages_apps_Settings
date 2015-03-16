@@ -34,6 +34,7 @@ import com.android.settings.livedisplay.DisplayGamma;
 import com.android.settings.Utils;
 import com.android.settings.vanir.GeneralButtonSettings;
 import com.android.settings.vanir.HardwareSettings;
+import com.android.settings.vanir.hfm.CheckHosts;
 import com.android.settings.R;
 
 import java.util.Arrays;
@@ -67,6 +68,12 @@ public class BootReceiver extends BroadcastReceiver {
             } else {
                 SystemProperties.set(IOSCHED_SETTINGS_PROP, "false");
             }
+
+            // Stash ad blocker restore here for now
+            Intent serv = new Intent(ctx, CheckHosts.class);
+            serv.setAction(intent.getAction());
+            serv.putExtras(intent);
+            ctx.startService(serv);
         }
 
         /* Restore the hardware tunable values */
@@ -74,7 +81,7 @@ public class BootReceiver extends BroadcastReceiver {
         GeneralButtonSettings.restoreKeyDisabler(ctx);
         DisplayGamma.restore(ctx);
         VibratorIntensity.restore(ctx);
-        InputMethodAndLanguageSettings.restore(ctx);       
+        InputMethodAndLanguageSettings.restore(ctx);
     }
 
     private void initFreqCapFiles(Context ctx)
