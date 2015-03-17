@@ -2204,8 +2204,6 @@
             </intent-filter>
         </activity>
 
-        <service android:name="com.android.settings.vanir.hfm.CheckHosts" />
-
         <activity android:name="com.android.settings.vanir.hfm.HfmWhitelist"
                 android:label="@string/hfm_whitelist_title" />
 
