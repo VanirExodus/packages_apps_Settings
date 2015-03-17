@@ -41,7 +41,6 @@ import android.os.StrictMode;
 import android.provider.Settings;
 import android.widget.TextView;
 
-import com.android.settings.vanir.hfm.HfmSettings;
 import com.android.settings.R;
 
 public final class HfmHelpers {
@@ -62,16 +61,6 @@ public final class HfmHelpers {
         File altHosts = new File("/etc/hosts.alt");
         File altOrigHosts = new File("/etc/hosts.alt_orig");
         File hosts = new File("/etc/hosts");
-        if (applyWhitelist || ! altOrigHosts.exists()) {
-            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-            Set<String> hfmWhitelistSet = sharedPreferences.getStringSet("hfm_whitelist", null);
-            if (hfmWhitelistSet != null) {
-                ArrayList<String> hfmWhitelist = new ArrayList<String>(hfmWhitelistSet);
-                if ( ! hfmWhitelist.isEmpty() ) {
-                    HfmWhitelist.applyWhitelist(context, hfmWhitelist);
-                }
-            }
-        }
         try {
             boolean adsDisabled = Settings.System.getInt(context.getContentResolver(), Settings.System.HFM_DISABLE_ADS, 0) == 1;
             if (adsDisabled && areFilesDifferent(hosts, altHosts)) {
@@ -79,10 +68,7 @@ public final class HfmHelpers {
             } else if ( ! adsDisabled && areFilesDifferent(hosts, defHosts)) {
                 copyFiles(defHosts, hosts);
             }
-        }
-        catch(IOException e)
-        {
-            e.printStackTrace();
+        } catch(IOException e) {
         }
     }
 
@@ -122,99 +108,5 @@ public final class HfmHelpers {
                        + " ; mount -o ro,remount /system";
             RunAsRoot(cmd);
         }
-    }
-
-    public static boolean isScriptFinished() {
-        File altHosts = new File("/etc/hosts.alt_orig");
-        File hosts0 = new File("/etc/hosts0");
-        File hosts1 = new File("/etc/hosts1");
-        File hosts2 = new File("/etc/hosts2");
-        File hosts3 = new File("/etc/hosts3");
-        File tmpHosts = new File("/etc/hosts.tmp");
-        File started = new File("/etc/started.cfg");
-
-        if (altHosts.exists() && !hosts0.exists() && !hosts1.exists()
-            && !hosts2.exists() && !hosts3.exists() && !tmpHosts.exists() && !started.exists()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public static boolean isAvailable(String urlString) throws IOException {
-        try {
-            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-            StrictMode.setThreadPolicy(policy);
-
-            URL url = new URL(urlString);
-
-            HttpURLConnection urlc = (HttpURLConnection) url.openConnection();
-            urlc.setRequestProperty("Connection", "close");
-            urlc.setConnectTimeout(1000);
-            urlc.connect();
-
-            if (urlc.getResponseCode() == 200) {
-                return true;
-            } else {
-                return false;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    public static void showDialog(String message, Context c) {
-        AlertDialog dialog = new AlertDialog.Builder(c)
-        .setMessage(message)
-        .setNeutralButton("OK", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                //Nothing here
-            }
-        }).show();
-        TextView tv = (TextView) dialog.findViewById(android.R.id.message);
-        tv.setTextSize(14);
-    }
-
-    public static void checkConnectivity(Context c, ConnectivityManager man) throws IOException {
-        NetworkInfo networkInfo = man.getActiveNetworkInfo();
-        if (networkInfo != null && networkInfo.isConnected()) {
-            HfmSettings.pd.show();
-            FetchHosts.fetch(); //Download and manage new hosts
-            i = 0;
-            applyNew(c);
-        } else {
-            showDialog(HfmSettings.res.getString(R.string.hfm_dialog_conn_error, c), c);
-        }
-    }
-
-    public static void applyNew(final Context c) {
-
-        final int delay = 500; //ms
-        final Handler h = new Handler();
-        h.postDelayed(new Runnable() {
-            public void run() {
-                if (isScriptFinished()) {
-                    if (HfmSettings.mHfmDisableAds.isChecked()) {
-                        checkStatus(c, true); //Hosts are downloaded. Apply if user has enabled blocking.
-                    }
-                    showDialog(FetchHosts.successfulSources + HfmSettings.res.getString(R.string.hfm_dialog_success), c);
-                    HfmSettings.pd.dismiss();
-                } else if (i < 40) {
-                    i++;
-                    h.postDelayed(this, delay);
-                } else {
-                    showDialog(HfmSettings.res.getString(R.string.hfm_dialog_failed), c);
-                    try {
-                        RunAsRoot("mount -o rw,remount /system"
-                                     + " && rm -f /etc/hosts[0-9] /etc/hosts.tmp /etc/started.cfg"
-                                     + " && mount -o ro,remount /system"); //Clean scraps after failing
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    HfmSettings.pd.dismiss();
-                }
-            }
-        }, delay);
     }
 }
