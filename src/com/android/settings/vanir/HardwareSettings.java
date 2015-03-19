@@ -43,6 +43,7 @@ import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
 import com.android.settings.Utils;
 import com.vanir.util.CMDProcessor;
+import com.vanir.util.Helpers;
 
 import java.io.File;
 
@@ -108,8 +109,9 @@ public class HardwareSettings extends SettingsPreferenceFragment implements
         mFastCharge = (CheckBoxPreference) findPreference(PREF_FCHARGE);
         if (!exists(FCHARGE_PATH)) {
             getPreferenceScreen().removePreference(mFastCharge);
+        } else {
+            mFastCharge.setChecked(Integer.parseInt(Helpers.readOneLine(FCHARGE_PATH)) == 1);
         }
-
         if (isLiftToWakeAvailable(getActivity())) {
             mLiftToWakePreference = (CheckBoxPreference) findPreference(KEY_LIFT_TO_WAKE);
             mLiftToWakePreference.setOnPreferenceChangeListener(this);
@@ -233,9 +235,9 @@ public class HardwareSettings extends SettingsPreferenceFragment implements
     private void writeFastChargeOption() {
 
         if (mFastCharge.isChecked()) {
-            new CMDProcessor().su.runWaitFor("busybox echo 0 > /sys/kernel/fast_charge/force_cast_charge");
+            new CMDProcessor().su.runWaitFor("busybox echo 0 > /sys/kernel/fast_charge/force_fast_charge");
         } else {
-            new CMDProcessor().su.runWaitFor("busybox echo 1 > /sys/kernel/fast_charge/force_cast_charge");
+            new CMDProcessor().su.runWaitFor("busybox echo 1 > /sys/kernel/fast_charge/force_fast_charge");
         }
     }
 
