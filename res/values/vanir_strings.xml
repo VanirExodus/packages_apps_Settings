@@ -39,6 +39,11 @@
     <string name="general">General</string>
     <string name="wake_options_title">Device wake up</string>
 
+    <!-- Colors stuff -->
+    <string name="colors_title">Colors</string>
+    <string name="icons_title">Icons</string>
+    <string name="text_title">Text</string>
+
     <!-- Other device settings -->
     <string name="more_device_controls_title">More\u2026</string>
     <string name="more_device_settings_title">Hardware</string>
@@ -412,6 +417,31 @@
 
     <!-- Summary for "Configure lockscreen" when security gesture is enabled [CHAR LIMIT=45] -->
     <string name="unlock_set_unlock_mode_gesture">Gesture</string>
+
+
+   <!-- Lock screen -->
+    <string name="lockscreen_weather_settings">Lockscreen weather</string>
+    <string name="lock_screen_weather_settings_summary">Customize Weather</string>
+
+   <!-- Weather settings -->
+    <string name="weather_show_weather_title">Show weather</string>
+    <string name="weather_show_weather_summary">Enable to show weather informations</string>
+    <string name="weather_show_location_title">Show location</string>
+    <string name="weather_show_location_summary">Enable to show the location</string>
+    <string name="weather_show_timestamp_title">Show timestamp</string>
+    <string name="weather_show_timestamp_summary">Enable to show the timestamp</string>
+    <string name="weather_condition_icon_title">Condition icon</string>
+    <string name="weather_condition_icon_dlg_title">Coose an icon for displaying the weather condition</string>
+    <string name="weather_condition_icon_monochrome_title">Monochrome</string>
+    <string name="weather_condition_icon_colored_title">Colored</string>
+    <string name="weather_condition_icon_vclouds_title">VClouds</string>
+    <string name="weather_colorize_all_icons_title">Colorize all icons</string>
+    <string name="weather_colorize_all_icons_summary">Enable to colorize all icons, disable to colorize only the monochrome icons</string>
+
+    <!-- randoms -->
+    <string name="dlg_reset_android">Android</string>
+    <string name="dlg_reset_darkkat">Exodus</string>
+    <string name="dlg_reset_values_message">Reset values to\nAndroid- or Exodus default?</string>
 
     <!-- CLOCK -->
     <string name="status_bar_clock_title">Clock style</string>
