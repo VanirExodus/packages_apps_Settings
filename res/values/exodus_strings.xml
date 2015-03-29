@@ -17,4 +17,7 @@
     <!-- SuperSU -->
     <string name="supersu_title">SuperSU</string>
 
+    <!-- Screen shutter sound -->
+    <string name="screenshot_shutter_sound_title">Screenshot shutter sound</string>
+
 </resources>
