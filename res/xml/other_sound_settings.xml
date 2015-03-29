@@ -59,11 +59,18 @@
             android:switchTextOn=""
             android:persistent="false" />
 
-
     <!-- Dock speaker plays -->
     <com.android.settings.notification.DropDownPreference
             android:key="dock_audio_media"
             android:title="@string/dock_audio_media_title"
+            android:persistent="false" />
+
+    <!-- Shutter adjust sound -->
+    <CheckBoxPreference
+            android:key="screenshot_shutter_sound"
+            android:title="@string/screenshot_shutter_sound_title"
+            android:switchTextOff=""
+            android:switchTextOn=""
             android:persistent="false" />
 
     <!-- Emergency tone -->
