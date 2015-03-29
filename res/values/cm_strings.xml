@@ -671,6 +671,9 @@
 
     <!-- Volume settings - Volume adjustment sound -->
     <string name="volume_adjust_sounds_title">Volume adjustment sounds</string>
+	
+	<!-- Screen shutter sound -->
+	<string name="screenshot_shutter_sound_title">Screenshot shutter sound</string>
 
     <!-- Hardware tunables - Vibrator intensity -->
     <string name="vibrator_intensity_title">Vibrator intensity</string>
