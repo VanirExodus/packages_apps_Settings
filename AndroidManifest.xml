@@ -2190,6 +2190,7 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".vanir.buttons.ButtonsTabHost" />
         <activity android:name=".vanir.navbar.NavbarTabHostFragment" />
         <activity android:name=".vanir.VanirInterface" />
 

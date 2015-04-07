@@ -55,9 +55,9 @@ import com.android.settings.Utils;
 import com.vanir.util.DeviceUtils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import static com.android.internal.util.vanir.HardwareButtonConstants.*;
 
 public class GeneralButtonSettings extends SettingsPreferenceFragment implements
         Preference.OnPreferenceChangeListener, Indexable {
@@ -71,6 +71,8 @@ public class GeneralButtonSettings extends SettingsPreferenceFragment implements
     private static final String HEADSET_CONNECT_MUSIC_PLAYER = "headset_connect_player";
     private static final String DISABLE_NAV_KEYS = "disable_nav_keys";
     private static final String FORCE_DISABLE_HARDWARE_KEYS = "force_disable_hardware_keys";
+    private static final String KEY_HOME_WAKE = "home_wake_screen";
+    private static final String KEY_HOME_ANSWER_CALL = "home_answer_call";
 
     private static final String KEY_POWER_END_CALL = "power_end_call";
     private static final String CATEGORY_POWER = "power_key";
@@ -80,9 +82,6 @@ public class GeneralButtonSettings extends SettingsPreferenceFragment implements
     private static final String CATEGORY_HEADSETHOOK = "button_headsethook";
     private static final String CATEGORY_NAVBAR = "navigation_bar";
 
-    public static final int KEY_MASK_CAMERA = 0x20;
-    public static final int KEY_MASK_VOLUME = 0x40;
-
     private SwitchPreference mDisableNavigationKeys;
     private CheckBoxPreference mForceDisableHardkeys;
     private PreferenceCategory mNavigationPreferencesCat;
@@ -91,13 +90,15 @@ public class GeneralButtonSettings extends SettingsPreferenceFragment implements
     private CheckBoxPreference mSwapVolumeButtons;
     private CheckBoxPreference mPowerEndCall;
     private CheckBoxPreference mVolWake;
+    private CheckBoxPreference mHomeAnswerCall;
+    private CheckBoxPreference mHomeWakeScreen;
 
     Handler mHandler = new Handler();
 
     private SettingsObserver mSettingsObserver;
 
-    private CmHardwareManager cmHardwareManager; 
-            
+    private CmHardwareManager cmHardwareManager;
+
     class SettingsObserver extends ContentObserver {
         SettingsObserver(Handler handler) {
             super(handler);
@@ -131,7 +132,9 @@ public class GeneralButtonSettings extends SettingsPreferenceFragment implements
         final Resources res = getResources();
         final ContentResolver resolver = getActivity().getContentResolver();
         final PreferenceScreen prefScreen = getPreferenceScreen();
+
         cmHardwareManager= (CmHardwareManager) getActivity().getSystemService(Context.CMHW_SERVICE);
+
         final int deviceWakeKeys = getResources().getInteger(
                 com.android.internal.R.integer.config_deviceHardwareWakeKeys);
         final int deviceKeys = getResources().getInteger(
@@ -139,6 +142,8 @@ public class GeneralButtonSettings extends SettingsPreferenceFragment implements
         final boolean hasPowerKey = KeyCharacterMap.deviceHasKey(KeyEvent.KEYCODE_POWER);
         final boolean hasVolumeKeys = (deviceKeys & KEY_MASK_VOLUME) != 0;
         final boolean showVolumeWake = (deviceWakeKeys & KEY_MASK_VOLUME) != 0;
+        final boolean hasHomeKey = (deviceKeys & KEY_MASK_HOME) != 0;
+        final boolean showHomeWake = (deviceWakeKeys & KEY_MASK_HOME) != 0;
 
         boolean hasAnyBindableKey = false;
         final PreferenceCategory generalCategory =
@@ -154,6 +159,20 @@ public class GeneralButtonSettings extends SettingsPreferenceFragment implements
         mForceDisableHardkeys = (CheckBoxPreference) findPreference(FORCE_DISABLE_HARDWARE_KEYS);
         mForceDisableHardkeys.setChecked(Settings.System.getIntForUser(resolver,
                 Settings.System.DEV_FORCE_DISABLE_HARDKEYS, 0, UserHandle.USER_CURRENT) == 1);
+
+        // Home button answers calls.
+        mHomeAnswerCall = (CheckBoxPreference) findPreference(KEY_HOME_ANSWER_CALL);
+        if (!Utils.isVoiceCapable(getActivity())) {
+            prefScreen.removePreference(mHomeAnswerCall);
+        }
+
+        mHomeWakeScreen = (CheckBoxPreference) findPreference(KEY_HOME_WAKE);
+        if (!showHomeWake) prefScreen.removePreference(mHomeWakeScreen);
+
+        if (!hasHomeKey) {
+            if (mHomeWakeScreen != null) prefScreen.removePreference(mHomeWakeScreen);
+            if (mHomeAnswerCall != null) prefScreen.removePreference(mHomeAnswerCall);
+        }
 
         final ButtonBacklightBrightness backlight =
                 (ButtonBacklightBrightness) findPreference(KEY_BUTTON_BACKLIGHT);
@@ -236,8 +255,8 @@ public class GeneralButtonSettings extends SettingsPreferenceFragment implements
                 prefScreen.removePreference(powerButtonCategory);
                 mPowerEndCall = null;
            } else {
-			   prefScreen.removePreference(powerButtonCategory);
-		   }
+               prefScreen.removePreference(powerButtonCategory);
+           }
         }
         Utils.updatePreferenceToSpecificActivityFromMetaDataOrRemove(getActivity(),
                 getPreferenceScreen(), KEY_BLUETOOTH_INPUT_SETTINGS);
@@ -336,11 +355,18 @@ public class GeneralButtonSettings extends SettingsPreferenceFragment implements
                 "vanir.android.settings.TOGGLE_NAVBAR_FOR_HARDKEYS"));
             return true;
 
+        } else if (preference == mHomeWakeScreen) {
+            Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.HOME_WAKE_SCREEN,
+                    mHomeWakeScreen.isChecked() ? 1 : 0);
+            return true;
+
         } else if (preference == mSwapVolumeButtons) {
             int value = mSwapVolumeButtons.isChecked()
                     ? (Utils.isTablet(getActivity()) ? 2 : 1) : 0;
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.SWAP_VOLUME_KEYS_ON_ROTATION, value);
+            return true;
 
         } else if (preference == mVolWake) {
             Settings.System.putInt(getActivity().getContentResolver(),

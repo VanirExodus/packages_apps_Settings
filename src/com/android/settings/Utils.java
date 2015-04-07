@@ -100,7 +100,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
-import com.android.settings.vanir.GeneralButtonSettings;
+import static com.android.internal.util.vanir.HardwareButtonConstants.*;
 
 public final class Utils {
     private static final String TAG = "Settings";
@@ -785,7 +785,7 @@ public final class Utils {
     public static boolean hasVolumeRocker(Context context) {
         final int deviceKeys = context.getResources().getInteger(
                 com.android.internal.R.integer.config_deviceHardwareKeys);
-        return (deviceKeys & GeneralButtonSettings.KEY_MASK_VOLUME) != 0;
+        return (deviceKeys & KEY_MASK_VOLUME) != 0;
     }
 
     /**

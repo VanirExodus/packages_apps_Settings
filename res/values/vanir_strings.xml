@@ -59,6 +59,22 @@
     <string name="select_custom_app_title">Select custom app</string>
     <string name="select_custom_activity_title">Select custom activity</string>
 
+    <!-- button tabs -->
+    <string name="home_button">Home</string>
+    <string name="back_button">Back</string>
+    <string name="app_switch_button">App switch</string>
+    <string name="assist_button">Assist</string>
+    <string name="menu_button">Menu</string>
+    <string name="enable_button_title">Enable button</string>
+    <string name="single_press_title">Single press action</string>
+    <string name="long_press_title">Long press action</string>
+    <string name="double_press_title">Double tap action</string>
+    <string name="enable_home_button">Enable home button</string>
+    <string name="enable_back_button">Enable back button</string>
+    <string name="enable_menu_button">Enable menu button</string>
+    <string name="enable_app_switch_button">Enable app switch button</string>
+    <string name="enable_assist_button">Enable assist button</string>
+
     <!-- Gesture panel -->
     <string name="gesture_panel_title">Gesture panel actions</string>
     <string name="button_add">Add gesture</string>
@@ -88,6 +104,8 @@
     <string name="hardware_keys_action_ime">IME switcher</string>
     <string name="hardware_keys_action_powermenu">Power menu</string>
     <string name="hardware_keys_action_navbar">Toggle the navbar</string>
+    <string name="set_button_actions">Set action</string>
+ 
     <!-- Hardware button switches -->
     <string name="key_enabled">Enable key</string>
 

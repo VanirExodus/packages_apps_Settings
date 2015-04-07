@@ -25,7 +25,7 @@
 
     <Preference
         android:key="buttons_navigation"
-        android:fragment="com.android.settings.ButtonSettings"
+        android:fragment="com.android.settings.vanir.buttons.ButtonsTabHost"
         android:title="@string/button_navigation_title" />
 
     <PreferenceScreen

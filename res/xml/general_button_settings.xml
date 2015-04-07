@@ -49,6 +49,22 @@
     </Preference>
 
     <PreferenceCategory
+        android:key="home_key"
+        android:title="@string/hardware_keys_home_key_title" >
+
+		 <CheckBoxPreference
+			android:key="home_answer_call"
+			android:title="@string/home_answer_call_title"
+			android:summary="@string/home_answer_call_summary"
+			android:persistent="false"/>
+
+		<com.android.settings.cyanogenmod.SystemSettingCheckBoxPreference
+			android:key="home_wake_screen"
+			android:title="@string/button_wake_title"
+			android:defaultValue="true" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:key="volume_keys"
         android:title="@string/hardware_keys_volume_keys_title" >
 
