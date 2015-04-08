@@ -64,6 +64,12 @@
                 android:summary="@string/doze_summary"
                 android:persistent="false" />
 
+        <!-- Doze // Ambient display: Exodus -->
+        <PreferenceScreen
+                android:key="doze_fragment"
+                android:title="@string/doze_title"
+                android:fragment="com.android.exodussettings.AmbientSettings" />
+
         <!-- Lift to wake -->
         <SwitchPreference
                 android:key="lift_to_wake"
