@@ -31,6 +31,7 @@ import com.android.internal.view.RotationPolicy;
 import com.android.settings.search.BaseSearchIndexProvider;
 import com.android.settings.search.Indexable;
 
+import static android.provider.Settings.Secure.DOZE_ENABLED;
 import static android.hardware.CmHardwareManager.FEATURE_TAP_TO_WAKE;
 import static android.provider.Settings.Secure.DOZE_ENABLED;
 import static android.provider.Settings.Secure.WAKE_GESTURE_ENABLED;
@@ -106,6 +107,7 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     private static final String KEY_NOTIFICATION_LIGHT = "notification_light";
     private static final String KEY_BATTERY_LIGHT = "battery_light";
 
+    private static final String KEY_DOZE_FRAGMENT = "doze_fragment";
     private static final int DLG_GLOBAL_CHANGE_WARNING = 1;
     private ListPreference mLcdDensityPreference;
     private FontDialogPreference mFontSizePref;
@@ -115,6 +117,7 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
 
     private ListPreference mScreenTimeoutPreference;
     private Preference mScreenSaverPreference;
+    private PreferenceScreen mDozeFragement;
     private SwitchPreference mAccelerometer;
     private SwitchPreference mLiftToWakePreference;
     private SwitchPreference mDozePreference;
@@ -201,15 +204,6 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
             }
         }
 
-        mDozePreference = (SwitchPreference) findPreference(KEY_DOZE);
-        if (mDozePreference != null && Utils.isDozeAvailable(activity)) {
-            mDozePreference.setOnPreferenceChangeListener(this);
-        } else {
-            if (displayPrefs != null && mDozePreference != null) {
-                displayPrefs.removePreference(mDozePreference);
-            }
-        }
-
         mTapToWake = (SwitchPreference) findPreference(KEY_TAP_TO_WAKE);
         if (displayPrefs != null && mTapToWake != null
                 && !mCmHardwareManager.isSupported(FEATURE_TAP_TO_WAKE)) {
@@ -243,7 +237,19 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     }
 
     private void onCreateCmSpecific() {
-		PreferenceCategory interfacePrefs = (PreferenceCategory)
+        final Activity activity = getActivity();
+        PreferenceCategory displayPrefs = (PreferenceCategory)
+                findPreference(KEY_CATEGORY_DISPLAY);
+        mDozePreference = (SwitchPreference) findPreference(KEY_DOZE);
+        if (mDozePreference != null && Utils.isDozeAvailable(activity)) {
+            mDozePreference.setOnPreferenceChangeListener(this);
+        } else {
+            if (displayPrefs != null && mDozePreference != null) {
+                displayPrefs.removePreference(mDozePreference);
+            }
+        }
+
+        PreferenceCategory interfacePrefs = (PreferenceCategory)
                 findPreference(KEY_CATEGORY_INTERFACE);
         mScreenSaverPreference = findPreference(KEY_SCREEN_SAVER);
         if (mScreenSaverPreference != null
@@ -292,6 +298,12 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
 
     private void onCreateExodusSpecific() {
         //todo here we can add stuff that is only in exodus morph version
+        final Activity activity = getActivity();
+        mDozeFragement = (PreferenceScreen) findPreference(KEY_DOZE_FRAGMENT);
+        if (!Utils.isDozeAvailable(activity)) {
+            getPreferenceScreen().removePreference(mDozeFragement);
+        }
+
         mScreenSaverPreference = findPreference(KEY_SCREEN_SAVER);
         if (mScreenSaverPreference != null
                 && getResources().getBoolean(
@@ -302,6 +314,18 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
 
     private void onCreateAospSpecific() {
         // todo here we can add stuff that is only present on aosp morph version
+        final Activity activity = getActivity();
+        PreferenceCategory displayPrefs = (PreferenceCategory)
+                findPreference(KEY_CATEGORY_DISPLAY);
+        mDozePreference = (SwitchPreference) findPreference(KEY_DOZE);
+        if (mDozePreference != null && Utils.isDozeAvailable(activity)) {
+            mDozePreference.setOnPreferenceChangeListener(this);
+        } else {
+            if (displayPrefs != null && mDozePreference != null) {
+                displayPrefs.removePreference(mDozePreference);
+            }
+        }
+
         mScreenSaverPreference = findPreference(KEY_SCREEN_SAVER);
         if (mScreenSaverPreference != null
                 && getResources().getBoolean(
@@ -554,7 +578,6 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
             mDozePreference.setChecked(value != 0);
         }
     }
-
     private void updateScreenSaverSummary() {
         if (mScreenSaverPreference != null) {
             mScreenSaverPreference.setSummary(
@@ -783,8 +806,13 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
                     if (!isLiftToWakeAvailable(context)) {
                         result.add(KEY_LIFT_TO_WAKE);
                     }
-                    if (!Utils.isDozeAvailable(context)) {
+                    if (!Utils.isDozeAvailable(context)
+			&& !SettingsUtils.isMorphExodus(context.getContentResolver())) {
                         result.add(KEY_DOZE);
+                    }
+                    if (!Utils.isDozeAvailable(context)
+ 			&& SettingsUtils.isMorphExodus(context.getContentResolver())) {
+                        result.add(KEY_DOZE_FRAGMENT);
                     }
                     return result;
                 }
