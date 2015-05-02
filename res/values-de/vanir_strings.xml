@@ -12,6 +12,41 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
+     <!-- Generic strings -->
+    <string name="ok_string">OK</string>
+    <string name="default_string">Standard</string>
+    <string name="enabled_string">Aktiviert</string>
+    <string name="disabled_string">Deaktiviert</string>
+    <string name="general_string">Allgemein</string>
+    <string name="reset_string">Zurücksetzen</string>
+    <string name="reset">Zurücksetzten</string>
+    <string name="empty_string">Leer</string>
+    <string name="ok">OK</string>
+
+    <!-- Font size sample text. This needs to be a very short string, as it is shown in
+    multiple font sizes in a limited amount of space. -->
+    <string name="font_size_sample">Beispiel</string>
+
+ <!-- Brightness sliders -->
+    <string name="brightness_adjustment_sliders_title">Helligkeitsanpassung</string>
+    <string name="brightness_adjustment_sliders_summary">Anpassungsmethode: </string>
+    <string name="brightness_adjust_none">Keine Regler aktiviert</string>
+    <string name="brightness_adjust_gesture">Über die Statusleiste wischen</string>
+    <string name="brightness_adjust_quicksettings">Regler in den Schnelleinstellungen</string>
+
+    <!--Quick unlock -->
+    <string name="unlock_quick_unlock_control_title">Schnelles Entsperren</string>
+    <string name="unlock_quick_unlock_control_summary">Gerät automatisch entsperren, wenn das richtige Passwort eingegeben wurde</string>
+
+   <!-- CLOCK -->
+    <string name="status_bar_clock_title">Stil der Uhr</string>
+    <string name="status_bar_am_pm_title">AM/PM style</string>
+    <string name="status_bar_am_pm_info">24 Stunden Format ist aktiviert</string>
+    <string name="right_clock">Rechts</string>
+    <string name="left_clock">Links</string>
+    <string name="center_clock">Mitte</string>
+    <string name="no_clock">Versteckt</string>
+
 <!-- Screen recorder -->
     <string name="screen_recorder_title">Bildschirmaufnahme</string>
     <string name="screen_recorder_summary">Einstellungen für die Bildschirmaufnahme anpassen</string>
@@ -51,4 +86,7 @@
     <string name="screen_recorder_bitrate_20000000">20000000</string>
     <string name="screen_recorder_record_audio_title">Externer Ton</string>
     <string name="screen_recorder_record_audio_summary">Ton von Mikrofon aufnehmen</string>
+
+<!-- QuickSettings 4 columns -->
+    <string name="qs_four_columns_title">Vier Kacheln pro Reihe anzeigen</string>
 </resources>
