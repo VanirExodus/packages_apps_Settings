@@ -16,7 +16,10 @@
 
 package com.android.settings.notification;
 
+import android.os.UserHandle;
+
 import android.content.Context;
+import android.hardware.CmHardwareManager;
 import android.os.Bundle;
 import android.preference.PreferenceCategory;
 import android.provider.SearchIndexableResource;
@@ -38,6 +41,10 @@ public class NotificationManagerSettings extends SettingsPreferenceFragment
 
     private static final String KEY_LOCK_SCREEN_NOTIFICATIONS = "lock_screen_notifications";
 
+    private static final String KEY_CATEGORY_LIGHTS = "lights";
+    private static final String KEY_NOTIFICATION_LIGHT = "notification_light";
+    private static final String KEY_BATTERY_LIGHT = "battery_light";
+
     private boolean mSecure;
     private int mLockscreenSelectedValue;
     private DropDownPreference mLockscreen;
@@ -48,6 +55,7 @@ public class NotificationManagerSettings extends SettingsPreferenceFragment
         addPreferencesFromResource(R.xml.notification_manager_settings);
         mSecure = new LockPatternUtils(getActivity()).isSecure();
         initLockscreenNotifications();
+        initPulse((PreferenceCategory) findPreference(KEY_CATEGORY_LIGHTS));
     }
 
     // === Lockscreen (public / private) notifications ===
@@ -110,6 +118,23 @@ public class NotificationManagerSettings extends SettingsPreferenceFragment
                 Settings.Secure.LOCK_SCREEN_ALLOW_PRIVATE_NOTIFICATIONS, 0) != 0;
     }
 
+    // === Pulse notification light ===
+
+    private void initPulse(PreferenceCategory parent) {
+        if (!getResources().getBoolean(
+                com.android.internal.R.bool.config_intrusiveNotificationLed)) {
+            parent.removePreference(parent.findPreference(KEY_NOTIFICATION_LIGHT));
+        }
+        if (!getResources().getBoolean(
+                com.android.internal.R.bool.config_intrusiveBatteryLed)
+                || UserHandle.myUserId() != UserHandle.USER_OWNER) {
+            parent.removePreference(parent.findPreference(KEY_BATTERY_LIGHT));
+        }
+        if (parent.getPreferenceCount() == 0) {
+            getPreferenceScreen().removePreference(parent);
+        }
+    }
+
     public static final Indexable.SearchIndexProvider SEARCH_INDEX_DATA_PROVIDER =
             new BaseSearchIndexProvider() {
                 @Override
@@ -122,6 +147,22 @@ public class NotificationManagerSettings extends SettingsPreferenceFragment
                     sir.xmlResId = R.xml.notification_manager_settings;
                     result.add(sir);
 
+                    return result;
+                }
+                
+              @Override
+                public List<String> getNonIndexableKeys(Context context) {
+                    CmHardwareManager cmHardwareManager =
+                        (CmHardwareManager) context.getSystemService(Context.CMHW_SERVICE);
+                    ArrayList<String> result = new ArrayList<String>();
+                    if (!context.getResources().getBoolean(
+                            com.android.internal.R.bool.config_intrusiveNotificationLed)) {
+                        result.add(KEY_NOTIFICATION_LIGHT);
+                    }
+                    if (!context.getResources().getBoolean(
+                            com.android.internal.R.bool.config_intrusiveBatteryLed)) {
+                        result.add(KEY_BATTERY_LIGHT);
+                    }
                     return result;
                 }
             };

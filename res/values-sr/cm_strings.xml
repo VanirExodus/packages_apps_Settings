@@ -791,7 +791,7 @@
   <string name="category_sounds">Звуци</string>
   <string name="category_interface">Интерфејс</string>
   <string name="category_calibration">Калибрација</string>
-  <string name="display_and_lights">Екран &amp; светла</string>
+  <string name="display_and_lights">Екран</string>
   <string name="notification_manager">Менаџер обавештења</string>
   <string name="lockscreen_settings">Закључан екран</string>
   <string name="category_lights">Светла</string>

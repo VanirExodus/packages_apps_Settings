@@ -809,7 +809,7 @@
   <string name="category_sounds">Äänet</string>
   <string name="category_interface">Käyttöliittymä</string>
   <string name="category_calibration">Kalibrointi</string>
-  <string name="display_and_lights">Näyttö &amp; valot</string>
+  <string name="display_and_lights">Näyttö</string>
   <string name="notification_manager">Ilmoitukset</string>
   <string name="lockscreen_settings">Lukitusnäyttö</string>
   <string name="category_lights">Valot</string>

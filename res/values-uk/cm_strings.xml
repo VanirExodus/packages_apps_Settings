@@ -790,7 +790,7 @@
   <string name="category_sounds">Звуки</string>
   <string name="category_interface">Інтерфейс</string>
   <string name="category_calibration">Калібрування</string>
-  <string name="display_and_lights">Екран та індикація</string>
+  <string name="display_and_lights">Екран</string>
   <string name="notification_manager">Менеджер повідомлень</string>
   <string name="lockscreen_settings">Екран блокування</string>
   <string name="category_lights">Індикація</string>

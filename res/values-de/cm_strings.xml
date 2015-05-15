@@ -801,7 +801,7 @@
   <string name="category_sounds">Töne</string>
   <string name="category_interface">Oberfläche</string>
   <string name="category_calibration">Kalibrierung</string>
-  <string name="display_and_lights">Display &amp; LED</string>
+  <string name="display_and_lights">Display</string>
   <string name="notification_manager">Benachrichtigungen</string>
   <string name="lockscreen_settings">Bildschirmsperre</string>
   <string name="category_lights">LED</string>

@@ -809,7 +809,7 @@
   <string name="category_sounds">Ήχοι</string>
   <string name="category_interface">Διεπαφή</string>
   <string name="category_calibration">Βελτίωση εικόνας</string>
-  <string name="display_and_lights">Οθόνη &amp; φωτισμός</string>
+  <string name="display_and_lights">Οθόνη</string>
   <string name="notification_manager">Διαχείριση ειδοποιήσεων</string>
   <string name="lockscreen_settings">Οθόνη κλειδώματος</string>
   <string name="category_lights">Φωτισμός</string>

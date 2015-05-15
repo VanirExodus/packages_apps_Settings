@@ -809,7 +809,7 @@
   <string name="category_sounds">Hangok</string>
   <string name="category_interface">Felhasználói felület</string>
   <string name="category_calibration">Kalibrálás</string>
-  <string name="display_and_lights">Kijelző &amp; Fények</string>
+  <string name="display_and_lights">Kijelző</string>
   <string name="notification_manager">Értesítés kezelő</string>
   <string name="lockscreen_settings">Képernyőzár</string>
   <string name="category_lights">Fények</string>

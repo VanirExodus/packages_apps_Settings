@@ -759,7 +759,7 @@
   <string name="category_sounds">Lyder</string>
   <string name="category_interface">Grensesnitt</string>
   <string name="category_calibration">Kalibrering</string>
-  <string name="display_and_lights">Skjerm &amp; lys</string>
+  <string name="display_and_lights">Skjerm</string>
   <string name="notification_manager">Notifikasjonsstyrer</string>
   <string name="lockscreen_settings">Låseskjerm</string>
   <string name="category_lights">Lys</string>

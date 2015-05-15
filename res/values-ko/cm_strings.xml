@@ -786,7 +786,7 @@
   <string name="category_sounds">소리</string>
   <string name="category_interface">인터페이스</string>
   <string name="category_calibration">보정</string>
-  <string name="display_and_lights">디스플레이 및 조명</string>
+  <string name="display_and_lights">디스플레이</string>
   <string name="notification_manager">알림 관리자</string>
   <string name="lockscreen_settings">잠금 화면</string>
   <string name="category_lights">조명</string>
