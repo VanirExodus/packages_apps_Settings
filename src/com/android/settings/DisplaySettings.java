@@ -80,7 +80,6 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     /** If there is no setting in the provider, use this. */
     private static final int FALLBACK_SCREEN_TIMEOUT_VALUE = 30000;
 
-    private static final String KEY_CATEGORY_LIGHTS = "lights";
     private static final String KEY_CATEGORY_DISPLAY = "display";
     private static final String KEY_CATEGORY_INTERFACE = "interface";
 
@@ -95,8 +94,6 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     private static final String KEY_PROXIMITY_WAKE = "proximity_on_wake";
     private static final String KEY_DISPLAY_ROTATION = "display_rotation";
     private static final String KEY_WAKE_WHEN_PLUGGED_OR_UNPLUGGED = "wake_when_plugged_or_unplugged";
-    private static final String KEY_NOTIFICATION_LIGHT = "notification_light";
-    private static final String KEY_BATTERY_LIGHT = "battery_light";
 
     private static final int DLG_GLOBAL_CHANGE_WARNING = 1;
 
@@ -256,7 +253,6 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
         mWakeWhenPluggedOrUnplugged =
                 (SwitchPreference) findPreference(KEY_WAKE_WHEN_PLUGGED_OR_UNPLUGGED);
 
-        initPulse((PreferenceCategory) findPreference(KEY_CATEGORY_LIGHTS));
     }
 
     private static boolean allowAllRotations(Context context) {
@@ -527,23 +523,6 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
         task.execute();
     }
 
-    // === Pulse notification light ===
-
-    private void initPulse(PreferenceCategory parent) {
-        if (!getResources().getBoolean(
-                com.android.internal.R.bool.config_intrusiveNotificationLed)) {
-            parent.removePreference(parent.findPreference(KEY_NOTIFICATION_LIGHT));
-        }
-        if (!getResources().getBoolean(
-                com.android.internal.R.bool.config_intrusiveBatteryLed)
-                || UserHandle.myUserId() != UserHandle.USER_OWNER) {
-            parent.removePreference(parent.findPreference(KEY_BATTERY_LIGHT));
-        }
-        if (parent.getPreferenceCount() == 0) {
-            getPreferenceScreen().removePreference(parent);
-        }
-    }
-
     /**
      * Reads the current font size and sets the value in the summary text
      */
@@ -685,14 +664,6 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
                     if (!context.getResources().getBoolean(
                             com.android.internal.R.bool.config_dreamsSupported)) {
                         result.add(KEY_SCREEN_SAVER);
-                    }
-                    if (!context.getResources().getBoolean(
-                            com.android.internal.R.bool.config_intrusiveNotificationLed)) {
-                        result.add(KEY_NOTIFICATION_LIGHT);
-                    }
-                    if (!context.getResources().getBoolean(
-                            com.android.internal.R.bool.config_intrusiveBatteryLed)) {
-                        result.add(KEY_BATTERY_LIGHT);
                     }
                     if (!context.getResources().getBoolean(
                             com.android.internal.R.bool.config_proximityCheckOnWake)) {

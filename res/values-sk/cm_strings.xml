@@ -792,7 +792,7 @@
   <string name="category_sounds">Zvuky</string>
   <string name="category_interface">Rozhranie</string>
   <string name="category_calibration">Kalibrácia</string>
-  <string name="display_and_lights">Displej &amp; svetlá</string>
+  <string name="display_and_lights">Displej</string>
   <string name="notification_manager">Správca oznámení</string>
   <string name="lockscreen_settings">Obrazovka uzamknutia</string>
   <string name="category_lights">Svetlá</string>

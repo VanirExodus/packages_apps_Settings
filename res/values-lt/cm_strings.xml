@@ -792,7 +792,7 @@
   <string name="category_sounds">Garsai</string>
   <string name="category_interface">Sąsaja</string>
   <string name="category_calibration">Kalibravimas</string>
-  <string name="display_and_lights">Ekranas ir šviesos</string>
+  <string name="display_and_lights">Ekranas</string>
   <string name="notification_manager">Pranešimų tvarkyklė</string>
   <string name="lockscreen_settings">Ekrano užraktas</string>
   <string name="category_lights">Šviesos</string>

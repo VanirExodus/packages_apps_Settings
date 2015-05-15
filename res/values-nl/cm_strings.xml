@@ -791,7 +791,7 @@
   <string name="category_sounds">Geluiden</string>
   <string name="category_interface">Uiterlijk</string>
   <string name="category_calibration">Kalibratie</string>
-  <string name="display_and_lights">Scherm &amp; verlichting</string>
+  <string name="display_and_lights">Scherm</string>
   <string name="notification_manager">Meldingenbeheer</string>
   <string name="lockscreen_settings">Vergrendelingsscherm</string>
   <string name="category_lights">Verlichting</string>

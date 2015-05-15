@@ -791,7 +791,7 @@
   <string name="category_sounds">Sons</string>
   <string name="category_interface">Interfície</string>
   <string name="category_calibration">Calibració</string>
-  <string name="display_and_lights">Pantalla &amp; llums</string>
+  <string name="display_and_lights">Pantalla</string>
   <string name="notification_manager">Gestor de notificacions</string>
   <string name="lockscreen_settings">Pantalla de bloqueig</string>
   <string name="category_lights">Llums</string>

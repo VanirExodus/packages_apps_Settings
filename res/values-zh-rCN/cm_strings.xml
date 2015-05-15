@@ -790,7 +790,7 @@
   <string name="category_sounds">声音</string>
   <string name="category_interface">界面</string>
   <string name="category_calibration">校准</string>
-  <string name="display_and_lights">显示 &amp; 指示灯</string>
+  <string name="display_and_lights">显示</string>
   <string name="notification_manager">通知管理器</string>
   <string name="lockscreen_settings">锁屏</string>
   <string name="category_lights">指示灯</string>

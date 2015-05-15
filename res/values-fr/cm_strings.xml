@@ -760,7 +760,7 @@
   <string name="category_sounds">Sons</string>
   <string name="category_interface">Interface</string>
   <string name="category_calibration">Calibrage</string>
-  <string name="display_and_lights">Affichage et voyants</string>
+  <string name="display_and_lights">Affichage</string>
   <string name="notification_manager">Gestionnaire de notification</string>
   <string name="lockscreen_settings">Écran de verrouillage</string>
   <string name="category_lights">Voyants</string>

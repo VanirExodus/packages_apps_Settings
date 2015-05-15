@@ -792,7 +792,7 @@
   <string name="category_sounds">Dźwięki</string>
   <string name="category_interface">Interfejs</string>
   <string name="category_calibration">Kalibracja</string>
-  <string name="display_and_lights">Wyświetlacz i diody</string>
+  <string name="display_and_lights">Wyświetlacz</string>
   <string name="notification_manager">Menedżer powiadomień</string>
   <string name="lockscreen_settings">Ekran blokady</string>
   <string name="category_lights">Dioda powiadomień</string>

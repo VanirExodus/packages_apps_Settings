@@ -791,7 +791,7 @@
   <string name="category_sounds">Suoni</string>
   <string name="category_interface">Interfaccia</string>
   <string name="category_calibration">Calibrazione</string>
-  <string name="display_and_lights">Display &amp; Luci</string>
+  <string name="display_and_lights">Display</string>
   <string name="notification_manager">Gestione notifiche</string>
   <string name="lockscreen_settings">Schermata di blocco</string>
   <string name="category_lights">Luci</string>
