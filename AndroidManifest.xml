@@ -2364,6 +2364,9 @@
                 <action android:name="com.cyanogenmod.setupwizard.SETUP_FINISHED" />
             </intent-filter>
         </receiver>
+	
+	<!-- EXODUS #RomControls -->
+	<activity android:name=".exodus.RomControls" />
 
     </application>
 </manifest>
