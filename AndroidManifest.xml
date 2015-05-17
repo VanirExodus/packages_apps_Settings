@@ -2365,5 +2365,8 @@
             </intent-filter>
         </receiver>
 
+        <!-- EXODUS #RomControls -->
+        <activity android:name=".exodus.RomControls" />
+
     </application>
 </manifest>

@@ -20,4 +20,12 @@
     <!-- Screen shutter sound -->
     <string name="screenshot_shutter_sound_title">Screenshot shutter sound</string>
 
+    <!-- Exodus #RomControl Menus start -->
+    <string name="exodus_title">Exodus</string>
+    <string name="rom_controls">Rom controls</string>
+    <string name="rom_category_1">Settings</string>
+
+    <!-- Exodus #RomControl LCD_Density @see cm-string.xml -->
+    <string name="lcd_density_summary">Changes your screen resolution and please note upon selection of this screen density device automatically restarts the UI</string>
+
 </resources>
