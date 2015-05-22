@@ -19,6 +19,7 @@ package com.android.settings;
 
 import android.os.UserHandle;
 
+import com.android.internal.util.exodus.SettingsUtils;
 import com.android.internal.view.RotationPolicy;
 import com.android.settings.search.BaseSearchIndexProvider;
 import com.android.settings.search.Indexable;
@@ -130,6 +131,15 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
         }
     };
 
+    private static int getXmlResource(Context context) {
+        if (SettingsUtils.isMorphCyanogenMod(context.getContentResolver())) {
+            return R.xml.display;
+        }
+        //todo : Add AOSP
+        // Not defined : Default is exodus
+        return R.xml.exodus_display_settings;
+    }
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -137,7 +147,7 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
         final ContentResolver resolver = activity.getContentResolver();
         mCmHardwareManager = (CmHardwareManager) activity.getSystemService(Context.CMHW_SERVICE);
 
-        addPreferencesFromResource(R.xml.display);
+        addPreferencesFromResource(getXmlResource(activity));
 
         PreferenceCategory displayPrefs = (PreferenceCategory)
                 findPreference(KEY_CATEGORY_DISPLAY);
@@ -165,42 +175,6 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
         disableUnusableTimeouts(mScreenTimeoutPreference);
         updateTimeoutPreferenceDescription(currentTimeout);
         updateDisplayRotationPreferenceDescription();
-
-        mLcdDensityPreference = (ListPreference) findPreference(KEY_LCD_DENSITY);
-        if (mLcdDensityPreference != null) {
-            int defaultDensity = DisplayMetrics.DENSITY_DEVICE;
-            int currentDensity = DisplayMetrics.DENSITY_CURRENT;
-            if (currentDensity < 10 || currentDensity >= 1000) {
-                // Unsupported value, force default
-                currentDensity = defaultDensity;
-            }
-
-            int factor = defaultDensity >= 480 ? 40 : 20;
-            int minimumDensity = defaultDensity - 4 * factor;
-            int currentIndex = -1;
-            String[] densityEntries = new String[7];
-            String[] densityValues = new String[7];
-            for (int idx = 0; idx < 7; ++idx) {
-                int val = minimumDensity + factor * idx;
-                int valueFormatResId = val == defaultDensity
-                        ? R.string.lcd_density_default_value_format
-                        : R.string.lcd_density_value_format;
-
-                densityEntries[idx] = getString(valueFormatResId, val);
-                densityValues[idx] = Integer.toString(val);
-                if (currentDensity == val) {
-                    currentIndex = idx;
-                }
-            }
-            mLcdDensityPreference.setEntries(densityEntries);
-            mLcdDensityPreference.setEntryValues(densityValues);
-            if (currentIndex != -1) {
-                mLcdDensityPreference.setValueIndex(currentIndex);
-            }
-            mLcdDensityPreference.setOnPreferenceChangeListener(this);
-            updateLcdDensityPreferenceDescription(currentDensity);
-        }
-
 
         mFontSizePref = (FontDialogPreference) findPreference(KEY_FONT_SIZE);
         mFontSizePref.setOnPreferenceChangeListener(this);
@@ -253,6 +227,64 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
         mWakeWhenPluggedOrUnplugged =
                 (SwitchPreference) findPreference(KEY_WAKE_WHEN_PLUGGED_OR_UNPLUGGED);
 
+        onCreateSpecifics(resolver);
+    }
+    
+    private void onCreateSpecifics(ContentResolver resolver) {
+        if (SettingsUtils.isMorphCyanogenMod(resolver)) {
+            onCreateCmSpecific();
+        } else if (SettingsUtils.IsMorphAosp(resolver)) {
+            onCreateAospSpecific();
+        // if nothing else applies, it's Exodus
+        } else {
+            onCreateExodusSpecific();
+        }
+    }
+        
+    private void onCreateCmSpecific() {
+        mLcdDensityPreference = (ListPreference) findPreference(KEY_LCD_DENSITY);
+        if (mLcdDensityPreference != null) {
+            int defaultDensity = DisplayMetrics.DENSITY_DEVICE;
+            int currentDensity = DisplayMetrics.DENSITY_CURRENT;
+            if (currentDensity < 10 || currentDensity >= 1000) {
+                // Unsupported value, force default
+                currentDensity = defaultDensity;
+            }
+
+            int factor = defaultDensity >= 480 ? 40 : 20;
+            int minimumDensity = defaultDensity - 4 * factor;
+            int currentIndex = -1;
+            String[] densityEntries = new String[7];
+            String[] densityValues = new String[7];
+            for (int idx = 0; idx < 7; ++idx) {
+                int val = minimumDensity + factor * idx;
+                int valueFormatResId = val == defaultDensity
+                        ? R.string.lcd_density_default_value_format
+                        : R.string.lcd_density_value_format;
+
+                densityEntries[idx] = getString(valueFormatResId, val);
+                densityValues[idx] = Integer.toString(val);
+                if (currentDensity == val) {
+                    currentIndex = idx;
+                }
+            }
+            mLcdDensityPreference.setEntries(densityEntries);
+            mLcdDensityPreference.setEntryValues(densityValues);
+            if (currentIndex != -1) {
+                mLcdDensityPreference.setValueIndex(currentIndex);
+            }
+            mLcdDensityPreference.setOnPreferenceChangeListener(this);
+            updateLcdDensityPreferenceDescription(currentDensity);
+        }
+    }
+    
+   
+    private void onCreateExodusSpecific() {
+     //todo here we can add stuff that is only in exodus morph version
+    }
+    
+    private void onCreateAospSpecific() {
+     // todo here we can add stuff that is only present on aosp morph version
     }
 
     private static boolean allowAllRotations(Context context) {
@@ -650,7 +682,7 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
                             new ArrayList<SearchIndexableResource>();
 
                     SearchIndexableResource sir = new SearchIndexableResource(context);
-                    sir.xmlResId = R.xml.display;
+                    sir.xmlResId = getXmlResource(context);
                     result.add(sir);
 
                     return result;
