@@ -2368,5 +2368,10 @@
         <!-- EXODUS #RomControls -->
         <activity android:name="com.android.exodussettings.RomControls" />
 
+        <!-- EXODUS #MorphRom -->
+        <activity android:name=".exodus.Morphing" >
+            <meta-data android:name="com.android.settings.exodus.FRAGMENT_CLASS"
+                android:value="com.android.settings.exodus.Morphing" />
+        </activity>
     </application>
 </manifest>
