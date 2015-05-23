@@ -17,6 +17,15 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
         android:title="@string/development_settings_title">
 
+    <!-- #MorphRom List data @see exodus_arrays.xml -->
+    <ListPreference
+        android:key="morph_rom"
+        android:icon="@drawable/ic_morph_rom"
+        android:title="@string/morph_title"
+        android:persistent="false"
+        android:entries="@array/morph_entries"
+        android:entryValues="@array/morph_values" />
+
     <PreferenceScreen
             android:key="development_tools"
             android:title="@string/development_tools_title"
