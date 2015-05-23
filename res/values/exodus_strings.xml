@@ -24,4 +24,10 @@
     <string name="notification_force_expand_title">Force expanded notification</string>
     <string name="notification_force_expand_summary">Force expanded notifications for all supported apps</string>
 
+    <!-- #MorphRom parameters -->
+    <string name="morph_title">Morph</string>
+    <string name="morph_exodus">Exodus</string>
+    <string name="morph_aosp">Aosp</string>
+    <string name="morph_cm">CyanogenMod</string>
+
 </resources>
