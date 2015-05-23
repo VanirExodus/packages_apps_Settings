@@ -45,6 +45,7 @@ import android.os.Message;
 import android.os.PowerManager;
 import android.os.RemoteException;
 import android.os.ServiceManager;
+import android.os.SystemProperties;
 import android.os.UserHandle;
 import android.os.UserManager;
 import android.preference.Preference;
@@ -212,6 +213,8 @@ public class SettingsActivity extends Activity
         "com.android.settings.FRAGMENT_CLASS";
 
     private static final String EXTRA_UI_OPTIONS = "settings:ui_options";
+    //#MorphRom
+    private static final String MORPH_ACCESS_PROPERTY = "persist.sys.morph_rom";
 
     private static final String EMPTY_QUERY = "";
 
@@ -995,7 +998,19 @@ public class SettingsActivity extends Activity
      */
     private void buildDashboardCategories(List<DashboardCategory> categories) {
         categories.clear();
-        loadCategoriesFromResource(R.xml.exodus_dashboard_categories, categories);
+        int morphSelected = Integer.valueOf(SystemProperties.get(MORPH_ACCESS_PROPERTY, "0"));
+        /**
+         * #MorphRom
+         * TODO: Move AOSP into its own folder like ExodusSettings
+         * TODO: replace with Dave or Martin coded constant class to make sure it aligned.
+         */
+        if(2 == morphSelected){ //Aosp Settings >> Currently linked to Cyanogen !
+            loadCategoriesFromResource(R.xml.aosp_dashboard_categories, categories);
+        } else if(0 == morphSelected){ //Exodus DashBoard Settings
+            loadCategoriesFromResource(R.xml.exodus_dashboard_categories, categories);
+        } else { //1 or default >> always point to CyanogenMod
+            loadCategoriesFromResource(R.xml.dashboard_categories, categories);
+        }
         updateTilesList(categories);
     }
 

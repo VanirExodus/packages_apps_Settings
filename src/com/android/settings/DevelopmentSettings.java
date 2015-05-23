@@ -68,6 +68,7 @@ import android.view.accessibility.AccessibilityManager;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.android.internal.util.exodus.SettingsUtils;
 import com.android.settings.search.BaseSearchIndexProvider;
 import com.android.settings.search.Indexable;
 import com.android.settings.widget.SwitchBar;
@@ -189,6 +190,12 @@ public class DevelopmentSettings extends SettingsPreferenceFragment
 
     private static String DEFAULT_LOG_RING_BUFFER_SIZE_IN_BYTES = "262144"; // 256K
 
+    // #MorphRom params
+    private static final String MORPH_ACCESS_KEY = "morph_rom";
+    private ListPreference morphRomPreference;
+
+    private Object mSelectedMorphValue;
+
     private IWindowManager mWindowManager;
     private IBackupManager mBackupManager;
     private DevicePolicyManager mDpm;
@@ -261,6 +268,7 @@ public class DevelopmentSettings extends SettingsPreferenceFragment
     private PreferenceScreen mProcessStats;
     private ListPreference mRootAccess;
     private Object mSelectedRootValue;
+
     private PreferenceScreen mDevelopmentTools;
 
     private SwitchPreference mAdvancedReboot;
@@ -433,7 +441,36 @@ public class DevelopmentSettings extends SettingsPreferenceFragment
         }
 
         mDevelopmentTools = (PreferenceScreen) findPreference(DEVELOPMENT_TOOLS);
+
+        //#MorphRom ListPreference registration.
+        morphRomPreference = addListPreference(MORPH_ACCESS_KEY);
+
         mAllPrefs.add(mDevelopmentTools);
+
+    }
+
+    // #MorphRom
+    /**
+     * This class used to update Morph values on UI.
+     * @see MORPH_ACCESS_PROPERTY which is a SharedPreference Property.
+     */
+    private void updateMorphOptions() {
+        int value = SettingsUtils.CurrentMorphMode(getActivity().getContentResolver());
+        morphRomPreference.setValue(Integer.toString(value));
+        morphRomPreference.setSummary(getResources()
+                .getStringArray(R.array.morph_access_entries)[value]);
+
+    }
+
+    // #MorphRom
+    /**
+     * This class used to write value into System persist parameter.
+     * @see MORPH_ACCESS_PROPERTY which is a SharedPreference Property.
+     */
+    private void writeMorphAccessOptions(Object newValue) {
+        String value = (String) newValue;
+        SettingsUtils.setCurrentMorphMode(getActivity().getContentResolver(),Integer.valueOf(value));
+        updateMorphOptions();
     }
 
     private ListPreference addListPreference(String prefKey) {
@@ -639,6 +676,8 @@ public class DevelopmentSettings extends SettingsPreferenceFragment
         updateAdvancedRebootOptions();
         updateDevelopmentShortcutOptions();
         updateUpdateRecoveryOptions();
+        //MorphRom update the options to displays proper.
+        updateMorphOptions();
     }
 
     private void writeAdvancedRebootOptions() {
@@ -1820,6 +1859,9 @@ public class DevelopmentSettings extends SettingsPreferenceFragment
             } else {
                 writeRootAccessOptions(newValue);
             }
+            return true;
+        } else if (preference == morphRomPreference) { // #MorphRom Changes conditions
+            writeMorphAccessOptions(newValue);
             return true;
         }
         return false;
