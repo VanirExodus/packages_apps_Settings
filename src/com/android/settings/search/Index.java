@@ -40,6 +40,10 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
 import android.util.Xml;
+//Add Exodus stuff
+import com.android.internal.util.exodus.SettingsUtils;
+import com.android.exodussettings.ExodusSearchHelper;
+//End add Exodus stuff
 import com.android.settings.R;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -203,6 +207,8 @@ public class Index {
     private final AtomicBoolean mIsAvailable = new AtomicBoolean(false);
     private final UpdateData mDataToProcess = new UpdateData();
     private Context mContext;
+    //mCurrentMorph saves the current morph state
+    private int mCurrentMorph;
     private final String mBaseAuthority;
 
     /**
@@ -218,12 +224,13 @@ public class Index {
     }
 
     public Index(Context context, String baseAuthority) {
-        mContext = context;
+        setContext(context);
         mBaseAuthority = baseAuthority;
     }
 
     public void setContext(Context context) {
         mContext = context;
+        mCurrentMorph=SettingsUtils.CurrentMorphMode(context.getContentResolver());
     }
 
     public boolean isAvailable() {
@@ -398,7 +405,9 @@ public class Index {
         synchronized (mDataToProcess) {
             final int count = array.length;
             for (int n = 0; n < count; n++) {
-                mDataToProcess.dataToUpdate.add(array[n]);
+                if (array[n].rank != ExodusSearchHelper.RANK_EXODUS || mCurrentMorph == SettingsUtils.MORPH_MODE_EXODUS) {
+                    mDataToProcess.dataToUpdate.add(array[n]);
+                }
             }
         }
     }

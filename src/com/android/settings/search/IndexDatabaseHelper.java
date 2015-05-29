@@ -29,7 +29,7 @@ public class IndexDatabaseHelper extends SQLiteOpenHelper {
     private static final String TAG = "IndexDatabaseHelper";
 
     private static final String DATABASE_NAME = "search_index.db";
-    private static final int DATABASE_VERSION = 118;
+    private static final int DATABASE_VERSION = 119;
     private static final String PREF_FILE = "morphmode";
     private static final String MORPH_MODE = "morph_mode";
 
