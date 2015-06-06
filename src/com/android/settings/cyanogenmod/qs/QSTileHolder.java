@@ -101,6 +101,10 @@ public class QSTileHolder {
                 resourceName = "ic_qs_cast_on";
                 stringId = R.string.qs_tile_cast_screen;
                 break;
+            case QSConstants.TILE_UPDATER:
+                resourceName = "ic_qs_update";
+                stringId = R.string.exodusupdate_settings_title;
+                break;
             case QSConstants.TILE_HOTSPOT:
                 resourceName = "ic_hotspot_disable";
                 stringId = R.string.qs_tile_hotspot;

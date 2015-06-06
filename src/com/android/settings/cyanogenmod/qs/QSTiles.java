@@ -46,6 +46,7 @@ import java.util.List;
 
 public class QSTiles extends Fragment implements
         DraggableGridView.OnRearrangeListener, AdapterView.OnItemClickListener {
+
     private DraggableGridView mDraggableGridView;
     private View mAddDeleteTile;
     private boolean mDraggingActive;
