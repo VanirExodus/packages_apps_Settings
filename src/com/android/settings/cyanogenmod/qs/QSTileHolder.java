@@ -15,11 +15,13 @@
  */
 package com.android.settings.cyanogenmod.qs;
 
+import android.content.ContentResolver;
 import android.content.Context;
 
 import android.text.TextUtils;
 import com.android.internal.util.cm.QSConstants;
 import com.android.internal.util.cm.QSUtils;
+import com.android.internal.util.exodus.SettingsUtils;
 import com.android.settings.R;
 
 import java.util.Arrays;
@@ -44,6 +46,8 @@ public class QSTileHolder {
     public static QSTileHolder from(Context context, String tileType) {
         String resourceName = null;
         int stringId = -1;
+
+        boolean morphIsCM = SettingsUtils.isMorphCyanogenMod(context.getContentResolver());
 
         if (!TILE_ADD_DELETE.equals(tileType) &&
                 !QSUtils.getAvailableTiles(context).contains(tileType)) {
@@ -118,7 +122,11 @@ public class QSTileHolder {
                 stringId = R.string.qs_tile_lte;
                 break;
             case QSConstants.TILE_PROFILES:
-                resourceName = "ic_qs_system_profiles";
+                if (morphIsCM) {
+                    resourceName = "ic_qs_system_profiles";
+                } else {
+                    resourceName = "ic_qs_exodus_system_profiles";
+                }
                 stringId = R.string.qs_tile_profiles;
                 break;
             case QSConstants.TILE_PERFORMANCE:
