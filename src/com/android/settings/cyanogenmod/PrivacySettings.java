@@ -29,6 +29,8 @@ import com.android.settings.Utils;
 import com.android.settings.search.BaseSearchIndexProvider;
 import com.android.settings.search.Indexable;
 
+import com.android.internal.util.exodus.SettingsUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,6 +69,10 @@ public class PrivacySettings extends SettingsPreferenceFragment implements Index
             // No telephony, remove dependent options
             PreferenceScreen root = getPreferenceScreen();
             root.removePreference(mBlacklist);
+        }
+        
+        if (SettingsUtils.isExodusMode(getActivity().getContentResolver()) {
+            getPreferenceScreen().removePreference("cmstats");
         }
 
     }

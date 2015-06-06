@@ -16,11 +16,14 @@
 
 package com.android.settings.cmstats;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.os.SystemProperties;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
+
+import com.android.internal.util.exodus.SettingsUtils;
 
 import java.math.BigInteger;
 import java.net.NetworkInterface;
@@ -82,7 +85,7 @@ public class Utilities {
      * @return Whether or not stats collection is enabled.
      */
     public static boolean isStatsCollectionEnabled(Context context) {
-        return Settings.Secure.getInt(context.getContentResolver(),
+        return SettingsUtils.isMorphCyanogenMod(context.getContentResolver()) && Settings.Secure.getInt(context.getContentResolver(),
                 Settings.Secure.STATS_COLLECTION, 1) != 0;
     }
 
