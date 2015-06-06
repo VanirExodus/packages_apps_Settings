@@ -27,6 +27,9 @@
     <string name="exodusupdate_settings_alternate_title">System updates</string>
     <string name="exodusupdate_settings_summary">Check for, view or install available updates</string>
 
+    <!-- phone settings -->
+    <string name="phone_call_settings_title">Call settings</string>
+
     <!-- Screen shutter sound -->
     <string name="screenshot_shutter_sound_title">Screenshot shutter sound</string>
 
