@@ -18,13 +18,11 @@
         android:title="@string/development_settings_title">
 
     <!-- #MorphRom List data @see exodus_arrays.xml && exodus_strings.xml -->
-    <ListPreference
+    <PreferenceScreen
         android:key="morph_rom"
         android:icon="@drawable/ic_morph_rom"
         android:title="@string/morph_title"
-        android:persistent="false"
-        android:entries="@array/morph_access_entries"
-        android:entryValues="@array/morph_access_values" />
+        android:persistent="false" />
 
     <PreferenceScreen
             android:key="development_tools"

@@ -54,6 +54,7 @@ public class PowerMenuActions extends SettingsPreferenceFragment {
     private CheckBoxPreference mUsersPref;
     private CheckBoxPreference mSettingsPref;
     private CheckBoxPreference mLockdownPref;
+    private CheckBoxPreference mMorphModePref; //MorphMode settings Checkbox
     private CheckBoxPreference mBugReportPref;
     private CheckBoxPreference mSilentPref;
 
@@ -94,6 +95,8 @@ public class PowerMenuActions extends SettingsPreferenceFragment {
                 mSettingsPref = (CheckBoxPreference) findPreference(GLOBAL_ACTION_KEY_SETTINGS);
             } else if (action.equals(GLOBAL_ACTION_KEY_LOCKDOWN)) {
                 mLockdownPref = (CheckBoxPreference) findPreference(GLOBAL_ACTION_KEY_LOCKDOWN);
+            } else if (action.equals(GLOBAL_ACTION_KEY_MORPH_MODE)) { //#MorphMode Settings
+                mMorphModePref = (CheckBoxPreference) findPreference(GLOBAL_ACTION_KEY_MORPH_MODE);
             } else if (action.equals(GLOBAL_ACTION_KEY_BUGREPORT)) {
                 mBugReportPref = (CheckBoxPreference) findPreference(GLOBAL_ACTION_KEY_BUGREPORT);
             } else if (action.equals(GLOBAL_ACTION_KEY_SILENT)) {
@@ -146,6 +149,10 @@ public class PowerMenuActions extends SettingsPreferenceFragment {
             mLockdownPref.setChecked(settingsArrayContains(GLOBAL_ACTION_KEY_LOCKDOWN));
         }
 
+        if (mMorphModePref != null) {
+            mMorphModePref.setChecked(settingsArrayContains(GLOBAL_ACTION_KEY_MORPH_MODE));
+        }
+
         if (mBugReportPref != null) {
             mBugReportPref.setChecked(settingsArrayContains(GLOBAL_ACTION_KEY_BUGREPORT));
         }
@@ -153,6 +160,7 @@ public class PowerMenuActions extends SettingsPreferenceFragment {
         if (mSilentPref != null) {
             mSilentPref.setChecked(settingsArrayContains(GLOBAL_ACTION_KEY_SILENT));
         }
+
 
         updatePreferences();
     }
@@ -194,6 +202,10 @@ public class PowerMenuActions extends SettingsPreferenceFragment {
         } else if (preference == mLockdownPref) {
             value = mLockdownPref.isChecked();
             updateUserConfig(value, GLOBAL_ACTION_KEY_LOCKDOWN);
+
+        } else if (preference == mMorphModePref) { //#MorphMode Settings
+            value = mMorphModePref.isChecked();
+            updateUserConfig(value, GLOBAL_ACTION_KEY_MORPH_MODE);
 
         } else if (preference == mBugReportPref) {
             value = mBugReportPref.isChecked();

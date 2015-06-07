@@ -193,9 +193,7 @@ public class DevelopmentSettings extends SettingsPreferenceFragment
 
     // #MorphRom params
     private static final String MORPH_ACCESS_KEY = "morph_rom";
-    private ListPreference morphRomPreference;
-
-    private Object mSelectedMorphValue;
+    private PreferenceScreen morphRomPreference;
 
     private IWindowManager mWindowManager;
     private IBackupManager mBackupManager;
@@ -444,7 +442,7 @@ public class DevelopmentSettings extends SettingsPreferenceFragment
         mDevelopmentTools = (PreferenceScreen) findPreference(DEVELOPMENT_TOOLS);
 
         //#MorphRom ListPreference registration.
-        morphRomPreference = addListPreference(MORPH_ACCESS_KEY);
+        morphRomPreference = (PreferenceScreen) findPreference(MORPH_ACCESS_KEY);
 
         mAllPrefs.add(mDevelopmentTools);
 
@@ -456,22 +454,9 @@ public class DevelopmentSettings extends SettingsPreferenceFragment
      * @see MORPH_ACCESS_PROPERTY which is a SharedPreference Property.
      */
     private void updateMorphOptions() {
-        int value = SettingsUtils.CurrentMorphMode(getActivity().getContentResolver());
-        morphRomPreference.setValue(Integer.toString(value));
-        morphRomPreference.setSummary(getResources()
-                .getStringArray(R.array.morph_access_entries)[value]);
+        int value = Settings.Exodus.getInt( getActivity().getContentResolver(), Settings.Exodus.MORPH_MODE, 0);
+        morphRomPreference.setSummary(getResources().getStringArray(R.array.morph_access_entries)[value]);
 
-    }
-
-    // #MorphRom
-    /**
-     * This class used to write value into System persist parameter.
-     * @see MORPH_ACCESS_PROPERTY which is a SharedPreference Property.
-     */
-    private void writeMorphAccessOptions(Object newValue) {
-        String value = (String) newValue;
-        SettingsUtils.setCurrentMorphMode(getActivity(),Integer.valueOf(value));
-        updateMorphOptions();
     }
 
     private ListPreference addListPreference(String prefKey) {
@@ -1803,6 +1788,9 @@ public class DevelopmentSettings extends SettingsPreferenceFragment
                 }
                 mUpdateRecoveryDialog.setOnDismissListener(this);
             }
+        } else if (preference == morphRomPreference) { //morphmode
+            int value = Settings.Exodus.getInt( getActivity().getContentResolver(), Settings.Exodus.MORPH_MODE, 0);
+            SettingsUtils.setCurrentMorphMode( getActivity(),Integer.valueOf(value));
         } else {
             return super.onPreferenceTreeClick(preferenceScreen, preference);
         }
@@ -1874,9 +1862,6 @@ public class DevelopmentSettings extends SettingsPreferenceFragment
             } else {
                 writeRootAccessOptions(newValue);
             }
-            return true;
-        } else if (preference == morphRomPreference) { // #MorphRom Changes conditions
-            writeMorphAccessOptions(newValue);
             return true;
         }
         return false;

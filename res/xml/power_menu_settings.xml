@@ -53,6 +53,11 @@
         android:key="lockdown"
         android:title="@string/power_menu_lockdown_title"
         android:defaultValue="false" />
+    <!--#MorphMode Settings -->
+    <CheckBoxPreference
+        android:key="morphmode"
+        android:title="@string/power_menu_moprhmode_title"
+        android:defaultValue="true" />
 
     <CheckBoxPreference
         android:key="bugreport"

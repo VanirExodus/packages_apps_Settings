@@ -48,11 +48,6 @@
     <string name="morph_aosp">Aosp</string>
     <string name="morph_cm">CyanogenMod</string>
 
-    <!-- #MorphRom parameters -->
-    <string name="morph_exodus">Exodus</string>
-    <string name="morph_aosp">AOSP</string>
-    <string name="morph_cm">CyanogenMod</string>
-
     <!-- Old school longpress back to kill switch in dev settings -->
     <string name="kill_app_navbar_summary">This device requires a navigation bar.  Set kill as a longpress target in navigation bar settings.</string>
 
@@ -99,5 +94,8 @@
     <!-- Superuser indicator on status bar -->
     <string name="su_indicator">Superuser indicator</string>
     <string name="su_indicator_summary">Show superuser indicator on status bar when a session is active</string>
+
+    <!-- PowerMenu section for #MorphMode title -->
+    <string name="power_menu_moprhmode_title">Morph mode</string>
 
 </resources>
