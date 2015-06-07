@@ -445,6 +445,7 @@
         <item>airplane</item>
         <item>users</item>
         <item>bugreport</item>
+        <item>morphmode</item>
         <item>silent</item>
     </string-array>
 
