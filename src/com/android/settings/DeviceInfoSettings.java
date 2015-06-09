@@ -50,6 +50,9 @@ import com.android.settings.search.BaseSearchIndexProvider;
 import com.android.settings.search.Index;
 import com.android.settings.search.Indexable;
 
+import com.android.internal.util.exodus.SettingsUtils;
+import static com.android.internal.util.exodus.SettingsUtils.*;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -102,6 +105,17 @@ public class DeviceInfoSettings extends SettingsPreferenceFragment implements In
         super.onCreate(icicle);
 
         addPreferencesFromResource(R.xml.device_info_settings);
+
+        int exodusMode = SettingsUtils.CurrentMorphMode(getActivity().getContentResolver());
+        switch (exodusMode) {
+			case MORPH_MODE_CYANOGENMOD:
+			    removePreference("extrainfo");
+			    break;
+			case MORPH_MODE_AOSP:
+			case MORPH_MODE_EXODUS:
+			    removePreference("contributor_cloud");
+			    break;
+        }
 
         setStringSummary(KEY_FIRMWARE_VERSION, Build.VERSION.RELEASE);
         findPreference(KEY_FIRMWARE_VERSION).setEnabled(true);
