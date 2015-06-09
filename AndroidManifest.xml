@@ -2305,7 +2305,7 @@
         </activity>
 
         <!-- Extra info -->
-        <activity android:name="com.android.settings.vanir.extrainfo.MainActivity"
+        <activity android:name="com.android.settings.exodus.extrainfo.MainActivity"
                   android:theme="@android:style/Theme.Material.Light.Dialog.NoActionBar.MinWidth">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

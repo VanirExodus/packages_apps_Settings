@@ -54,7 +54,7 @@
     <string name="morph_cm">CyanogenMod</string>
 
     <!-- Extra Info -->
-    <string name="extrainfo">Extra information</string>
+    <string name="extrainfo">Additional information</string>
     <string name="extrainfo_summary">Display extra info for cpu, display, etc</string>
 
     <!-- Old school longpress back to kill switch in dev settings -->

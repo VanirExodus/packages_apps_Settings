@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package com.android.settings.vanir.extrainfo;
+package com.android.settings.exodus.extrainfo;
 
 import android.app.Activity;
 import android.content.Context;
