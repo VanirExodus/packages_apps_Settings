@@ -30,14 +30,14 @@
         android:summary="@string/button_navigation_summary" />
 
     <PreferenceScreen
-        android:id="@+id/button_settings"
+        android:key="button_settings"
         android:fragment="com.android.exodussettings.exodus.GeneralButtonSettings"
         android:title="@string/button_settings" 
         android:icon="@drawable/ic_settings_buttons" />
 
 
     <PreferenceScreen
-            android:id="@+id/device_specific_gesture_settings"
+            android:key="device_specific_gesture_settings"
             android:title="@string/gesture_settings_title"
             android:icon="@drawable/ic_settings_gestures">
         <intent
@@ -53,7 +53,7 @@
         android:persistent="true" />
 
     <Preference
-        android:id="@+id/performance_settings"
+        android:key="performance_settings"
         android:fragment="com.android.settings.cyanogenmod.PerformanceSettings"
         android:title="@string/performance_settings_title"
         android:icon="@drawable/ic_settings_performance" 
