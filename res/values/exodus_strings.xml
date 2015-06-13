@@ -45,11 +45,6 @@
     <!-- #MorphRom parameters -->
     <string name="morph_title">Morph mode</string>
     <string name="morph_exodus">Exodus</string>
-    <string name="morph_aosp">Aosp</string>
-    <string name="morph_cm">CyanogenMod</string>
-
-    <!-- #MorphRom parameters -->
-    <string name="morph_exodus">Exodus</string>
     <string name="morph_aosp">AOSP</string>
     <string name="morph_cm">CyanogenMod</string>
 
@@ -107,4 +102,6 @@
     <!-- #PowerMenuTile -->
     <string name="quick_settings_power_menu_label">Power menu</string>
 
+    <!-- PowerMenu section for #MorphMode title -->
+    <string name="power_menu_moprh_mode_title">Morph mode</string>
 </resources>

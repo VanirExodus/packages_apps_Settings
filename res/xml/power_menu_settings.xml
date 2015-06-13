@@ -40,6 +40,11 @@
         android:defaultValue="true" />
 
     <CheckBoxPreference
+        android:key="morphmode"
+        android:title="@string/power_menu_moprh_mode_title"
+        android:defaultValue="true" />     <!--#MorphMode Settings -->
+
+    <CheckBoxPreference
         android:key="users"
         android:title="@string/power_menu_users_title"
         android:defaultValue="false" />
