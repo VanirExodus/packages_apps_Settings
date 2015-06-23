@@ -2365,6 +2365,15 @@
         <activity android:name="com.android.exodussettings.exodus.buttons.ButtonsTabHost" />
 
         <activity
+            android:name=".exodus.fragments.Animations"
+            android:label="@string/animations_category" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="com.intent.category.SHORTCUT"/>
+            </intent-filter>
+        </activity>
+
+        <activity
             android:name="com.android.exodussettings.SystemappRemover"
             android:label="@string/sizer_title"
             android:parentActivityName="Settings" >
