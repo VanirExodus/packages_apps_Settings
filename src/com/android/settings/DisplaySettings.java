@@ -161,20 +161,11 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
 
         PreferenceCategory displayPrefs = (PreferenceCategory)
                 findPreference(KEY_CATEGORY_DISPLAY);
-        PreferenceCategory interfacePrefs = (PreferenceCategory)
-                findPreference(KEY_CATEGORY_INTERFACE);
 
         mDisplayRotationPreference = (PreferenceScreen) findPreference(KEY_DISPLAY_ROTATION);
         mAccelerometer = (SwitchPreference) findPreference(DisplayRotation.KEY_ACCELEROMETER);
         if (mAccelerometer != null) {
             mAccelerometer.setPersistent(false);
-        }
-
-        mScreenSaverPreference = findPreference(KEY_SCREEN_SAVER);
-        if (mScreenSaverPreference != null
-                && getResources().getBoolean(
-                        com.android.internal.R.bool.config_dreamsSupported) == false) {
-            interfacePrefs.removePreference(mScreenSaverPreference);
         }
 
         mScreenTimeoutPreference = (ListPreference) findPreference(KEY_SCREEN_TIMEOUT);
@@ -252,6 +243,15 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     }
 
     private void onCreateCmSpecific() {
+		PreferenceCategory interfacePrefs = (PreferenceCategory)
+                findPreference(KEY_CATEGORY_INTERFACE);
+        mScreenSaverPreference = findPreference(KEY_SCREEN_SAVER);
+        if (mScreenSaverPreference != null
+                && getResources().getBoolean(
+                        com.android.internal.R.bool.config_dreamsSupported) == false) {
+            interfacePrefs.removePreference(mScreenSaverPreference);
+        }
+
         mLcdDensityPreference = (ListPreference) findPreference(KEY_LCD_DENSITY);
         if (mLcdDensityPreference != null) {
             int defaultDensity = getDefaultDensity();
@@ -291,11 +291,23 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
 
 
     private void onCreateExodusSpecific() {
-     //todo here we can add stuff that is only in exodus morph version
+        //todo here we can add stuff that is only in exodus morph version
+        mScreenSaverPreference = findPreference(KEY_SCREEN_SAVER);
+        if (mScreenSaverPreference != null
+                && getResources().getBoolean(
+                        com.android.internal.R.bool.config_dreamsSupported) == false) {
+            getPreferenceScreen().removePreference(mScreenSaverPreference);
+        }
     }
 
     private void onCreateAospSpecific() {
-     // todo here we can add stuff that is only present on aosp morph version
+        // todo here we can add stuff that is only present on aosp morph version
+        mScreenSaverPreference = findPreference(KEY_SCREEN_SAVER);
+        if (mScreenSaverPreference != null
+                && getResources().getBoolean(
+                        com.android.internal.R.bool.config_dreamsSupported) == false) {
+            getPreferenceScreen().removePreference(mScreenSaverPreference);
+        }
     }
     
      private int getDefaultDensity() {
