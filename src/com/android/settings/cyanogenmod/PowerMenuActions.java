@@ -49,6 +49,7 @@ public class PowerMenuActions extends SettingsPreferenceFragment {
 
     private CheckBoxPreference mRebootPref;
     private CheckBoxPreference mScreenshotPref;
+    private CheckBoxPreference mScreenrecordPref;
     private CheckBoxPreference mProfilePref;
     private CheckBoxPreference mAirplanePref;
     private CheckBoxPreference mMorphModePref; //MorphMode settings Checkbox
@@ -80,21 +81,19 @@ public class PowerMenuActions extends SettingsPreferenceFragment {
                 getPreferenceScreen().removePreference(findPreference(action));
                 continue;
             }
-
+            boolean isExodusMode = SettingsUtils.isMorphExodus(mContext.getContentResolver());
             if (action.equals(GLOBAL_ACTION_KEY_REBOOT)) {
                 mRebootPref = (CheckBoxPreference) findPreference(GLOBAL_ACTION_KEY_REBOOT);
             } else if (action.equals(GLOBAL_ACTION_KEY_SCREENSHOT)) {
                 mScreenshotPref = (CheckBoxPreference) findPreference(GLOBAL_ACTION_KEY_SCREENSHOT);
+            } else if (action.equals(GLOBAL_ACTION_KEY_SCREENRECORD) && isExodusMode ) { // ScreenRecording
+                mScreenrecordPref = (CheckBoxPreference) findPreference(GLOBAL_ACTION_KEY_SCREENRECORD);
             } else if (action.equals(GLOBAL_ACTION_KEY_PROFILE)) {
                 mProfilePref = (CheckBoxPreference) findPreference(GLOBAL_ACTION_KEY_PROFILE);
             } else if (action.equals(GLOBAL_ACTION_KEY_AIRPLANE)) {
                 mAirplanePref = (CheckBoxPreference) findPreference(GLOBAL_ACTION_KEY_AIRPLANE);
-            } else if (action.equals(GLOBAL_ACTION_KEY_MORPH_MODE)) { //#MorphMode Settings
+            } else if (action.equals(GLOBAL_ACTION_KEY_MORPH_MODE) && isExodusMode ) { //#MorphMode Settings
                 mMorphModePref = (CheckBoxPreference) findPreference(GLOBAL_ACTION_KEY_MORPH_MODE);
-                if (! SettingsUtils.isMorphExodus(mContext.getContentResolver()) ) {
-                    getPreferenceScreen().removePreference(mMorphModePref); // remove if we are not in EXODUS
-                    mMorphModePref = null;
-                }
             } else if (action.equals(GLOBAL_ACTION_KEY_USERS)) {
                 mUsersPref = (CheckBoxPreference) findPreference(GLOBAL_ACTION_KEY_USERS);
             } else if (action.equals(GLOBAL_ACTION_KEY_SETTINGS)) {
@@ -103,10 +102,8 @@ public class PowerMenuActions extends SettingsPreferenceFragment {
                 mLockdownPref = (CheckBoxPreference) findPreference(GLOBAL_ACTION_KEY_LOCKDOWN);
             } else if (action.equals(GLOBAL_ACTION_KEY_BUGREPORT)) {
                 mBugReportPref = (CheckBoxPreference) findPreference(GLOBAL_ACTION_KEY_BUGREPORT);
-            } else if (action.equals(GLOBAL_ACTION_KEY_SILENT)) {
-                if (SettingsUtils.CurrentMorphMode(getActivity().getContentResolver()) == MORPH_MODE_EXODUS) {
-                    mSilentPref = (CheckBoxPreference) findPreference(GLOBAL_ACTION_KEY_SILENT);
-                }
+            } else if (action.equals(GLOBAL_ACTION_KEY_SILENT) && isExodusMode ) { // SilentMode
+                mSilentPref = (CheckBoxPreference) findPreference(GLOBAL_ACTION_KEY_SILENT);
             }
         }
 
@@ -123,6 +120,10 @@ public class PowerMenuActions extends SettingsPreferenceFragment {
 
         if (mScreenshotPref != null) {
             mScreenshotPref.setChecked(settingsArrayContains(GLOBAL_ACTION_KEY_SCREENSHOT));
+        }
+
+        if (mScreenrecordPref != null) {
+            mScreenrecordPref.setChecked(settingsArrayContains(GLOBAL_ACTION_KEY_SCREENRECORD));
         }
 
         if (mProfilePref != null) {
@@ -185,6 +186,10 @@ public class PowerMenuActions extends SettingsPreferenceFragment {
         } else if (preference == mScreenshotPref) {
             value = mScreenshotPref.isChecked();
             updateUserConfig(value, GLOBAL_ACTION_KEY_SCREENSHOT);
+
+        } else if (preference == mScreenrecordPref) {
+            value = mScreenrecordPref.isChecked();
+            updateUserConfig(value, GLOBAL_ACTION_KEY_SCREENRECORD);
 
         } else if (preference == mProfilePref) {
             value = mProfilePref.isChecked();
