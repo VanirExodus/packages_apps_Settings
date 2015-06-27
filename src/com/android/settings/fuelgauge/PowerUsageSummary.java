@@ -51,6 +51,7 @@ import android.view.MenuItem;
 import com.android.internal.os.BatterySipper;
 import com.android.internal.os.BatteryStatsHelper;
 import com.android.internal.os.PowerProfile;
+import com.android.internal.util.exodus.SettingsUtils;
 import com.android.settings.HelpUtils;
 import com.android.settings.R;
 import com.android.settings.SettingsActivity;
@@ -71,17 +72,20 @@ public class PowerUsageSummary extends SettingsPreferenceFragment
 
     private static final String KEY_APP_LIST = "app_list";
 
+    private static final String KEY_BATTERY_SAVER = "battery_saver";
+
     private static final String KEY_PERF_PROFILE = "pref_perf_profile";
 
-    private static final String KEY_BATTERY_SAVER = "low_power";
-
     private static final String KEY_PER_APP_PROFILES = "app_perf_profiles_enabled";
+
+    private static final String KEY_BATTERY_SAVER_CYAN = "low_power";
 
     private static final String BATTERY_HISTORY_FILE = "tmp_bat_history.bin";
 
     private static final int MENU_STATS_TYPE = Menu.FIRST;
     private static final int MENU_STATS_REFRESH = Menu.FIRST + 1;
     private static final int MENU_BATTERY_SAVER = Menu.FIRST + 2;
+    private static final int MENU_BATTERY_SAVER_THRESHOLD = Menu.FIRST + 3;
     private static final int MENU_HELP = Menu.FIRST + 3;
 
     private UserManager mUm;
@@ -91,6 +95,7 @@ public class PowerUsageSummary extends SettingsPreferenceFragment
     private String mBatteryLevel;
     private String mBatteryStatus;
     private boolean mBatteryPluggedIn;
+    private int currentMorph;
 
     private int mStatsType = BatteryStats.STATS_SINCE_CHARGED;
 
@@ -157,23 +162,36 @@ public class PowerUsageSummary extends SettingsPreferenceFragment
         mAppListGroup = (PreferenceGroup) findPreference(KEY_APP_LIST);
         setHasOptionsMenu(true);
 
-        mPerfProfilePref = (ListPreference) findPreference(KEY_PERF_PROFILE);
-        mBatterySaverPref = (SwitchPreference) findPreference(KEY_BATTERY_SAVER);
-        mPerAppProfiles = (SwitchPreference) findPreference(KEY_PER_APP_PROFILES);
-        if (mPerfProfilePref != null && !mPowerManager.hasPowerProfiles()) {
+        currentMorph = SettingsUtils.CurrentMorphMode(getActivity().getContentResolver());
+        //Only if in CyanogenMod Morph
+        if (currentMorph == 1) {
+            mPerfProfilePref = (ListPreference) findPreference(KEY_PERF_PROFILE);
+            mBatterySaverPref = (SwitchPreference) findPreference(KEY_BATTERY_SAVER_CYAN);
+            mPerAppProfiles = (SwitchPreference) findPreference(KEY_PER_APP_PROFILES);
+            if (mPerfProfilePref != null && !mPowerManager.hasPowerProfiles()) {
+                removePreference(KEY_PERF_PROFILE);
+                removePreference(KEY_PER_APP_PROFILES);
+                mPerfProfilePref = null;
+                mPerAppProfiles = null;
+            } else if (mPerfProfilePref != null) {
+                // Remove the battery saver switch, power profiles have 3 modes
+                removePreference(KEY_BATTERY_SAVER_CYAN);
+                mBatterySaverPref = null;
+                mPerfProfilePref.setOrder(-1);
+                mPerfProfilePref.setEntries(mPerfProfileEntries);
+                mPerfProfilePref.setEntryValues(mPerfProfileValues);
+                updatePerformanceValue();
+                mPerfProfilePref.setOnPreferenceChangeListener(this);
+            }
+        }
+
+        //Respect Morph mode
+        if (!(currentMorph == 0)) {
+            removePreference(KEY_BATTERY_SAVER);
+        } else if (!(currentMorph == 1)) {
             removePreference(KEY_PERF_PROFILE);
             removePreference(KEY_PER_APP_PROFILES);
-            mPerfProfilePref = null;
-            mPerAppProfiles = null;
-        } else if (mPerfProfilePref != null) {
-            // Remove the battery saver switch, power profiles have 3 modes
-            removePreference(KEY_BATTERY_SAVER);
-            mBatterySaverPref = null;
-            mPerfProfilePref.setOrder(-1);
-            mPerfProfilePref.setEntries(mPerfProfileEntries);
-            mPerfProfilePref.setEntryValues(mPerfProfileValues);
-            updatePerformanceValue();
-            mPerfProfilePref.setOnPreferenceChangeListener(this);
+            removePreference(KEY_BATTERY_SAVER_CYAN);
         }
 
         mPerformanceProfileObserver = new PerformanceProfileObserver(new Handler());
@@ -284,9 +302,16 @@ public class PowerUsageSummary extends SettingsPreferenceFragment
         refresh.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM |
                 MenuItem.SHOW_AS_ACTION_WITH_TEXT);
 
-        MenuItem batterySaver = menu.add(0, MENU_BATTERY_SAVER, 0,
-                R.string.battery_saver_threshold);
-        batterySaver.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+        //Respect current Morph
+        currentMorph = SettingsUtils.CurrentMorphMode(getActivity().getContentResolver());
+        if (currentMorph == 1) {
+            MenuItem batterySaverThreshold = menu.add(0, MENU_BATTERY_SAVER_THRESHOLD, 0,
+                    R.string.battery_saver_threshold);
+            batterySaverThreshold.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+        } else if (currentMorph == 2) {
+            MenuItem batterySaver = menu.add(0, MENU_BATTERY_SAVER, 0, R.string.battery_saver);
+            batterySaver.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+        }
 
         String helpUrl;
         if (!TextUtils.isEmpty(helpUrl = getResources().getString(R.string.help_url_battery))) {
@@ -312,6 +337,11 @@ public class PowerUsageSummary extends SettingsPreferenceFragment
                 mHandler.removeMessages(MSG_REFRESH_STATS);
                 return true;
             case MENU_BATTERY_SAVER:
+                final SettingsActivity sa = (SettingsActivity) getActivity();
+                sa.startPreferencePanel(BatterySaverSettings.class.getName(), null,
+                        R.string.battery_saver, null, null, 0);
+                return true;
+            case MENU_BATTERY_SAVER_THRESHOLD:
                 Resources res = getResources();
 
                 final int defWarnLevel = res.getInteger(
