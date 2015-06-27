@@ -49,6 +49,21 @@
         <item>3</item>
     </string-array>
 
+    <!-- Battery percent options with low percent only -->
+    <string-array name="exodus_battery_percent_options_values" translatable="false">
+		<item>0</item>
+		<item>1</item>
+		<item>2</item>
+		<item>3</item>
+    </string-array>
+
+    <string-array name="exodus_battery_percent_options_entries" translatable="false">
+		<item>@string/status_bar_battery_percentage_default</item>
+        <item>@string/status_bar_battery_percentage_text_inside</item>
+        <item>@string/status_bar_battery_percentage_text_next</item>
+		<item>@string/status_bar_battery_percentage_low_only</item>
+    </string-array>
+
     <!-- Screen recorder video sizes -->
     <string-array name="screen_recorder_video_sizes">
         <item>@string/screen_recorder_size_240x400</item>

@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -78,23 +79,24 @@ public class StatusBarSettings extends SettingsPreferenceFragment
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         ContentResolver resolver = getActivity().getContentResolver();
+        Resources res = getActivity().getResources();
 
         int exodusMode = SettingsUtils.CurrentMorphMode(resolver);
         switch (exodusMode) {
-			case MORPH_MODE_AOSP:
-			case MORPH_MODE_CYANOGENMOD:
+            case MORPH_MODE_AOSP:
+            case MORPH_MODE_CYANOGENMOD:
                 addPreferencesFromResource(R.xml.status_bar_settings);
                 break;
             case MORPH_MODE_EXODUS:
                 addPreferencesFromResource(R.xml.exodus_status_bar_settings);
 
-				mStatusBarGreeting = (SwitchPreference) findPreference(KEY_STATUS_BAR_GREETING);
-				mCustomGreetingText = Settings.System.getString(resolver, Settings.System.STATUS_BAR_GREETING);
-				mGreetingMode = Settings.System.getInt(resolver, Settings.System.STATUS_BAR_GREETING_MODE, 0);
-				boolean greeting = mCustomGreetingText != null && !TextUtils.isEmpty(mCustomGreetingText) || mGreetingMode == 0;
-				mStatusBarGreeting.setChecked(greeting);
-		        break;
-		}
+                mStatusBarGreeting = (SwitchPreference) findPreference(KEY_STATUS_BAR_GREETING);
+                mCustomGreetingText = Settings.System.getString(resolver, Settings.System.STATUS_BAR_GREETING);
+                mGreetingMode = Settings.System.getInt(resolver, Settings.System.STATUS_BAR_GREETING_MODE, 0);
+                boolean greeting = mCustomGreetingText != null && !TextUtils.isEmpty(mCustomGreetingText) || mGreetingMode == 0;
+                mStatusBarGreeting.setChecked(greeting);
+                break;
+        }
 
         mStatusBarClock = (ListPreference) findPreference(STATUS_BAR_CLOCK_STYLE);
         mStatusBarAmPm = (ListPreference) findPreference(STATUS_BAR_AM_PM);
@@ -125,12 +127,23 @@ public class StatusBarSettings extends SettingsPreferenceFragment
         mStatusBarBattery.setSummary(mStatusBarBattery.getEntry());
         mStatusBarBattery.setOnPreferenceChangeListener(this);
 
-        int batteryShowPercent = Settings.System.getInt(resolver,
-                Settings.System.STATUS_BAR_SHOW_BATTERY_PERCENT, 0);
-        mStatusBarBatteryShowPercent.setValue(String.valueOf(batteryShowPercent));
-        mStatusBarBatteryShowPercent.setSummary(mStatusBarBatteryShowPercent.getEntry());
+        int batteryShowPercent;
+        if (exodusMode == MORPH_MODE_EXODUS) {
+            batteryShowPercent = Settings.Exodus.getInt(resolver,
+                    Settings.Exodus.EXODUS_STATUS_BAR_SHOW_BATTERY_PERCENT, 3);
+            mStatusBarBatteryShowPercent.setEntryValues(res.getStringArray(R.array.exodus_battery_percent_options_values));
+            mStatusBarBatteryShowPercent.setEntries(res.getStringArray(R.array.exodus_battery_percent_options_entries));
+            mStatusBarBatteryShowPercent.setValue(String.valueOf(batteryShowPercent));
+            mStatusBarBatteryShowPercent.setSummary(mStatusBarBatteryShowPercent.getEntry());
+            mStatusBarBatteryShowPercent.setOnPreferenceChangeListener(this);
+        } else {
+            batteryShowPercent = Settings.System.getInt(resolver,
+                    Settings.System.STATUS_BAR_SHOW_BATTERY_PERCENT, 0);
+            mStatusBarBatteryShowPercent.setValue(String.valueOf(batteryShowPercent));
+            mStatusBarBatteryShowPercent.setSummary(mStatusBarBatteryShowPercent.getEntry());
+            mStatusBarBatteryShowPercent.setOnPreferenceChangeListener(this);
+        }
         enableStatusBarBatteryDependents(batteryStyle);
-        mStatusBarBatteryShowPercent.setOnPreferenceChangeListener(this);
     }
 
     @Override
@@ -148,7 +161,7 @@ public class StatusBarSettings extends SettingsPreferenceFragment
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
        if (preference == mStatusBarGreeting) {
-		   final ContentResolver resolver = getActivity().getContentResolver();
+           final ContentResolver resolver = getActivity().getContentResolver();
            boolean enabled = mStatusBarGreeting.isChecked();
 
            if (enabled) {
@@ -214,8 +227,20 @@ public class StatusBarSettings extends SettingsPreferenceFragment
         } else if (preference == mStatusBarBatteryShowPercent) {
             int batteryShowPercent = Integer.valueOf((String) newValue);
             int index = mStatusBarBatteryShowPercent.findIndexOfValue((String) newValue);
-            Settings.System.putInt(
-                    resolver, Settings.System.STATUS_BAR_SHOW_BATTERY_PERCENT, batteryShowPercent);
+            int exodusMode = SettingsUtils.CurrentMorphMode(resolver);
+            switch (exodusMode) {
+                case MORPH_MODE_AOSP:
+                    // unused
+                    break;
+                case MORPH_MODE_CYANOGENMOD:
+                    Settings.System.putInt(
+                            resolver, Settings.System.STATUS_BAR_SHOW_BATTERY_PERCENT, batteryShowPercent);
+                    break;
+                case MORPH_MODE_EXODUS:
+                    Settings.Exodus.putInt(
+                            resolver, Settings.Exodus.EXODUS_STATUS_BAR_SHOW_BATTERY_PERCENT, batteryShowPercent);
+                    break;
+            }
             mStatusBarBatteryShowPercent.setSummary(
                     mStatusBarBatteryShowPercent.getEntries()[index]);
             return true;

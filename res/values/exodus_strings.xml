@@ -61,6 +61,9 @@
     <string name="morph_aosp">AOSP</string>
     <string name="morph_cm">CyanogenMod</string>
 
+    <!-- Low battery percent -->
+    <string name="status_bar_battery_percentage_low_only">Low battery only</string>
+
     <!-- Extra Info -->
     <string name="extrainfo">Additional information</string>
     <string name="extrainfo_summary">Display extra info for cpu, display, etc</string>
