@@ -79,7 +79,7 @@ public class PowerUsageSummary extends SettingsPreferenceFragment
 
     private static final int MENU_STATS_TYPE = Menu.FIRST;
     private static final int MENU_STATS_REFRESH = Menu.FIRST + 1;
-    private static final int MENU_BATTERY_SAVER = Menu.FIRST + 2;
+    private static final int MENU_BATTERY_SAVER_THRESHOLD = Menu.FIRST + 2;
     private static final int MENU_HELP = Menu.FIRST + 3;
 
     private UserManager mUm;
@@ -89,6 +89,8 @@ public class PowerUsageSummary extends SettingsPreferenceFragment
     private String mBatteryLevel;
     private String mBatteryStatus;
     private boolean mBatteryPluggedIn;
+    private boolean isCyanogenModMorph =
+            SettingsUtils.isMorphCyanogenMod(getActivity().getContentResolver());
 
     private int mStatsType = BatteryStats.STATS_SINCE_CHARGED;
 
@@ -156,7 +158,8 @@ public class PowerUsageSummary extends SettingsPreferenceFragment
 
         mPerfProfilePref = (ListPreference) findPreference(KEY_PERF_PROFILE);
         mBatterySaverPref = (SwitchPreference) findPreference(KEY_BATTERY_SAVER);
-        if (mPerfProfilePref != null && !mPowerManager.hasPowerProfiles()) {
+        if ((mPerfProfilePref != null && !mPowerManager.hasPowerProfiles())
+                || !isCyanogenModMorpgh) {
             removePreference(KEY_PERF_PROFILE);
             mPerfProfilePref = null;
         } else if (mPerfProfilePref != null) {
@@ -278,9 +281,11 @@ public class PowerUsageSummary extends SettingsPreferenceFragment
         refresh.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM |
                 MenuItem.SHOW_AS_ACTION_WITH_TEXT);
 
-        MenuItem batterySaver = menu.add(0, MENU_BATTERY_SAVER, 0,
-                R.string.battery_saver_threshold);
-        batterySaver.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+        if (isCyanogenModMorph) {
+            MenuItem batterySaverThreshold = menu.add(0, MENU_BATTERY_SAVER_THRESHOLD, 0,
+                    R.string.battery_saver_threshold);
+            batterySaverThreshold.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+        }
 
         String helpUrl;
         if (!TextUtils.isEmpty(helpUrl = getResources().getString(R.string.help_url_battery))) {
@@ -305,7 +310,7 @@ public class PowerUsageSummary extends SettingsPreferenceFragment
                 refreshStats();
                 mHandler.removeMessages(MSG_REFRESH_STATS);
                 return true;
-            case MENU_BATTERY_SAVER:
+            case MENU_BATTERY_SAVER_THRESHOLD:
                 Resources res = getResources();
 
                 final int defWarnLevel = res.getInteger(
