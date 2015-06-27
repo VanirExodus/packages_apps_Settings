@@ -17,7 +17,13 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
                   xmlns:settings="http://schemas.android.com/apk/res/com.android.settings"
                   android:title="@string/power_usage_summary_title">
+    <!-- Exodus Battery Saver Screen -->
+    <PreferenceScreen
+            android:key="battery_saver"
+            android:title="@string/battery_saver"
+            android:fragment="com.android.settings.fuelgauge.BatterySaverSettings"/>
 
+    <!-- CyanogenMod Battery Mode -->
     <ListPreference
             android:key="pref_perf_profile"
             android:dialogTitle="@string/perf_profile_title"
@@ -30,10 +36,7 @@
             android:summary="@string/autoperf_summary"
             android:defaultValue="true" />
 
-    <com.android.settings.cyanogenmod.GlobalSettingSwitchPreference
-            android:key="low_power"
-            android:title="@string/battery_saver"/>
-
+    <!-- Power Usage Chart -->
     <PreferenceCategory
             android:title="@string/power_usage_history_title"
             settings:keywords="@string/keywords_battery"
