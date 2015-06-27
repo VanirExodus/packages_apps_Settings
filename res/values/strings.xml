@@ -6078,4 +6078,8 @@
     <string name="animation_duration_title">Animation duration</string>
     <string name="animation_duration_default">Default</string>
 
+    <!-- Battery saver color -->
+    <string name="battery_saver_warning_color_title">Warning color</string>
+    <string name="battery_saver_warning_color_summary">Enable orange status and navigation bars when battery saver is activated</string>
+
 </resources>
