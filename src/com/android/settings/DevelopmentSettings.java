@@ -446,6 +446,15 @@ public class DevelopmentSettings extends SettingsPreferenceFragment
         //#MorphRom ListPreference registration.
         morphRomPreference = addListPreference(MORPH_ACCESS_KEY);
 
+        //We are not using this CyanogenMod recovery #EXODUSCHAGNES starts
+        if(mUpdateRecovery.isChecked()){
+            mUpdateRecovery.setChecked(false);
+            writeUpdateRecoveryOptions();
+        }
+        PreferenceScreen preferenceScreen = getPreferenceScreen();
+        preferenceScreen.removePreference(mUpdateRecovery);
+        //#EXODUSCHAGNES ends
+
         mAllPrefs.add(mDevelopmentTools);
 
     }
