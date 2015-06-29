@@ -75,6 +75,11 @@
     <uses-permission android:name="com.cyanogen.permission.REQUEST_KILL_SWITCH_OP" />
     <uses-permission android:name="cyanogenmod.permission.FINISH_SETUP" />
 
+    <!-- Anti-piracy support -->
+    <uses-permission android:name="android.permission.DELETE_PACKAGES"/>
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
+
     <permission
         android:name="cyanogenmod.permission.PROTECTED_APP"
         android:protectionLevel="signatureOrSystem" />
@@ -2354,6 +2359,25 @@
         <receiver android:name=".profiles.SetupDefaultProfileReceiver">
             <intent-filter>
                 <action android:name="com.cyanogenmod.setupwizard.SETUP_FINISHED" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Anti-piracy support -->
+        <service android:name=".applications.AntiPiracyNotifyService"
+            android:enabled="true"
+            android:permission="android.permission.DELETE_PACKAGES" />
+        <receiver android:name=".applications.AntiPiracyInstallReceiver" 
+            android:enabled="true"
+            android:priority="1000" 
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.PACKAGE_INSTALL" />
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <action android:name="android.intent.action.PACKAGE_CHANGED" />
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="package" />
             </intent-filter>
         </receiver>
 
