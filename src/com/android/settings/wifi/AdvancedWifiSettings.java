@@ -159,7 +159,7 @@ public class AdvancedWifiSettings extends SettingsPreferenceFragment
 
         mNotifyChangedNetwork = (ListPreference) findPreference(KEY_NOTIFY_CHANGED_NETWORKS);
         int notifyValue = Settings.Exodus.getInt(getContentResolver(),
-                    Settings.Exodus.WIFI_NETWORK_NOTIFICATIONS, 3);
+                    Settings.Exodus.WIFI_NETWORK_NOTIFICATIONS, 0);
         mNotifyChangedNetwork.setValueIndex(notifyValue);
         mNotifyChangedNetwork.setSummary(mNotifyChangedNetwork.getEntries()[notifyValue]);
         mNotifyChangedNetwork.setOnPreferenceChangeListener(this);
