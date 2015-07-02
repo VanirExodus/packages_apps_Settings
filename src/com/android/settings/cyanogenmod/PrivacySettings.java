@@ -47,6 +47,7 @@ public class PrivacySettings extends SettingsPreferenceFragment implements Index
     private static final String TAG = "PrivacySettings";
     private static final String KEY_BLACKLIST = "blacklist";
     private static final String KEY_WHISPERPUSH = "whisperpush";
+    private static final String KEY_CMSTATS = "cmstats";
     private static final String WHISPERPUSH_ORIGINAL = "org.whispersystems.whisperpush";
     private static final String WHISPERPUSH_UPDATE = "org.whispersystems.whisperpush2";
 
@@ -85,16 +86,16 @@ public class PrivacySettings extends SettingsPreferenceFragment implements Index
             }
         }
 
+        if (SettingsUtils.isMorphExodus(getActivity().getContentResolver())) {
+            PreferenceScreen mCMStats = (PreferenceScreen) findPreference(KEY_CMSTATS);
+            getPreferenceScreen().removePreference(mCMStats);
+        }
     }
 
     private static boolean isWhisperPushUpdated(PackageManager pm, Context context) {
         // updated package is present
         if (!Utils.isPackageInstalled(context, WHISPERPUSH_UPDATE)) {
             return false;
-        }
-        
-        if (SettingsUtils.isMorphExodus(getActivity().getContentResolver())) {
-            removePreference("cmstats");
         }
 
         // ...and it has been granted the correct permission
