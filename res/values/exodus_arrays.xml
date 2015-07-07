@@ -128,4 +128,16 @@
         <item>2000</item>
     </string-array>
 
+    <!-- Battery Saver: Warning Color -->
+    <string-array name="battery_saver_warning_color_entries">
+        <item>Default</item>
+        <item>Custom</item>
+        <item>None</item>
+    </string-array>
+
+    <string-array name="battery_saver_warning_color_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
 </resources>
