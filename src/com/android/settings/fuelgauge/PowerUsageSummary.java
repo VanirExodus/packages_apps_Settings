@@ -59,6 +59,8 @@ import com.android.settings.SettingsPreferenceFragment;
 
 import java.util.List;
 
+import static com.android.internal.util.exodus.SettingsUtils.*;
+
 /**
  * Displays a list of apps and subsystems that consume power, ordered by how much power was
  * consumed since the last time it was unplugged.
@@ -95,7 +97,7 @@ public class PowerUsageSummary extends SettingsPreferenceFragment
     private String mBatteryLevel;
     private String mBatteryStatus;
     private boolean mBatteryPluggedIn;
-    private int mExodusMode;
+    private int mExodusMode = MORPH_MODE_EXODUS;
 
     private int mStatsType = BatteryStats.STATS_SINCE_CHARGED;
 
@@ -164,7 +166,7 @@ public class PowerUsageSummary extends SettingsPreferenceFragment
 
         mExodusMode = SettingsUtils.CurrentMorphMode(getActivity().getContentResolver());
         //Only if in CyanogenMod Morph
-        if (mExodusMode == 1) {
+        if (mExodusMode == MORPH_MODE_CYANOGENMOD) {
             mPerfProfilePref = (ListPreference) findPreference(KEY_PERF_PROFILE);
             mBatterySaverPref = (SwitchPreference) findPreference(KEY_BATTERY_SAVER_CYAN);
             mPerAppProfiles = (SwitchPreference) findPreference(KEY_PER_APP_PROFILES);
@@ -186,10 +188,10 @@ public class PowerUsageSummary extends SettingsPreferenceFragment
         }
 
         //Respect Morph mode
-        if (!(mExodusMode == 0)) {
+        if (!(mExodusMode == MORPH_MODE_EXODUS)) {
             removePreference(KEY_BATTERY_SAVER);
         }
-        if (!(mExodusMode == 1)) {
+        if (!(mExodusMode == MORPH_MODE_CYANOGENMOD)) {
             removePreference(KEY_PERF_PROFILE);
             removePreference(KEY_PER_APP_PROFILES);
             removePreference(KEY_BATTERY_SAVER_CYAN);
@@ -305,11 +307,11 @@ public class PowerUsageSummary extends SettingsPreferenceFragment
 
         //Respect current Morph
         mExodusMode = SettingsUtils.CurrentMorphMode(getActivity().getContentResolver());
-        if (mExodusMode == 1) {
+        if (mExodusMode == MORPH_MODE_CYANOGENMOD) {
             MenuItem batterySaverThreshold = menu.add(0, MENU_BATTERY_SAVER_THRESHOLD, 0,
                     R.string.battery_saver_threshold);
             batterySaverThreshold.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
-        } else if (mExodusMode == 2) {
+        } else if (mExodusMode == MORPH_MODE_AOSP) {
             MenuItem batterySaver = menu.add(0, MENU_BATTERY_SAVER, 0, R.string.battery_saver);
             batterySaver.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
         }
