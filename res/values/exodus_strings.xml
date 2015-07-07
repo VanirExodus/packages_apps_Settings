@@ -17,7 +17,7 @@
 
     <!-- generic -->
     <string name="ok">OK</string>
-    
+
     <!-- Additional animation controls -->
     <string name="animations_category">System animations</string>
     <string name="apps_and_activities">Tasks and activities</string>
@@ -198,4 +198,7 @@
     <string name="qs_four_columns_summary_on">4 tiles set for each row</string>
     <string name="qs_four_columns_summary_off">3 tiles set for each row</string>
 
+    <!-- Battery saver color -->
+    <string name="battery_saver_warning_color_title">Warning color style</string>
 </resources>
+
