@@ -173,4 +173,9 @@
     <string name="qs_four_columns_summary_on">4 tiles set for each row</string>
     <string name="qs_four_columns_summary_off">3 tiles set for each row</string>
 
+    <!-- Battery saver color -->
+    <string name="battery_saver_warning_color_style_title">Warning color style</string>
+    <string name="battery_saver_warning_color_title">Warning custom color</string>
+    <string name="battery_saver_warning_color_reset_message">Reset battery saver warning color?</string>
+
 </resources>
