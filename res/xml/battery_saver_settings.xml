@@ -37,12 +37,17 @@
             android:title="@string/battery_saver_turn_on_automatically_title"
             android:persistent="false" />
 
-    <!-- Warning color -->
-    <com.android.settings.cyanogenmod.SystemSettingSwitchPreference
+    <!-- Warning Color: Style -->
+    <com.android.settings.notification.DropDownPreference
+            android:key="battery_saver_warning_color_style"
+            android:title="@string/battery_saver_warning_color_style_title"
+            android:persistent="false" />
+
+    <!-- Warning Color: Custom Color -->
+     <net.margaritov.preference.colorpicker.ColorPickerPreference
             android:key="battery_saver_warning_color"
             android:title="@string/battery_saver_warning_color_title"
-            android:summary="@string/battery_saver_warning_color_summary"
-            android:defaultValue="true" />
+            android:defaultValue="0xf4511e" />
 
     <!-- Feature description text -->
     <com.android.settings.fuelgauge.WallOfTextPreference
