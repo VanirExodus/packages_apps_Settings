@@ -363,7 +363,7 @@
     <string name="development_shortcut_summary">Enable app management shortcuts in recent apps list</string>
 
     <!-- tap-to-sleep -->
-    <string name="double_tap_to_sleep_title">Double-tap to sleep</string>
+    <string name="double_tap_to_sleep_title">Status bar double-tap to sleep</string>
     <string name="double_tap_to_sleep_summary">Double-tap on the status bar to turn off the display</string>
 
     <!-- Turn on display when power connected; turn off display when power disconnected -->
