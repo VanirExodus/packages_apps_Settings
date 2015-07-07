@@ -51,6 +51,10 @@ import com.android.settings.notification.SettingPref;
 import com.android.settings.SettingsPreferenceFragment;
 import com.android.settings.widget.SwitchBar;
 
+import net.margaritov.preference.colorpicker.DropDownColorPreference;
+
+import static com.android.internal.util.exodus.SettingsUtils.*;
+
 public class BatterySaverSettings extends SettingsPreferenceFragment
         implements SwitchBar.OnSwitchChangeListener, Preference.OnPreferenceChangeListener {
     private static final String TAG = "BatterySaverSettings";
@@ -61,6 +65,7 @@ public class BatterySaverSettings extends SettingsPreferenceFragment
     private static final String KEY_BATTERY_SAVER_WARNING_COLOR = "battery_saver_warning_color";
     private static final String KEY_DESCRIPTION = "description";
 
+    private int mWarningColorStyleSelectedValue;
     private static final long WAIT_FOR_SWITCH_ANIM = 500;
 
     private final Handler mHandler = new Handler();
@@ -73,9 +78,11 @@ public class BatterySaverSettings extends SettingsPreferenceFragment
     private SettingPref mTriggerPref;
     private SwitchBar mSwitchBar;
     private Switch mSwitch;
+    private DropDownColorPreference mWarningColor;
     private boolean mValidListener;
     private PowerManager mPowerManager;
     private int mExodusMode;
+    private boolean mInitFinished;
 
     private ListPreference mPerfProfilePref;
     private String[] mPerfProfileEntries;
@@ -106,19 +113,20 @@ public class BatterySaverSettings extends SettingsPreferenceFragment
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mExodusMode = SettingsUtils.CurrentMorphMode(getActivity().getContentResolver());
-        if (mCreated && mExodusMode == 2) {
+        if (mCreated && mExodusMode == MORPH_MODE_AOSP) {
             mSwitchBar.show();
             return;
         }
         mCreated = true;
         addPreferencesFromResource(R.xml.battery_saver_settings);
 
+        initBatteryWarningStyle();
 
         mExodusMode = SettingsUtils.CurrentMorphMode(getActivity().getContentResolver());
         mContext = getActivity();
         mSwitchBar = ((SettingsActivity) mContext).getSwitchBar();
         mSwitch = mSwitchBar.getSwitch();
-        if (mExodusMode == 2) {
+        if (mExodusMode == MORPH_MODE_AOSP) {
             mSwitchBar.show();
         }
 
@@ -144,9 +152,8 @@ public class BatterySaverSettings extends SettingsPreferenceFragment
         mPerfProfileValues = getResources().getStringArray(
                 com.android.internal.R.array.perf_profile_values);
 
-
         //Only in Exodus
-        if (mExodusMode == 0) {
+        if (mExodusMode == MORPH_MODE_EXODUS) {
             mPerfProfilePref = (ListPreference) findPreference(KEY_PERF_PROFILE);
             mPerAppProfiles = (SwitchPreference) findPreference(KEY_PER_APP_PROFILES);
             if (mPerfProfilePref != null && !mPowerManager.hasPowerProfiles()) {
@@ -164,17 +171,92 @@ public class BatterySaverSettings extends SettingsPreferenceFragment
         }
 
         //Respect Morph
-        if (!(mExodusMode == 0)) {
+        if (!(mExodusMode == MORPH_MODE_EXODUS)) {
             removePreference(KEY_BATTERY_SAVER_WARNING_COLOR);
             removePreference(KEY_PERF_PROFILE);
             removePreference(KEY_PER_APP_PROFILES);
         }
-        if (!(mExodusMode == 2)) {
+        if (!(mExodusMode == MORPH_MODE_AOSP)) {
             removePreference(KEY_DESCRIPTION);
         }
 
-
         mPerformanceProfileObserver = new PerformanceProfileObserver(new Handler());
+    }
+
+    // === Battery Warning Style ===
+    private void initBatteryWarningStyle() {
+        mInitFinished = false;
+        mWarningColor = (DropDownColorPreference) findPreference(KEY_BATTERY_SAVER_WARNING_COLOR);
+        mWarningColor.setOnPreferenceChangeListener(this);
+
+        mWarningColor.addItem(R.string.default_string,0);
+        mWarningColor.addItem(R.string.custom_string,1);
+        mWarningColor.addItem(R.string.none_string,2);
+
+        updateWarningColor();
+        mWarningColor.setCallback(new DropDownColorPreference.Callback() {
+            @Override
+            public boolean onItemSelected(int pos, Object value) {
+                final int warningStyle = (Integer) value;
+
+                Settings.System.putInt(getActivity().getContentResolver(), 
+                        Settings.System.BATTERY_SAVER_MODE_COLOR_STYLE, warningStyle);
+
+                switch (warningStyle) {
+                    case 1: {
+                        if (mInitFinished) mWarningColor.showDialog(null);
+                        break;
+                    } case 2: {
+                        mWarningColor.setNewPreviewColor(16777215);
+                        break;
+                    } default: {
+                        int intColor = getResources().getColor( com.android.internal.R.color.battery_saver_mode_color);
+                        mWarningColor.setNewPreviewColor(intColor);
+                        break;
+                    }
+                }
+
+                mWarningColorStyleSelectedValue = warningStyle;
+                return true;
+            }
+        });
+
+        initWarningColor();
+        mInitFinished = true;
+    }
+
+    private void updateWarningColor() {
+        if (mWarningColor == null) {
+            return;
+        }
+        final int mWarningColorStyleSelectedValue = Settings.System.getInt(getActivity().getContentResolver(),
+                 Settings.System.BATTERY_SAVER_MODE_COLOR_STYLE, 0);
+        mWarningColor.setSelectedValue(mWarningColorStyleSelectedValue);
+    }
+
+    private void initWarningColor() {
+        int batterySaverWarningColorStyle = Settings.System.getInt(getActivity().getContentResolver(),
+                 Settings.System.BATTERY_SAVER_MODE_COLOR_STYLE, 0);
+
+        switch (batterySaverWarningColorStyle) {
+            case 1: {
+                int intColor = Settings.System.getInt(getActivity().getContentResolver(),
+                        Settings.System.BATTERY_SAVER_MODE_COLOR, -2);
+                if (intColor == -2) {
+                    intColor = getResources().getColor(
+                            com.android.internal.R.color.battery_saver_mode_color);
+                }
+                mWarningColor.setNewPreviewColor(intColor);
+                break;
+            } case 2: {
+                mWarningColor.setNewPreviewColor(16777215);
+                break;
+            } default: {
+                int intColor = getResources().getColor( com.android.internal.R.color.battery_saver_mode_color);
+                mWarningColor.setNewPreviewColor(intColor);
+                break;
+            }
+        }
     }
 
     @Override
@@ -237,6 +319,15 @@ public class BatterySaverSettings extends SettingsPreferenceFragment
                 updatePerformanceSummary();
                 return true;
             }
+        }
+
+        if (preference == mWarningColor) {
+            String hex = DropDownColorPreference.convertToARGB(Integer.valueOf(String
+                    .valueOf(newValue)));
+            int intHex = DropDownColorPreference.convertToColorInt(hex);
+            Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.BATTERY_SAVER_MODE_COLOR, intHex);
+            return true;
         }
         return false;
     }
