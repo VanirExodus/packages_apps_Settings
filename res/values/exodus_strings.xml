@@ -173,4 +173,7 @@
     <string name="qs_four_columns_summary_on">4 tiles set for each row</string>
     <string name="qs_four_columns_summary_off">3 tiles set for each row</string>
 
+    <!-- Animation Speed Header -->
+    <string name="animation_speed_title">Animation speed</string>
+
 </resources>
