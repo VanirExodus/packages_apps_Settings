@@ -37,6 +37,9 @@ import java.util.Arrays;
 
 public class Animations extends SettingsPreferenceFragment implements OnPreferenceChangeListener {
 
+    private static final String WINDOW_ANIMATION_SCALE = "window_animation_scale";
+    private static final String TRANSITION_ANIMATION_SCALE = "transition_animation_scale";
+    private static final String ANIMATOR_DURATION_SCALE = "animator_duration_scale";
     private static final String ACTIVITY_OPEN = "activity_open";
     private static final String ACTIVITY_CLOSE = "activity_close";
     private static final String TASK_OPEN = "task_open";
@@ -50,6 +53,10 @@ public class Animations extends SettingsPreferenceFragment implements OnPreferen
     private static final String WALLPAPER_INTRA_CLOSE = "wallpaper_intra_close";
     private static final String TASK_OPEN_BEHIND = "task_open_behind";
 
+    IWindowManager mWindowManager;
+    AnimationScalePreference mWindowAnimationScale;
+    AnimationScalePreference mTransitionAnimationScale;
+    AnimationScalePreference mAnimatorDurationScale;
     ListPreference mActivityOpenPref;
     ListPreference mActivityClosePref;
     ListPreference mTaskOpenPref;
@@ -83,77 +90,39 @@ public class Animations extends SettingsPreferenceFragment implements OnPreferen
             mAnimationsNum[i] = String.valueOf(mAnimations[i]);
         }
 
-        mActivityOpenPref = (ListPreference) findPreference(ACTIVITY_OPEN);
-        mActivityOpenPref.setOnPreferenceChangeListener(this);
-        mActivityOpenPref.setSummary(getProperSummary(mActivityOpenPref));
-        mActivityOpenPref.setEntries(mAnimationsStrings);
-        mActivityOpenPref.setEntryValues(mAnimationsNum);
+        mWindowManager = IWindowManager.Stub.asInterface(ServiceManager.getService("window"));
+        mWindowAnimationScale = findAndInitAnimationScalePreference(WINDOW_ANIMATION_SCALE);
+        mTransitionAnimationScale = findAndInitAnimationScalePreference(TRANSITION_ANIMATION_SCALE);
+        mAnimatorDurationScale = findAndInitAnimationScalePreference(ANIMATOR_DURATION_SCALE);
 
-        mActivityClosePref = (ListPreference) findPreference(ACTIVITY_CLOSE);
-        mActivityClosePref.setOnPreferenceChangeListener(this);
-        mActivityClosePref.setSummary(getProperSummary(mActivityClosePref));
-        mActivityClosePref.setEntries(mAnimationsStrings);
-        mActivityClosePref.setEntryValues(mAnimationsNum);
+        mActivityOpenPref = findAndInitListPreference(ACTIVITY_OPEN);
+        mActivityClosePref = findAndInitListPreference(ACTIVITY_CLOSE);
+        mTaskOpenPref = findAndInitListPreference(TASK_OPEN);
+        mTaskClosePref = findAndInitListPreference(TASK_CLOSE);
+        mTaskMoveToFrontPref = findAndInitListPreference(TASK_MOVE_TO_FRONT);
+        mTaskMoveToBackPref = findAndInitListPreference(TASK_MOVE_TO_BACK);
+        mWallpaperOpen = findAndInitListPreference(WALLPAPER_OPEN);
+        mWallpaperClose = findAndInitListPreference(WALLPAPER_CLOSE);
+        mWallpaperIntraOpen = findAndInitListPreference(WALLPAPER_INTRA_OPEN);
+        mWallpaperIntraClose = findAndInitListPreference(WALLPAPER_INTRA_CLOSE);
+        mTaskOpenBehind = findAndInitListPreference(TASK_OPEN_BEHIND);
 
-        mTaskOpenPref = (ListPreference) findPreference(TASK_OPEN);
-        mTaskOpenPref.setOnPreferenceChangeListener(this);
-        mTaskOpenPref.setSummary(getProperSummary(mTaskOpenPref));
-        mTaskOpenPref.setEntries(mAnimationsStrings);
-        mTaskOpenPref.setEntryValues(mAnimationsNum);
-
-        mTaskClosePref = (ListPreference) findPreference(TASK_CLOSE);
-        mTaskClosePref.setOnPreferenceChangeListener(this);
-        mTaskClosePref.setSummary(getProperSummary(mTaskClosePref));
-        mTaskClosePref.setEntries(mAnimationsStrings);
-        mTaskClosePref.setEntryValues(mAnimationsNum);
-
-        mTaskMoveToFrontPref = (ListPreference) findPreference(TASK_MOVE_TO_FRONT);
-        mTaskMoveToFrontPref.setOnPreferenceChangeListener(this);
-        mTaskMoveToFrontPref.setSummary(getProperSummary(mTaskMoveToFrontPref));
-        mTaskMoveToFrontPref.setEntries(mAnimationsStrings);
-        mTaskMoveToFrontPref.setEntryValues(mAnimationsNum);
-
-        mTaskMoveToBackPref = (ListPreference) findPreference(TASK_MOVE_TO_BACK);
-        mTaskMoveToBackPref.setOnPreferenceChangeListener(this);
-        mTaskMoveToBackPref.setSummary(getProperSummary(mTaskMoveToBackPref));
-        mTaskMoveToBackPref.setEntries(mAnimationsStrings);
-        mTaskMoveToBackPref.setEntryValues(mAnimationsNum);
-
-        mWallpaperOpen = (ListPreference) findPreference(WALLPAPER_OPEN);
-        mWallpaperOpen.setOnPreferenceChangeListener(this);
-        mWallpaperOpen.setSummary(getProperSummary(mWallpaperOpen));
-        mWallpaperOpen.setEntries(mAnimationsStrings);
-        mWallpaperOpen.setEntryValues(mAnimationsNum);
-
-        mWallpaperClose = (ListPreference) findPreference(WALLPAPER_CLOSE);
-        mWallpaperClose.setOnPreferenceChangeListener(this);
-        mWallpaperClose.setSummary(getProperSummary(mWallpaperClose));
-        mWallpaperClose.setEntries(mAnimationsStrings);
-        mWallpaperClose.setEntryValues(mAnimationsNum);
-
-        mWallpaperIntraOpen = (ListPreference) findPreference(WALLPAPER_INTRA_OPEN);
-        mWallpaperIntraOpen.setOnPreferenceChangeListener(this);
-        mWallpaperIntraOpen.setSummary(getProperSummary(mWallpaperIntraOpen));
-        mWallpaperIntraOpen.setEntries(mAnimationsStrings);
-        mWallpaperIntraOpen.setEntryValues(mAnimationsNum);
-
-        mWallpaperIntraClose = (ListPreference) findPreference(WALLPAPER_INTRA_CLOSE);
-        mWallpaperIntraClose.setOnPreferenceChangeListener(this);
-        mWallpaperIntraClose.setSummary(getProperSummary(mWallpaperIntraClose));
-        mWallpaperIntraClose.setEntries(mAnimationsStrings);
-        mWallpaperIntraClose.setEntryValues(mAnimationsNum);
-
-        mTaskOpenBehind = (ListPreference) findPreference(TASK_OPEN_BEHIND);
-        mTaskOpenBehind.setOnPreferenceChangeListener(this);
-        mTaskOpenBehind.setSummary(getProperSummary(mTaskOpenBehind));
-        mTaskOpenBehind.setEntries(mAnimationsStrings);
-        mTaskOpenBehind.setEntryValues(mAnimationsNum);
 
         int defaultDuration = Settings.System.getInt(getActivity().getContentResolver(),
                 Settings.System.ANIMATION_CONTROLS_DURATION, 0);
         mAnimationDuration = (AnimBarPreference) findPreference(ANIMATION_DURATION);
         mAnimationDuration.setInitValue((int) (defaultDuration));
         mAnimationDuration.setOnPreferenceChangeListener(this);
+    }
+
+    @Override
+    public boolean onPreferenceClick(Preference preference) {
+        if (preference == mWindowAnimationScale ||
+                preference == mTransitionAnimationScale ||
+                preference == mAnimatorDurationScale) {
+            ((AnimationScalePreference) preference).click();
+        }
+        return false;
     }
 
     @Override
@@ -164,7 +133,16 @@ public class Animations extends SettingsPreferenceFragment implements OnPreferen
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         boolean result = false;
-        if (preference == mActivityOpenPref) {
+        if (preference == mWindowAnimationScale) {
+            writeAnimationScaleOption(0, mWindowAnimationScale, newValue);
+            result = true;
+        } else if (preference == mTransitionAnimationScale) {
+            writeAnimationScaleOption(1, mTransitionAnimationScale, newValue);
+            result = true;
+        } else if (preference == mAnimatorDurationScale) {
+            writeAnimationScaleOption(2, mAnimatorDurationScale, newValue);
+            result = true;
+        } else if (preference == mActivityOpenPref) {
             int val = Integer.parseInt((String) newValue);
             result = Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.ACTIVITY_ANIMATION_CONTROLS[0], val);
@@ -245,5 +223,49 @@ public class Animations extends SettingsPreferenceFragment implements OnPreferen
 
         int mNum = Settings.System.getInt(getActivity().getContentResolver(), mString, 0);
         return mAnimationsStrings[mNum];
+    }
+
+    private ListPreference findAndInitListPreference(String key) {
+        ListPreference pref = (ListPreference) findPreference(key);
+        pref.setOnPreferenceChangeListener(this);
+        pref.setSummary(getProperSummary(pref));
+        pref.setEntries(mAnimationsStrings);
+        pref.setEntryValues(mAnimationsNum);
+        return pref;
+    }
+
+    private AnimationScalePreference findAndInitAnimationScalePreference(String key) {
+        AnimationScalePreference pref = (AnimationScalePreference) findPreference(key);
+        pref.setOnPreferenceChangeListener(this);
+        pref.setOnPreferenceClickListener(this);
+        mAllPrefs.add(pref);
+        return pref;
+    }
+
+    private void updateAnimationScaleOptions() {
+        updateAnimationScaleValue(0, mWindowAnimationScale);
+        updateAnimationScaleValue(1, mTransitionAnimationScale);
+        updateAnimationScaleValue(2, mAnimatorDurationScale);
+    }
+
+    private void writeAnimationScaleOption(int which, AnimationScalePreference pref,
+            Object newValue) {
+        try {
+            float scale = newValue != null ? Float.parseFloat(newValue.toString()) : 1;
+            mWindowManager.setAnimationScale(which, scale);
+            updateAnimationScaleValue(which, pref);
+        } catch (RemoteException e) {
+        }
+    }
+
+    private void updateAnimationScaleValue(int which, AnimationScalePreference pref) {
+        try {
+            float scale = mWindowManager.getAnimationScale(which);
+            if (scale != 1) {
+                mHaveDebugSettings = true;
+            }
+            pref.setScale(scale);
+        } catch (RemoteException e) {
+        }
     }
 }
