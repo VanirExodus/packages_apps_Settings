@@ -20,6 +20,31 @@
     xmlns:settings="http://schemas.android.com/apk/res/com.android.settings">
 
     <PreferenceCategory
+        android:key="animation_speed"
+        android:title="@string/animation_speed_title"/>
+
+        <com.android.settings.AnimationScalePreference
+            android:key="window_animation_scale"
+            android:title="@string/window_animation_scale_title"
+            android:persistent="false"
+            android:entries="@array/window_animation_scale_entries"
+            android:entryValues="@array/window_animation_scale_values" />
+
+        <com.android.settings.AnimationScalePreference
+            android:key="transition_animation_scale"
+            android:title="@string/transition_animation_scale_title"
+            android:persistent="false"
+            android:entries="@array/transition_animation_scale_entries"
+            android:entryValues="@array/transition_animation_scale_values" />
+
+        <com.android.settings.AnimationScalePreference
+            android:key="animator_duration_scale"
+            android:title="@string/animator_duration_scale_title"
+            android:persistent="false"
+            android:entries="@array/animator_duration_scale_entries"
+            android:entryValues="@array/animator_duration_scale_values" />
+
+    <PreferenceCategory
         android:key="apps_activities"
         android:title="@string/apps_and_activities"/>
 
