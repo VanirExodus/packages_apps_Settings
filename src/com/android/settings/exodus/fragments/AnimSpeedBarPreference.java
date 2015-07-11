@@ -26,42 +26,48 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 import com.android.settings.R;
+import com.android.settings.IntervalSeekBar;
 
-public class AnimBarPreference extends Preference
-        implements OnSeekBarChangeListener {
-
-    public static int maximum = 100;
-    public static int interval = 1;
+public class AnimSpeedBarPreference extends Preference
+    implements SeekBar.OnSeekBarChangeListener {
 
     private Context mContext;
 
-    private TextView monitorBox;
-    private SeekBar bar;
+    private TextView mMonitorBox;
+    private IntervalSeekBar mSeekBar;
 
-    int defaultValue = 60;
+    private float mScale = 1.0f;
+
+    float defaultValue = 85;
 
     private OnPreferenceChangeListener changer;
 
-    public AnimBarPreference(Context context, AttributeSet attrs) {
+    public AnimSpeedBarPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
     @Override
     protected View onCreateView(ViewGroup parent) {
         mContext = getContext();
-        View layout = View.inflate(mContext, R.layout.slider_preference, null);
+        View layout = View.inflate(mContext, R.layout.preference_animation_slider, null);
 
-        monitorBox = (TextView) layout.findViewById(R.id.monitor_box);
-        bar = (SeekBar) layout.findViewById(R.id.seek_bar);
-        bar.setOnSeekBarChangeListener(this);
-        bar.setMax(maximum);
-        bar.setProgress(defaultValue);
+        mMonitorBox = (TextView) layout.findViewById(R.id.monitor_box);
+        mMonitorBox.setText(String.valueOf(mScale) + "x");
+
+        mSeekBar = (IntervalSeekBar) layout.findViewById(R.id.scale_seekbar);
+        mSeekBar.setProgressFloat(mScale);
+        mSeekBar.setOnSeekBarChangeListener(this);
 
         return layout;
     }
 
-    public void setInitValue(int progress) {
-        defaultValue = progress;
+    public void setScale(float scale) {
+        if (mSeekBar != null)
+            mSeekBar.setProgressFloat(scale);
+        if (mMonitorBox != null)
+            mMonitorBox.setText(String.valueOf(scale) + "x");
+
+        mScale = scale;
     }
 
     @Override
@@ -79,15 +85,8 @@ public class AnimBarPreference extends Preference
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
-        progress = Math.round(((float) progress) / interval) * interval;
-        seekBar.setProgress(progress);
-        if (progress > 0) {
-            monitorBox.setText(String.valueOf(progress * 15) + "ms");
-        } else {
-            monitorBox.setText(mContext.getResources().getString(R.string.animation_duration_default));
-        }
-        changer.onPreferenceChange(this, Integer.toString(progress));
+        setScale(mSeekBar.getProgressFloat());
+        changer.onPreferenceChange(this, Float.toString(mScale));
     }
 
     @Override

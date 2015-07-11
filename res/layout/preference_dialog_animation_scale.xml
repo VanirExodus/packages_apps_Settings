@@ -42,7 +42,7 @@
                 android:layout_below="@+id/container"
                 settings:min="0"
                 settings:max="2"
-                settings:defaultValue="0.75"
+                settings:defaultValue="0.85"
                 settings:digits="2" />
 
 </RelativeLayout>

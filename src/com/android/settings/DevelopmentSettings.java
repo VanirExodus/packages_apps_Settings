@@ -324,7 +324,11 @@ public class DevelopmentSettings extends SettingsPreferenceFragment
             return;
         }
 
-        addPreferencesFromResource(R.xml.development_prefs);
+        if (SettingsUtils.isMorphExodus(getActivity().getContentResolver())) {
+            addPreferencesFromResource(R.xml.exodus_development_prefs);
+        } else {
+            addPreferencesFromResource(R.xml.development_prefs);
+        }
 
         final PreferenceGroup debugDebuggingCategory = (PreferenceGroup)
                 findPreference(DEBUG_DEBUGGING_CATEGORY_KEY);
@@ -425,9 +429,16 @@ public class DevelopmentSettings extends SettingsPreferenceFragment
         mSimulateColorSpace = addListPreference(SIMULATE_COLOR_SPACE);
         mUseAwesomePlayer = findAndInitSwitchPref(USE_AWESOMEPLAYER_KEY);
         mUSBAudio = findAndInitSwitchPref(USB_AUDIO_KEY);
-        mWindowAnimationScale = findAndInitAnimationScalePreference(WINDOW_ANIMATION_SCALE_KEY);
-        mTransitionAnimationScale = findAndInitAnimationScalePreference(TRANSITION_ANIMATION_SCALE_KEY);
-        mAnimatorDurationScale = findAndInitAnimationScalePreference(ANIMATOR_DURATION_SCALE_KEY);
+
+        if (!SettingsUtils.isMorphExodus(getActivity().getContentResolver())) {
+            mWindowAnimationScale =
+                    findAndInitAnimationScalePreference(WINDOW_ANIMATION_SCALE_KEY);
+            mTransitionAnimationScale =
+                    findAndInitAnimationScalePreference(TRANSITION_ANIMATION_SCALE_KEY);
+            mAnimatorDurationScale =
+                    findAndInitAnimationScalePreference(ANIMATOR_DURATION_SCALE_KEY);
+        }
+
         mImmediatelyDestroyActivities = (SwitchPreference) findPreference(
                 IMMEDIATELY_DESTROY_ACTIVITIES_KEY);
         mAllPrefs.add(mImmediatelyDestroyActivities);
@@ -679,7 +690,9 @@ public class DevelopmentSettings extends SettingsPreferenceFragment
         updateShowHwLayersUpdatesOptions();
         updateDebugHwOverdrawOptions();
         updateDebugLayoutOptions();
-        updateAnimationScaleOptions();
+        if (!SettingsUtils.isMorphExodus(getActivity().getContentResolver())) {
+            updateAnimationScaleOptions();
+        }
         updateOverlayDisplayDevicesOptions();
         updateOpenGLTracesOptions();
         updateImmediatelyDestroyActivitiesOptions();
@@ -780,12 +793,14 @@ public class DevelopmentSettings extends SettingsPreferenceFragment
         resetUpdateRecoveryOptions();
 
         android.util.TypedValue outValue = new android.util.TypedValue();
-        getResources().getValue(R.dimen.default_window_anim_scale, outValue, true); //obj outValue copies.
-        writeAnimationScaleOption(0, mWindowAnimationScale, outValue.getFloat());
-        getResources().getValue(R.dimen.default_transition_anim_scale, outValue, true);
-        writeAnimationScaleOption(1, mTransitionAnimationScale, outValue.getFloat());
-        getResources().getValue(R.dimen.default_animator_duration_scale, outValue, true);
-        writeAnimationScaleOption(2, mAnimatorDurationScale, outValue.getFloat());
+        if (!SettingsUtils.isMorphExodus(getActivity().getContentResolver())) {
+            getResources().getValue(R.dimen.default_window_anim_scale, outValue, true);
+            writeAnimationScaleOption(0, mWindowAnimationScale, outValue.getFloat());
+            getResources().getValue(R.dimen.default_transition_anim_scale, outValue, true);
+            writeAnimationScaleOption(1, mTransitionAnimationScale, outValue.getFloat());
+            getResources().getValue(R.dimen.default_animator_duration_scale, outValue, true);
+            writeAnimationScaleOption(2, mAnimatorDurationScale, outValue.getFloat());
+        }
         // Only poke the color space setting if we control it.
         if (usingDevelopmentColorSpace()) {
             writeSimulateColorSpace(-1);
@@ -1456,7 +1471,9 @@ public class DevelopmentSettings extends SettingsPreferenceFragment
     private void updateAnimationScaleValue(int which, AnimationScalePreference pref) {
         try {
             float scale = mWindowManager.getAnimationScale(which);
-            if (scale != 1) {
+            android.util.TypedValue outValue = new android.util.TypedValue();
+            getResources().getValue(R.dimen.default_window_anim_scale, outValue, true);
+            if (scale != outValue.getFloat()) {
                 mHaveDebugSettings = true;
             }
             pref.setScale(scale);

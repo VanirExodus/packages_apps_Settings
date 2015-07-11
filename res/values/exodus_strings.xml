@@ -19,6 +19,7 @@
     <string name="ok">OK</string>
     
     <!-- Additional animation controls -->
+    <string name="custom_animation_duration_title">Custom animation duration</string>
     <string name="animations_category">System animations</string>
     <string name="apps_and_activities">Tasks and activities</string>
     <string name="wallpaper_animations">Wallpaper animations</string>
@@ -172,5 +173,8 @@
     <string name="qs_four_columns_title">Show four tiles per row</string>
     <string name="qs_four_columns_summary_on">4 tiles set for each row</string>
     <string name="qs_four_columns_summary_off">3 tiles set for each row</string>
+
+    <!-- Animation Speed Header -->
+    <string name="animation_speed_title">Animation speed</string>
 
 </resources>

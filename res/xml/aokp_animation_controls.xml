@@ -20,8 +20,28 @@
     xmlns:settings="http://schemas.android.com/apk/res/com.android.settings">
 
     <PreferenceCategory
+        android:key="animation_speed"
+        android:title="@string/animation_speed_title" />
+
+        <com.android.settings.exodus.fragments.AnimSpeedBarPreference
+            android:key="window_animation_scale"
+            android:title="@string/window_animation_scale_title" />
+
+        <com.android.settings.exodus.fragments.AnimSpeedBarPreference
+            android:key="transition_animation_scale"
+            android:title="@string/transition_animation_scale_title" />
+
+        <com.android.settings.exodus.fragments.AnimSpeedBarPreference
+            android:key="animator_duration_scale"
+            android:title="@string/animator_duration_scale_title" />
+
+        <com.android.settings.exodus.fragments.AnimBarPreference
+            android:key="animation_duration"
+            android:title="@string/custom_animation_duration_title" />
+
+    <PreferenceCategory
         android:key="apps_activities"
-        android:title="@string/apps_and_activities"/>
+        android:title="@string/apps_and_activities" />
 
         <ListPreference
             android:key="activity_open"
@@ -70,10 +90,6 @@
         <ListPreference
             android:key="task_open_behind"
             android:title="@string/task_open_behind_title" />
-
-        <com.android.settings.exodus.fragments.AnimBarPreference
-            android:key="animation_duration"
-            android:title="@string/animation_duration_title" />
 
     <Preference
         style="?android:preferenceInformationStyle"

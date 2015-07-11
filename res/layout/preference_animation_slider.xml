@@ -10,7 +10,9 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:settings="http://schemas.android.com/apk/res/com.android.settings"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="?android:attr/listPreferredItemHeight"
@@ -25,7 +27,8 @@
         android:layout_marginTop="8dip"
         android:layout_marginBottom="8dip">
 
-        <TextView android:id="@android:id/title"
+        <TextView
+            android:id="@android:id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:singleLine="true"
@@ -53,15 +56,19 @@
                 android:singleLine="true"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
-            <SeekBar android:id="@+id/seek_bar"
-                android:layout_marginStart="44dp"
+            <com.android.settings.IntervalSeekBar
+                android:id="@+id/scale_seekbar"
+                android:layout_marginStart="28dp"
                 android:layout_gravity="center_vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:max="100"
-                android:progress="60" />
+                settings:min="0"
+                settings:max="2"
+                settings:defaultValue="0.85"
+                settings:digits="2" />
 
-            <TextView android:id="@+id/suppression_text"
+            <TextView
+                android:id="@+id/suppression_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|start"
