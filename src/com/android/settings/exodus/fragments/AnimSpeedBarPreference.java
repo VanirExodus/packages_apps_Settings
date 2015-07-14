@@ -62,8 +62,8 @@ public class AnimSpeedBarPreference extends Preference
     }
 
     public void setScale(float scale) {
-        if (mSeekBar != null)
-            mSeekBar.setProgressFloat(scale);
+        //if (mSeekBar != null)
+        //    mSeekBar.setProgressFloat(scale);
         if (mMonitorBox != null)
             mMonitorBox.setText(String.valueOf(scale) + "x");
 
