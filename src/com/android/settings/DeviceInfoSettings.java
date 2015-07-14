@@ -113,6 +113,7 @@ public class DeviceInfoSettings extends SettingsPreferenceFragment implements In
 			    break;
 			case MORPH_MODE_AOSP:
 			case MORPH_MODE_EXODUS:
+			    removePreference("exodus_updates");
 //			    removePreference("contributor_cloud");
 			    break;
         }

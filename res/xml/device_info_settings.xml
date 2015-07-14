@@ -19,8 +19,18 @@
         <PreferenceScreen android:key="logo1"
                 android:layout="@layout/logo_row" />
 
-        <!-- System update settings - launches activity
-        <PreferenceScreen android:key="system_update_settings"
+        <!-- System update settings - launches activity-->
+        <PreferenceScreen
+            android:key="exodus_updates"
+            android:title="@string/exodusupdate_settings_title"
+            android:summary="@string/exodusupdate_settings_summary">
+            <intent android:action="android.intent.action.MAIN"
+                android:targetPackage="com.exodus.updater"
+                android:targetClass="com.exodus.updater.UpdatesSettings"
+                />
+        </PreferenceScreen>
+
+        <!--PreferenceScreen android:key="system_update_settings"
                 android:title="@string/system_update_settings_list_item_title"
                 android:summary="@string/system_update_settings_list_item_summary">
             <intent android:action="android.settings.SYSTEM_UPDATE_SETTINGS"
