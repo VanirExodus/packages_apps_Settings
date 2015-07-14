@@ -108,13 +108,14 @@ public class DeviceInfoSettings extends SettingsPreferenceFragment implements In
 
         int exodusMode = SettingsUtils.CurrentMorphMode(getActivity().getContentResolver());
         switch (exodusMode) {
-			case MORPH_MODE_CYANOGENMOD:
-			    removePreference("extrainfo");
-			    break;
-			case MORPH_MODE_AOSP:
-			case MORPH_MODE_EXODUS:
-//			    removePreference("contributor_cloud");
-			    break;
+            case MORPH_MODE_CYANOGENMOD:
+                removePreference("extrainfo");
+                break;
+            case MORPH_MODE_AOSP:
+            case MORPH_MODE_EXODUS:
+                removePreference("exodus_updates");
+//              removePreference("contributor_cloud");
+                break;
         }
 
         setStringSummary(KEY_FIRMWARE_VERSION, "Google " + Build.VERSION.RELEASE_BRANCH);
