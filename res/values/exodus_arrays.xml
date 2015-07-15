@@ -140,4 +140,19 @@
         <item>1</item>
         <item>2</item>
     </string-array>
+
+    <!-- Brightness Sliders -->
+    <string-array name="brightness_adjust_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <string-array name="brightness_adjust_entries" translatable="false">
+        <item>@string/brightness_adjust_none</item>
+        <item>@string/brightness_adjust_gesture</item>
+        <item>@string/brightness_adjust_quicksettings</item>
+        <item>@string/brightness_adjust_both</item>
+    </string-array>
 </resources>

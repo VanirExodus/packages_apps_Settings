@@ -81,6 +81,8 @@ import java.util.List;
 import com.android.settings.cyanogenmod.DisplayRotation;
 import com.android.settings.Utils;
 
+import static com.android.internal.util.exodus.SettingsUtils.*;
+
 public class DisplaySettings extends SettingsPreferenceFragment implements
         Preference.OnPreferenceChangeListener, OnPreferenceClickListener, Indexable {
     private static final String TAG = "DisplaySettings";
@@ -105,8 +107,10 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     private static final String KEY_WAKE_WHEN_PLUGGED_OR_UNPLUGGED = "wake_when_plugged_or_unplugged";
     private static final String KEY_NOTIFICATION_LIGHT = "notification_light";
     private static final String KEY_BATTERY_LIGHT = "battery_light";
+    private static final String KEY_BRIGHTNESS_ADJUSTMENT = "brightness_adjust";
 
     private static final int DLG_GLOBAL_CHANGE_WARNING = 1;
+    private ListPreference mBrightnessAdjustment;
     private ListPreference mLcdDensityPreference;
     private FontDialogPreference mFontSizePref;
     private PreferenceScreen mDisplayRotationPreference;
@@ -142,12 +146,14 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     };
 
     private static int getXmlResource(Context context) {
-        if (SettingsUtils.isMorphCyanogenMod(context.getContentResolver())) {
-            return R.xml.display;
+        switch (SettingsUtils.CurrentMorphMode(context.getContentResolver())) {
+            case MORPH_MODE_CYANOGENMOD:
+                return R.xml.display;
+            case MORPH_MODE_AOSP:
+                return R.xml.aosp_display_settings;
+            default:
+                return R.xml.exodus_display_settings;
         }
-        //todo : Add AOSP
-        // Not defined : Default is exodus
-        return R.xml.exodus_display_settings;
     }
 
     @Override
@@ -291,6 +297,8 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
 
 
     private void onCreateExodusSpecific() {
+        final Activity activity = getActivity();
+        final ContentResolver resolver = activity.getContentResolver();
         //todo here we can add stuff that is only in exodus morph version
         mScreenSaverPreference = findPreference(KEY_SCREEN_SAVER);
         if (mScreenSaverPreference != null
@@ -298,6 +306,26 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
                         com.android.internal.R.bool.config_dreamsSupported) == false) {
             getPreferenceScreen().removePreference(mScreenSaverPreference);
         }
+
+        final int sbBrightness = Settings.System.getInt(resolver,
+                Settings.System.STATUS_BAR_BRIGHTNESS_CONTROL, 0);
+        final int qsBrightness = Settings.Secure.getInt(resolver,
+                Settings.Secure.QS_SHOW_BRIGHTNESS_SLIDER, 1);
+        int brightness = 1;
+        if (sbBrightness == 1 && qsBrightness == 0)
+            brightness = 1;
+        else if (sbBrightness == 0 && qsBrightness == 1)
+            brightness = 2;
+        else if (qsBrightness == 1 && qsBrightness == 1)
+            brightness = 3;
+        else
+            brightness = 0;
+
+        mBrightnessAdjustment = (ListPreference) findPreference(KEY_BRIGHTNESS_ADJUSTMENT);
+        mBrightnessAdjustment.setValue(String.valueOf(brightness));
+        mBrightnessAdjustment.setSummary(mBrightnessAdjustment.getEntries()[mBrightnessAdjustment
+                .findIndexOfValue(String.valueOf(brightness))]);
+        mBrightnessAdjustment.setOnPreferenceChangeListener(this);
     }
 
     private void onCreateAospSpecific() {
@@ -690,6 +718,30 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
             boolean auto = (Boolean) objValue;
             Settings.System.putInt(getContentResolver(), SCREEN_BRIGHTNESS_MODE,
                     auto ? SCREEN_BRIGHTNESS_MODE_AUTOMATIC : SCREEN_BRIGHTNESS_MODE_MANUAL);
+        }
+        if (preference == mBrightnessAdjustment) {
+            int sb = 0;
+            int qs = 0;
+            int value = Integer.valueOf((String) objValue);
+            mBrightnessAdjustment.setValue(String.valueOf(value));
+            mBrightnessAdjustment.setSummary(mBrightnessAdjustment.getEntries()[mBrightnessAdjustment
+                    .findIndexOfValue(String.valueOf(value))]);
+            switch (value) {
+                case 1:
+                    sb = 1;
+                    break;
+                case 2:
+                    qs = 1;
+                    break;
+                case 3:
+                    qs = 1;
+                    sb = 1;
+                    break;
+            }
+            Settings.System.putInt(getContentResolver(),
+                    Settings.System.STATUS_BAR_BRIGHTNESS_CONTROL, sb);
+            Settings.Secure.putInt(getContentResolver(),
+                    Settings.Secure.QS_SHOW_BRIGHTNESS_SLIDER, qs);
         }
         if (preference == mLiftToWakePreference) {
             boolean value = (Boolean) objValue;
