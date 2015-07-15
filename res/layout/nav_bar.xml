@@ -79,5 +79,16 @@
                 android:layout_height="wrap_content"
                 android:textSize="14sp" />
         </LinearLayout>
+        <TextView
+            android:id="@+id/disabled_message"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dip"
+            android:layout_weight="0.2"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/navigation_ring_disabled_message"
+            android:textSize="14sp" />
     </LinearLayout>
 </LinearLayout>
