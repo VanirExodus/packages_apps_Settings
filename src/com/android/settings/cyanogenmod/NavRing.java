@@ -18,6 +18,7 @@ package com.android.settings.cyanogenmod;
 
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -27,12 +28,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
+import com.android.exodussettings.exodus.prefrences.BaseExodusSettingSwitchBar;
 import com.android.settings.R;
+import com.android.settings.SettingsActivity;
 import com.android.internal.util.cm.NavigationRingConstants;
+import com.android.internal.util.exodus.SettingsUtils;
 
-public class NavRing extends Fragment implements View.OnClickListener {
+public class NavRing extends Fragment implements View.OnClickListener,
+        BaseExodusSettingSwitchBar.SwitchBarChangeCallback {
+
+    private BaseExodusSettingSwitchBar mNavRingEnabler;
     private LinearLayout mRestore, mSave, mEdit;
+    private TextView mMessage;
     private final static Intent TRIGGER_INTENT =
             new Intent(NavigationRingConstants.BROADCAST);
 
@@ -44,14 +51,45 @@ public class NavRing extends Fragment implements View.OnClickListener {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        TextView message = (TextView) view.findViewById(R.id.message);
-        message.setText(R.string.navigation_ring_message);
+        mMessage = (TextView) view.findViewById(R.id.message);
+        mMessage.setText(R.string.navigation_ring_message);
         mEdit = (LinearLayout) view.findViewById(R.id.navbar_edit);
         mEdit.setOnClickListener(this);
         mSave = (LinearLayout) view.findViewById(R.id.navbar_save);
         mSave.setOnClickListener(this);
         mRestore = (LinearLayout) view.findViewById(R.id.navbar_restore);
         mRestore.setOnClickListener(this);
+        if (SettingsUtils.isMorphExodus(getActivity().getContentResolver())) {
+            boolean enabled = Settings.Exodus.getInt(getActivity().getContentResolver(),
+                    Settings.Exodus.ENABLE_NAVIGATION_RING, 1) == 1;
+            updateNavRing(enabled);
+        } else {
+            updateNavRing(true);
+        } 
+    }
+
+    @Override
+    public void onDestroyView() {
+        if (mNavRingEnabler != null) {
+            mNavRingEnabler.teardownSwitchBar();
+        }
+        super.onDestroyView();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        final SettingsActivity activity = (SettingsActivity) getActivity();
+        mNavRingEnabler = new BaseExodusSettingSwitchBar(activity, activity.getSwitchBar(),
+                Settings.Exodus.ENABLE_NAVIGATION_RING, true, this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mNavRingEnabler != null) {
+            mNavRingEnabler.resume(getActivity());
+        }
     }
 
     @Override
@@ -63,6 +101,27 @@ public class NavRing extends Fragment implements View.OnClickListener {
     @Override
     public void onPause() {
         super.onPause();
+        if (mNavRingEnabler != null) {
+            mNavRingEnabler.pause();
+        }
+        setEditMode(false);
+    }
+
+    @Override
+    public void onEnablerChanged(boolean isEnabled) {
+        updateNavRing(isEnabled);
+    }
+
+    private void updateNavRing (boolean isEnabled) {
+        if (isEnabled) {
+            mMessage.setText(R.string.navigation_ring_message);
+            mRestore.setVisibility(View.VISIBLE);
+            mEdit.setVisibility(View.VISIBLE);
+        } else {
+            mMessage.setText(R.string.navigation_ring_disabled_message);
+            mRestore.setVisibility(View.GONE);
+            mEdit.setVisibility(View.GONE);
+        }
         setEditMode(false);
     }
 

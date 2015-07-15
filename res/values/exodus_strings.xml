@@ -179,4 +179,7 @@
 
     <!-- Battery saver color -->
     <string name="battery_saver_warning_color_title">Warning color style</string>
+
+    <!-- Nav Ring: More -->
+    <string name="navigation_ring_disabled_message">Navigation ring is currently disabled.</string>
 </resources>
