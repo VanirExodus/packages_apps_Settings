@@ -46,12 +46,14 @@ public class NavRing extends Fragment implements View.OnClickListener,
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.nav_bar, container, false);
+        if (SettingsUtils.isMorphExodus(getActivity().getContentResolver()))
+            return inflater.inflate(R.layout.exodus_nav_ring, container, false);
+        else
+            return inflater.inflate(R.layout.nav_bar, container, false);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        mDisabledMessage = (TextView) view.findViewById(R.id.disabled_message);
         mMessage = (TextView) view.findViewById(R.id.message);
         mMessage.setText(R.string.navigation_ring_message);
         mEdit = (LinearLayout) view.findViewById(R.id.navbar_edit);
@@ -61,6 +63,7 @@ public class NavRing extends Fragment implements View.OnClickListener,
         mRestore = (LinearLayout) view.findViewById(R.id.navbar_restore);
         mRestore.setOnClickListener(this);
         if (SettingsUtils.isMorphExodus(getActivity().getContentResolver())) {
+            mDisabledMessage = (TextView) view.findViewById(R.id.disabled_message);
             boolean enabled = Settings.Exodus.getInt(getActivity().getContentResolver(),
                     Settings.Exodus.ENABLE_NAVIGATION_RING, 1) == 1;
             updateNavRing(enabled);
@@ -114,12 +117,12 @@ public class NavRing extends Fragment implements View.OnClickListener,
     }
 
     private void updateNavRing (boolean isEnabled) {
-        if (isEnabled) {
+        if (isEnabled && mDisabledMessage != null) {
             mMessage.setVisibility(View.VISIBLE);
             mDisabledMessage.setVisibility(View.GONE);
             mRestore.setVisibility(View.VISIBLE);
             mEdit.setVisibility(View.VISIBLE);
-        } else {
+        } else if (mDisabledMessage != null) {
             mMessage.setVisibility(View.GONE);
             mDisabledMessage.setVisibility(View.VISIBLE);
             mRestore.setVisibility(View.GONE);
