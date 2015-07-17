@@ -330,7 +330,7 @@ public class SettingsActivity extends Activity
             LiveDisplay.class.getName(),
             DisplayRotation.class.getName(),
             com.android.settings.cyanogenmod.PrivacySettings.class.getName(),
-            com.android.settings.exodus.ScreenRecorderSettings.class.getName()
+            com.android.exodussettings.exodus.ScreenRecorderSettings.class.getName()
     };
 
 
