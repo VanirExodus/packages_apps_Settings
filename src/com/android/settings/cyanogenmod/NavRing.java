@@ -28,7 +28,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import com.android.exodussettings.exodus.prefrences.BaseExodusSettingSwitchBar;
+import com.android.exodussettings.preferences.BaseExodusSettingSwitchBar;
 import com.android.settings.R;
 import com.android.settings.SettingsActivity;
 import com.android.internal.util.cm.NavigationRingConstants;

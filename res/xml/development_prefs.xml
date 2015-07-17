@@ -160,7 +160,7 @@
             android:key="screen_recorder"
             android:title="@string/screen_recorder_title"
             android:summary="@string/screen_recorder_summary"
-            android:fragment="com.android.settings.exodus.ScreenRecorderSettings" />
+            android:fragment="com.android.exodussettings.exodus.ScreenRecorderSettings" />
 
         <SwitchPreference
                 android:key="debug_view_attributes"

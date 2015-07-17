@@ -80,7 +80,7 @@
                 android:summary="@string/extrainfo_summary">
             <intent android:action="android.intent.action.MAIN"
                     android:targetPackage="com.android.settings"
-                    android:targetClass="com.android.settings.exodus.extrainfo.MainActivity" />
+                    android:targetClass="com.android.exodussettings.extrainfo.MainActivity" />
         </PreferenceScreen>
 
         <!-- Feedback on the device -->
