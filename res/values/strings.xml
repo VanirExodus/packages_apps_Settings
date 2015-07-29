@@ -6061,6 +6061,10 @@
    <string name="imei_information_summary">IMEI relative information</string>
    <string name="slot_number">(Slot<xliff:g id="slot_num">%1$d</xliff:g>)</string>
 
+    <!-- Lockscreen wallpaper -->
+    <string name="lockscreen_wallpaper_title">Wallpaper</string>
+    <string name="lockscreen_wallpaper_summary">Set lockscreen wallpaper</string>
+
     <!-- AOKP custom system animations -->
     <string name="aokp_animation_title">System animations</string>
     <string name="aokp_animation_summary">AOKP custom animation</string>

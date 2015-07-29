@@ -35,6 +35,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.ResolveInfo;
 import android.content.pm.UserInfo;
 import android.content.res.Resources;
@@ -46,6 +47,7 @@ import android.os.UserManager;
 import android.preference.SwitchPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
+import android.preference.PreferenceCategory;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceGroup;
 import android.preference.PreferenceScreen;
@@ -96,6 +98,7 @@ public class SecuritySettings extends SettingsPreferenceFragment
     private static final String KEY_CREDENTIALS_MANAGER = "credentials_management";
     private static final String PACKAGE_MIME_TYPE = "application/vnd.android.package-archive";
     private static final String KEY_SCREEN_PINNING = "screen_pinning_settings";
+    private static final String KEY_GENERAL_CATEGORY = "general_category";
 
     // Cyanogen device lock
     public static final String ACCOUNT_TYPE_CYANOGEN = "com.cyanogen";
@@ -108,6 +111,8 @@ public class SecuritySettings extends SettingsPreferenceFragment
     private SwitchPreference mLockDeviceToCyanogenAccount;
 
     private static final String KEY_SMS_SECURITY_CHECK_PREF = "sms_security_check_limit";
+
+    private static final String KEY_LOCKSCREEN_WALLPAPER = "lockscreen_wallpaper";
 
     // These switch preferences need special handling since they're not all stored in Settings.
     private static final String SWITCH_PREFERENCE_KEYS[] = { KEY_SHOW_PASSWORD,
@@ -302,6 +307,19 @@ public class SecuritySettings extends SettingsPreferenceFragment
                 deviceAdminCategory.removePreference(appOpsSummary);
             }
         }
+
+        // Lockscreen wallpaper
+        if (generalCategory != null) {
+            PreferenceScreen lockscreenWallpaper = (PreferenceScreen)
+                generalCategory.findPreference(KEY_LOCKSCREEN_WALLPAPER);
+            if (lockscreenWallpaper != null) {
+                try {
+                    getActivity().getPackageManager().getPackageInfo("com.slim.wallpaperpicker", 0);
+                } catch (PackageManager.NameNotFoundException e) {
+                    generalCategory.removePreference(lockscreenWallpaper);
+                }
+            }
+         }
 
         // The above preferences come and go based on security state, so we need to update
         // the index. This call is expected to be fairly cheap, but we may want to do something
