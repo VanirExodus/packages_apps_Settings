@@ -345,6 +345,14 @@
                 android:targetClass="eu.chainfire.supersu.MainActivity" />
         </dashboard-tile>
 
+        <!-- Morph Mode -->
+        <dashboard-tile
+            android:id="@+id/morph_mode_settings"
+            android:title="@string/morph_settings"
+            android:fragment="com.android.exodussettings.MorphMode"
+            android:icon="@drawable/ic_morph_mode"
+            />
+
         <!-- About Device -->
         <dashboard-tile
                 android:id="@+id/about_settings"
