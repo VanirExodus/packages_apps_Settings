@@ -2418,6 +2418,17 @@
             </intent-filter>
         </receiver>
 
+        <!-- Random Boot Animation Support >
+        <receiver android:name="org.randboot.support.RandBootReceiver"
+            android:enabled="true"
+            android:priority="1000"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver-->
+
         <!-- EXODUS #RomControls -->
         <activity android:name="com.android.exodussettings.RomControls" />
         <activity android:name="com.android.exodussettings.exodus.GeneralButtonSettings" />

@@ -16,7 +16,8 @@ LOCAL_SRC_FILES := \
         src/com/android/settings/EventLogTags.logtags
 LOCAL_SRC_FILES += \
         $(call all-java-files-under, ../ExodusSettings/src) \
-        $(call all-java-files-under, ../../services/AntiPiracy/src)
+        $(call all-java-files-under, ../../services/AntiPiracy/src) \
+        $(call all-java-files-under, ../../services/RandBoot/src)
 
 LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res \
     frameworks/support/v7/cardview/res
@@ -39,7 +40,8 @@ LOCAL_AAPT_FLAGS := \
     --auto-add-overlay \
     --extra-packages android.support.v7.cardview \
     --extra-packages com.android.exodussettings \
-    --extra-packages org.antipiracy.support
+    --extra-packages org.antipiracy.support \
+    --extra-packages org.randboot.support
 
 include frameworks/opt/setupwizard/navigationbar/common.mk
 include $(BUILD_PACKAGE)
