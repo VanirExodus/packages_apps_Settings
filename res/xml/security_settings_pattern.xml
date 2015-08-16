@@ -80,6 +80,14 @@
             android:title="@string/lockscreen_targets_message"
             settings:advanced="true"/>
 
+        <PreferenceScreen
+            android:key="lockscreen_wallpaper"
+            android:title="@string/lockscreen_wallpaper_title"
+            android:summary="@string/lockscreen_wallpaper_summary"
+            android:persistent="false"
+            android:fragment="com.android.settings.exodus.LockscreenWallpaper">
+        </PreferenceScreen>
+
         <com.android.settings.cyanogenmod.SecureSettingSwitchPreference
             android:key="lockscreen_visualizer"
             android:title="@string/lockscreen_visualizer_title"
