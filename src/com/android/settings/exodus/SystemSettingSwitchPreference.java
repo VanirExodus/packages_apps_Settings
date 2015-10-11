@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2013 The CyanogenMod project
+ * Copyright (C) 2015 Team Exodus
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.android.settings.cyanogenmod;
+package com.android.settings.exodus;
 
 import android.content.Context;
 import android.preference.SwitchPreference;

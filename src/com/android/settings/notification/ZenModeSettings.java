@@ -35,6 +35,7 @@ import java.util.List;
 public class ZenModeSettings extends ZenModeSettingsBase implements Indexable {
     private static final String KEY_PRIORITY_SETTINGS = "priority_settings";
     private static final String KEY_AUTOMATION_SETTINGS = "automation_settings";
+    private static final String KEY_ALLOW_LIGHTS = "allow_lights";
 
     private Preference mPrioritySettings;
 
@@ -48,6 +49,11 @@ public class ZenModeSettings extends ZenModeSettingsBase implements Indexable {
         mPrioritySettings = root.findPreference(KEY_PRIORITY_SETTINGS);
         if (!isScheduleSupported(mContext)) {
             removePreference(KEY_AUTOMATION_SETTINGS);
+        }
+        // Remove of the "Allow notification light" setting if an led is not supported
+        if (!getResources().getBoolean(
+                com.android.internal.R.bool.config_intrusiveNotificationLed)) {
+            removePreference(KEY_ALLOW_LIGHTS);
         }
     }
 
