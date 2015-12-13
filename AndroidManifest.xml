@@ -2584,5 +2584,8 @@
                 android:value="com.android.settings.applications.WriteSettingsDetails" />
         </activity>
 
+        <!-- EXODUS #RomControls -->
+        <activity android:name="com.android.settings.exodus.RomControls" />
+
     </application>
 </manifest>
