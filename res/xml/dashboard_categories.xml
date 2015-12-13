@@ -71,6 +71,20 @@
                 />
 
     </dashboard-category>
+    <!-- RomControls start -->
+    <!-- EXODUS -->
+    <dashboard-category
+            android:id="@+id/exodus_custom"
+            android:title="@string/exodus_title" >
+        <!-- rom controls -->
+        <dashboard-tile
+            android:id="@+id/rom_controls"
+            android:title="@string/rom_controls"
+            android:fragment="com.android.settings.exodus.romcontrols.RomControlsFragment"
+            android:icon="@drawable/ic_exodus_rom_controls"
+            />
+    </dashboard-category>
+    <!-- RomControls end -->
 
     <!-- DEVICE -->
     <dashboard-category
