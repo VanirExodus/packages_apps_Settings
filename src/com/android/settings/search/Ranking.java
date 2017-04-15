@@ -62,7 +62,7 @@ import java.util.HashMap;
 /**
  * Utility class for dealing with Search Ranking.
  */
-public final class Ranking {
+public final class Ranking extends com.exodus.utils.search.ExodusRanking {
 
     public static final int RANK_WIFI = 1;
     public static final int RANK_BT = 2;
