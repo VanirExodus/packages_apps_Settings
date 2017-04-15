@@ -491,7 +491,7 @@ public class ButtonsSettings extends SettingsPreferenceFragment implements
 
     /**
      * For Search.
-     */
+     
     public static final Indexable.SearchIndexProvider SEARCH_INDEX_DATA_PROVIDER =
         new BaseSearchIndexProvider() {
             @Override
@@ -513,6 +513,23 @@ public class ButtonsSettings extends SettingsPreferenceFragment implements
                 // TODO: Implement search index provider.
 
                 return result;
+            }
+        }; */
+
+    /**
+     * Button For Search.
+     **/
+    public static final SearchIndexProvider SEARCH_INDEX_DATA_PROVIDER =
+        new com.android.settings.search.BaseSearchIndexProvider() {
+            @Override
+            public java.util.List<android.provider.SearchIndexableResource> getXmlResourcesToIndex(
+                    android.content.Context context, boolean enabled) {
+                return com.exodus.utils.search.ExodusSearchIndexableResources.fetchXmlResourcesToindex(R.xml.buttons_settings, context, enabled);
+            }
+
+            @Override
+            public java.util.List<String> getNonIndexableKeys(android.content.Context context) {
+                return com.exodus.utils.search.ExodusSearchIndexableResources.fetchNonIndexableKeys(context);
             }
         };
 }

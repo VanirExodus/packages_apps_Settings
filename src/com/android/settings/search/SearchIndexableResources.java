@@ -18,7 +18,6 @@ package com.android.settings.search;
 
 import android.provider.SearchIndexableResource;
 
-import com.android.settings.ButtonsSettings;
 import com.android.settings.DateTimeSettings;
 import com.android.settings.DevelopmentSettings;
 import com.android.settings.DeviceInfoSettings;
@@ -61,12 +60,12 @@ import com.android.settings.wifi.WifiSettings;
 import java.util.Collection;
 import java.util.HashMap;
 
-public final class SearchIndexableResources {
+public final class SearchIndexableResources extends com.exodus.utils.search.ExodusSearchIndexableResources {
 
-    public static int NO_DATA_RES_ID = 0;
+//    public static int NO_DATA_RES_ID = 0;
 
-    public static HashMap<String, SearchIndexableResource> sResMap =
-            new HashMap<String, SearchIndexableResource>();
+//    public static HashMap<String, SearchIndexableResource> sResMap =
+//            new HashMap<String, SearchIndexableResource>();
 
     static {
         sResMap.put(WifiSettings.class.getName(),
@@ -329,12 +328,6 @@ public final class SearchIndexableResources {
                         ZenModeVisualInterruptionSettings.class.getName(),
                         R.drawable.ic_settings_notifications));
 
-        sResMap.put(ButtonsSettings.class.getName(),
-                new SearchIndexableResource(
-                        Ranking.getRankForClassName(ButtonsSettings.class.getName()),
-                        R.xml.buttons_settings,
-                        ButtonsSettings.class.getName(),
-                        R.drawable.ic_settings_buttons));
     }
 
     private SearchIndexableResources() {
