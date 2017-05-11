@@ -37,8 +37,6 @@ import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.SubMenu;
-
 import com.android.internal.logging.MetricsProto.MetricsEvent;
 import com.android.internal.os.BatterySipper;
 import com.android.internal.os.BatterySipper.DrainType;
@@ -78,16 +76,6 @@ public class PowerUsageSummary extends PowerUsageBase {
     @VisibleForTesting
     static final int MENU_ADDITIONAL_BATTERY_INFO = Menu.FIRST + 4;
     private static final int MENU_HELP = Menu.FIRST + 5;
-
-    private static final int MENU_BATTERY_STYLE             = Menu.FIRST + 5;
-    private static final int SUBMENU_BATTERY_BAR            = Menu.FIRST + 6;
-    private static final int SUBMENU_BATTERY_CIRCLE         = Menu.FIRST + 7;
-    private static final int SUBMENU_BATTERY_TEXT           = Menu.FIRST + 8;
-    private static final int SUBMENU_BATTERY_HIDDEN         = Menu.FIRST + 9;
-    private static final int MENU_BATTERY_PERCENT           = Menu.FIRST + 10;
-    private static final int SUBMENU_BATTERY_PERCENT_HIDDEN = Menu.FIRST + 11;
-    private static final int SUBMENU_BATTERY_PERCENT_INSIDE = Menu.FIRST + 12;
-    private static final int SUBMENU_BATTERY_PERCENT_NEXT   = Menu.FIRST + 13;
 
     private BatteryHistoryPreference mHistPref;
     private PreferenceGroup mAppListGroup;
@@ -174,10 +162,6 @@ public class PowerUsageSummary extends PowerUsageBase {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        int selectedIcon = Settings.System.getInt(getActivity().getContentResolver(),
-                                    Settings.System.STATUS_BAR_BATTERY_STYLE, 0);
-        int selectedPercentage = Settings.System.getInt(getActivity().getContentResolver(),
-                                    Settings.System.STATUS_BAR_SHOW_BATTERY_PERCENT, 0);
         if (DEBUG) {
             menu.add(Menu.NONE, MENU_STATS_TYPE, Menu.NONE, R.string.menu_stats_total)
                     .setIcon(com.android.internal.R.drawable.ic_menu_info_details)
